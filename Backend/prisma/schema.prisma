@@ -1,0 +1,82 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+model Users {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  username String @db.VarChar(255) @unique
+  email String @db.VarChar(255) @unique
+  password String @db.VarChar(255)
+  picture String @db.VarChar() @default("")
+}
+
+model Employees {
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(255)
+  code String @unique
+  email String @unique @db.VarChar(255)
+  gender Gender @default(MALE)
+  placeOfBirth String
+  dateOfBirth DateTime
+  marriageStatus Boolean @default(false)
+  photo String?
+  address String? @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  schools Schools[]
+  roles EmployeeRoles[]
+}
+
+model Schools {
+  id Int @id @default(autoincrement())
+  name String
+  level SchoolLevel @default(sma)
+  address String @db.VarChar(255) @default("")
+  graduateDate DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  employeeId Int
+  employee Employees @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+}
+
+model EmployeeRoles {
+  employeeId Int
+  roleId Int
+  employees Employees @relation(fields: [employeeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  roles Roles @relation(fields: [roleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id ([roleId, employeeId])
+}
+
+model Roles {
+  id Int @id @default(autoincrement())
+  name String
+  detail String @default("")
+  employees EmployeeRoles[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum SchoolLevel {
+  tk
+  sd
+  smp
+  sma
+  ptn
+  pts
+}

@@ -1,0 +1,55 @@
+::-webkit-scrollbar {
+  display: none;
+}
+
+:root {
+  --bg-primary: rgba(43, 43, 43, 0.55);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+body {
+  box-sizing: border-box;
+}
+
+#app {
+  overflow: hidden;
+}
+
+// utility
+.size {
+  &-7 {
+    font-size: calc(1rem - 1px);
+  }
+}
+
+.font {
+  &-primary {
+    font-family: 'Poppins', sans-serif;
+  }
+  &-secondary {
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+.text {
+  &-center {
+    text-align: center;
+  }
+}
+
+.bg-panel {
+  &-primary {
+    background-color: rgba(43, 43, 43, 0.62);
+    border-radius: .5rem;
+  }
+}
+
+// override
+.n-notification-container .n-notification {
+  background-color: var(--bg-primary) !important;
+}
