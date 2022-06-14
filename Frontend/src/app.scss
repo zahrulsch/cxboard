@@ -1,9 +1,16 @@
+@use 'sass:math';
+
 ::-webkit-scrollbar {
   display: none;
 }
 
 :root {
-  --bg-primary: rgba(43, 43, 43, 0.55);
+  --bg-primary: rgb(27, 27, 27);
+  --bg-secondary: rgb(44, 44, 44);
+  --color-primary: rgb(226, 226, 226);
+  @for $i from 0 through 3 {
+    --color-secondary-#{$i}: rgb( #{128 - $i*15},  #{128 - $i*15},  #{128 - $i*15});
+  }
 }
 
 * {
@@ -21,10 +28,32 @@ body {
 }
 
 // utility
-.size {
-  &-7 {
-    font-size: calc(1rem - 1px);
+@for $i from 1 through 7 {
+  .size- {
+    &#{$i} {
+      font-size: calc(1rem - #{$i}px);
+    }
   }
+  .gap-x- {
+    &#{$i} {
+      column-gap: math.div(1.5rem, $i);
+    }
+  }
+  .gap-y- {
+    &#{$i} {
+      row-gap: math.div(1.5rem, $i);
+    }
+  }
+  .radius- {
+    &#{$i} {
+      border-radius: math.div(1.5rem, $i);
+      overflow: hidden;
+    }
+  }
+}
+
+.panel-header {
+  color: var(--color-secondary-0);
 }
 
 .font {
@@ -44,12 +73,11 @@ body {
 
 .bg-panel {
   &-primary {
-    background-color: rgba(43, 43, 43, 0.62);
-    border-radius: .5rem;
+    background-color: var(--bg-primary);
   }
 }
 
-// override
+// override naive-ui
 .n-notification-container .n-notification {
   background-color: var(--bg-primary) !important;
 }

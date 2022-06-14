@@ -62,31 +62,34 @@ export default defineComponent({
 
 <template>
   <div class="login">
-    <div class="login-panel bg-panel-primary px-4 py-5">
-      <h3 class="text-center has-text-weight-bold is-size-4">CXBoard</h3>
+    <div class="login-panel bg-panel-primary px-4 py-4">
+      <h3 class="text-center has-text-weight-bold is-size-5">CXBoard</h3>
       <div class="input-panel">
-        <label class="has-text-weight-light size-7">Nama Pengguna</label>
+        <label class="has-text-weight-light size-7 font-secondary">Nama Pengguna</label>
         <n-input 
           :bordered="false"
           placeholder="username"
-          class="size-7"
+          class="size-7 font-secondary"
           v-model:value="email"
+          size="small"
         />
       </div>
       <div class="input-panel">
-        <label class="has-text-weight-light size-7">Kata Sandi</label>
+        <label class="has-text-weight-light size-7 font-secondary">Kata Sandi</label>
         <n-input 
           :bordered="false"
           placeholder="password"
-          class="size-7"
+          class="size-7 font-secondary"
           type="password"
           v-model:value="password"
           show-password-on="click"
+          size="small"
         />
       </div>
       <n-button
         type="primary"
         @click="login"
+        size="small"
       >
         <template #icon>
           <n-icon>
@@ -100,8 +103,6 @@ export default defineComponent({
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/respmixin.scss';
-
 @mixin flexColumn {
   display: flex;
   flex-direction: column;
@@ -126,7 +127,7 @@ export default defineComponent({
       width: 30%;
     }
     @include res('xlarge') {
-      width: 23%;
+      width: 21%;
     }
     @include res('xxlarge') {
       width: 18%;

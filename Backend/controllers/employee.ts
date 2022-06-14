@@ -19,7 +19,7 @@ export default class EmployeeController {
       const { code, dateOfBirth, email, gender, marriageStatus, name, placeOfBirth, address, photo, schools, roles } = req.body
       payloadChecker<EmployeePayload>({ code, dateOfBirth, email, gender, marriageStatus, name, placeOfBirth })
 
-      const result = await prisma.employees.create({
+      await prisma.employees.create({
         data: { 
           code, 
           dateOfBirth: 	new Date(dateOfBirth), 

@@ -8,6 +8,12 @@ const routes: RouteRecordRaw[] = [
     meta: { pageTitle: 'Halaman Masuk' },
     component: () => import('./views/Login.vue'),
     beforeEnter: [ titleChanger ]
+  },
+  {
+    path: '/',
+    meta: { pageTitle: 'Beranda' },
+    component: () => import('./views/Dashboard.vue'),
+    beforeEnter: [ titleChanger ]
   }
 ]
 
