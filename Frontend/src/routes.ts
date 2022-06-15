@@ -10,6 +10,12 @@ const routes: RouteRecordRaw[] = [
     beforeEnter: [ titleChanger ]
   },
   {
+    path: '/employees',
+    meta: { pageTitle: 'Pegawai' },
+    component: () => import('./views/Employee.vue'),
+    beforeEnter: [ titleChanger ]
+  },
+  {
     path: '/',
     meta: { pageTitle: 'Beranda' },
     component: () => import('./views/Dashboard.vue'),
