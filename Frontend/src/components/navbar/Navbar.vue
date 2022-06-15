@@ -27,7 +27,7 @@ export default defineComponent({
             <TextAlignRight16Filled />
           </n-icon>
         </template>
-        <div class="font-secondary p-2 is-flex is-flex-direction-column gap-y-2 nav-links-mob">
+        <div class="font-secondary size-3 p-2 is-flex is-flex-direction-column gap-y-2 nav-links-mob">
           <router-link to="/">
             <div class="nav-link gap-x-5">
               <n-icon>
