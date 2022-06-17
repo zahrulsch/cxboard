@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { NInput, NButton, NIcon, useNotification } from 'naive-ui'
+import { NInput, NButton, NIcon, useMessage } from 'naive-ui'
 import { ArrowCircleRight16Regular } from '@vicons/fluent'
 import { requester } from '../apis/generalRequester'
 
@@ -24,12 +24,13 @@ export default defineComponent({
   },
   setup: function() {
     return {
-      notif: useNotification()
+      notif: useMessage()
     }
   },
   data: () => ({
     email: '',
-    password: ''
+    password: '',
+    loading: false
   }),
   methods: {
     login: function() {
@@ -39,21 +40,16 @@ export default defineComponent({
       }, {
         onSuccess: data => {
           console.log(data.data.accessToken)
+          this.$router.push('/')
         },
         onError: err => {
           if (err) {
-            this.notif.error({
-              title: 'Login gagal',
-              description: `${err.status} - ${err.message}`,
-              meta: `errorcode: ${err.code}`,
-              closable: true,
-              duration: 3000
-            })
+            this.notif.error(err.message)
           } else {
-            
+            this.notif.error('Error tidak terprediksi')
           }
         },
-        onLoading: console.log
+        onLoading: v => this.loading = v
       })
     }
   }
@@ -65,38 +61,37 @@ export default defineComponent({
     <div class="login-panel bg-panel-primary px-4 py-4">
       <h3 class="text-center has-text-weight-bold is-size-5">CXBoard</h3>
       <div class="input-panel">
-        <label class="has-text-weight-light size-7 font-secondary">Nama Pengguna</label>
+        <label class="has-text-weight-light size-3 font-secondary">Nama Pengguna</label>
         <n-input 
           :bordered="false"
           placeholder="username"
-          class="size-7 font-secondary"
+          class="size-3 font-secondary"
           v-model:value="email"
-          size="small"
         />
       </div>
       <div class="input-panel">
-        <label class="has-text-weight-light size-7 font-secondary">Kata Sandi</label>
+        <label class="has-text-weight-light size-3 font-secondary">Kata Sandi</label>
         <n-input 
           :bordered="false"
-          placeholder="password"
-          class="size-7 font-secondary"
+          placeholder="••••••••"
+          class="size-3 font-secondary"
           type="password"
           v-model:value="password"
           show-password-on="click"
-          size="small"
         />
       </div>
       <n-button
         type="primary"
         @click="login"
-        size="small"
+        size="medium"
+        :loading="loading"
       >
         <template #icon>
           <n-icon>
             <arrow-circle-right16-regular />
           </n-icon>          
         </template>
-        <span class="font-secondary">Masuk</span>
+        <span class="font-secondary size-4">Masuk</span>
       </n-button>
     </div>
   </div>

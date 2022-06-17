@@ -25,13 +25,15 @@ export default defineComponent({
     <div class=" py-2 px-1 is-flex is-flex-direction-column">
       <h4 class="size-4 mb-3 color-secondary-0 has-text-weight-semibold font-secondary">Daftar Pegawai</h4>
       <div class="employee-list mb-4">
-        <employee-card v-for="i in 5" :key="i"/>
+        <employee-card v-for="i in 5" :key="i" level="leader" name="Natasya Iriana"/>
       </div>
       <n-button
         type="primary"
         size="small"
         class="radius-5 action-button"
         icon-placement="right"
+        quaternary
+        @click="$router.push('/employees')"
       >
         <template #icon>
           <n-icon>
@@ -50,6 +52,7 @@ export default defineComponent({
         type="primary"
         size="small"
         class="radius-5 action-button"
+        quaternary
       >
         <template #icon>
           <n-icon>

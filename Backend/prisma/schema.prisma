@@ -25,7 +25,6 @@ model Users {
 model Employees {
   id Int @id @default(autoincrement())
   name String @db.VarChar(255)
-  code String @unique
   email String @unique @db.VarChar(255)
   gender Gender @default(MALE)
   placeOfBirth String
@@ -35,34 +34,59 @@ model Employees {
   address String? @db.Text
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  schools Schools[]
+  schools EmployeeSchools[]
   roles EmployeeRoles[]
+  teams EmployeeTeams[]
+}
+
+model EmployeeTeams {
+  employeeId Int
+  teamId Int
+  code String @unique
+  employees Employees @relation(fields: [employeeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  teams Teams @relation(fields: [teamId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  id Int @id @default(autoincrement())
+}
+
+model EmployeeSchools {
+  id Int @id @default(autoincrement())
+  graduateYear Int @default(2020)
+  employeeId Int
+  schoolId Int
+  employeess Employees @relation(fields: [employeeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  schools Schools @relation(fields: [schoolId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Schools {
   id Int @id @default(autoincrement())
-  name String
+  name String @unique
   level SchoolLevel @default(sma)
   address String @db.VarChar(255) @default("")
-  graduateDate DateTime?
+  employees EmployeeSchools[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  employeeId Int
-  employee Employees @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+}
+
+model Teams {
+  id Int @id @default(autoincrement())
+  name String
+  code String @unique
+  employees EmployeeTeams[]
+  address String?
+  image String?
 }
 
 model EmployeeRoles {
+  id Int @id @default(autoincrement())
   employeeId Int
   roleId Int
   employees Employees @relation(fields: [employeeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   roles Roles @relation(fields: [roleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-
-  @@id ([roleId, employeeId])
 }
 
 model Roles {
   id Int @id @default(autoincrement())
-  name String
+  name String @unique
   detail String @default("")
   employees EmployeeRoles[]
   createdAt DateTime @default(now())

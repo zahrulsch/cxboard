@@ -5,8 +5,14 @@ import type { Response, Request, NextFunction } from 'express'
 import { Prisma } from "@prisma/client";
 
 type EmployeeCreatePayload = Parameters<typeof prisma.employees.create>['0']['data']
-type SchoolCreatePayload = Parameters<typeof prisma.schools.create>['0']['data']
 type RolesCreatePayload = Parameters<typeof prisma.roles.create>['0']['data']
+type SchoolCreatePayload = {
+  id: number
+  name: string
+  level: 'sma' | 'smp' | 'sd' | 'tk' | 'pts' | 'ptn'
+  graduateYear: number
+  schoolId: number
+}
 
 interface EmployeePayload extends Omit<EmployeeCreatePayload, 'schools' | 'roles'> {
   schools?: SchoolCreatePayload[]
@@ -16,12 +22,11 @@ interface EmployeePayload extends Omit<EmployeeCreatePayload, 'schools' | 'roles
 export default class EmployeeController {
   static async create(req: Request<any, any, EmployeePayload>, res: Response, next: NextFunction) {
     try {
-      const { code, dateOfBirth, email, gender, marriageStatus, name, placeOfBirth, address, photo, schools, roles } = req.body
-      payloadChecker<EmployeePayload>({ code, dateOfBirth, email, gender, marriageStatus, name, placeOfBirth })
+      const { dateOfBirth, email, gender, marriageStatus, name, placeOfBirth, address, photo, schools, roles } = req.body
+      payloadChecker<EmployeePayload>({ dateOfBirth, email, gender, marriageStatus, name, placeOfBirth })
 
       await prisma.employees.create({
         data: { 
-          code, 
           dateOfBirth: 	new Date(dateOfBirth), 
           email, 
           gender, 
@@ -31,7 +36,18 @@ export default class EmployeeController {
           address, 
           photo,
           schools: {
-            create: schools
+            create: schools?.map(school => {
+              const { name, level, graduateYear, schoolId } = school
+              return {
+                schools: {
+                  connectOrCreate: {
+                    where: { id: schoolId },
+                    create: { name, level }
+                  }
+                },
+                graduateYear
+              }
+            })
           },
           roles: {
             create: roles?.map(role => {
@@ -45,7 +61,7 @@ export default class EmployeeController {
                 }
               }
             })
-          }
+          },
         }
       })
       responseSender(res, 201, { data: 'employee added successfully' })
@@ -74,13 +90,11 @@ export default class EmployeeController {
         include: {
           schools: {
             select: {
-              name: true,
-              createdAt: true,
-              updatedAt: true,
-              graduateDate: true,
-              id: true,
-              level: true,
-              address: true
+              graduateYear: true,
+              schools: {
+                select: { name: true, id: true, level: true },
+              },
+              id: true
             }
           },
           roles: {
@@ -89,10 +103,31 @@ export default class EmployeeController {
                 select: { name: true, id: true },
               }
             }
+          },
+          teams: {
+            select: {
+              code: true,
+              teams: {
+                select: {
+                  name: true
+                }
+              }
+            }
           }
         }
       })
-      responseSender(res, 200, { data: result })
+      responseSender(res, 200, {
+        data: result.map(res => {
+          const { schools } = res
+          return { ...res, schools: schools.map(sc => ({
+            id: sc.id,
+            name: sc.schools.name,
+            level: sc.schools.level,
+            schoolId: sc.schools.id,
+            graduateYear: sc.graduateYear
+          })) }
+        })
+      })
     } catch (e) {
       next(e)
     }
@@ -100,14 +135,13 @@ export default class EmployeeController {
 
   static async edit(req: Request<any, any, Partial<EmployeePayload>>, res: Response, next: NextFunction) {
     try {
-      const { address, code, dateOfBirth, email, gender, marriageStatus, name, photo, placeOfBirth, schools } = req.body
+      const { address, dateOfBirth, email, gender, marriageStatus, name, photo, placeOfBirth, schools } = req.body
       const { id } = req.params
 
       await prisma.employees.update({
         where: { id: +id },
         data: { 
           address, 
-          code, 
           dateOfBirth: dateOfBirth ? new Date(dateOfBirth) : dateOfBirth, 
           email, 
           gender, 
@@ -116,17 +150,23 @@ export default class EmployeeController {
           photo, 
           placeOfBirth,
           schools: {
-            deleteMany: {
-              NOT: schools?.map(school => ({id: school.id}))
-            },
-            upsert: schools?.map(school => {
-              const { id, ...rest } = school
+            upsert: schools?.map(sc => {
+              const { graduateYear, id, level, name, schoolId } = sc
               return {
-                where: {id},
-                update: {...rest, graduateDate: rest.graduateDate ? new Date(rest.graduateDate) : rest.graduateDate},
-                create: {...rest, graduateDate: rest.graduateDate ? new Date(rest.graduateDate) : rest.graduateDate}
+                where: { id },
+                create: {
+                  graduateYear,
+                  schools: {
+                    connectOrCreate: {
+                      where: { id: schoolId },
+                      create: { name, level }
+                    }
+                  }
+                },
+                update: { graduateYear }
               }
             })
+            
           }
         }
       })
@@ -139,10 +179,6 @@ export default class EmployeeController {
   static async delete(req: Request<any, any>, res: Response, next: NextFunction) {
     try {
       const { id } = req.params
-
-      await prisma.schools.deleteMany({
-        where: { employeeId: +id }
-      })
 
       await prisma.employees.delete({
         where: { id: +id }

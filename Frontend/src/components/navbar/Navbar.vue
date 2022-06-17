@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { Home16Regular, DocumentPercent20Regular, ShiftsActivity20Filled, PeopleTeam20Regular, TextAlignRight16Filled } from '@vicons/fluent'
+import { ArrowCircleLeft16Regular, Home16Regular, DocumentPercent20Regular, ShiftsActivity20Filled, PeopleTeam20Regular, TextAlignRight16Filled } from '@vicons/fluent'
 import { NIcon } from 'naive-ui'
 import NavbarDrawer from './NavbarDrawer.vue'
 
@@ -13,7 +13,8 @@ export default defineComponent({
     ShiftsActivity20Filled, 
     PeopleTeam20Regular,
     TextAlignRight16Filled,
-    NavbarDrawer
+    NavbarDrawer,
+    ArrowCircleLeft16Regular
   },
   data: () => ({
     showDrawer: false
@@ -22,9 +23,14 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="bg-panel-primary radius-4 container size-2 p-3 px-4 is-flex is-align-items-center is-justify-content-space-between">
+  <div class="bg-panel-primary radius-4 container size-2 p-3 px-4 is-flex is-align-items-center is-justify-content-space-between app-nav">
     <NavbarDrawer style="background-color: var(--bg-primary); width: 80%;" :show="showDrawer" @on-update:show="v => showDrawer = v"/>
-    <h4 class="has-text-weight-bold size-2">CXBoard</h4>
+    <n-icon class="is-clickable" @click="$router.back()" id="back" size="18" v-if="$route.path !== '/'">
+      <ArrowCircleLeft16Regular />
+    </n-icon>
+    <h4 class="logo gap-x-3 has-text-weight-bold size-2">
+      <router-link id="app-logo" to="/">CXBoard</router-link>
+    </h4>
     <div class="nav-links-mobile">
       <n-icon @click="showDrawer = !showDrawer" class="is-clickable">
         <TextAlignRight16Filled />
@@ -68,6 +74,25 @@ export default defineComponent({
 </template>
 
 <style scoped lang="scss">
+  .app-nav {
+    background-color: rgb(189, 0, 79);
+  }
+  #back {
+    display: flex;
+    align-items: center;
+    color: var(--color-primary-0);
+
+    @include res('small') {
+      display: none;
+    }
+  }
+  #app-logo {
+    color: var(--color-primary-0)
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+  }
   .nav {
     &-link {
       display: flex;

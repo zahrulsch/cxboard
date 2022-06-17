@@ -2,6 +2,7 @@
 import { defineComponent } from 'vue'
 import { NImage, NIcon } from 'naive-ui'
 import { PersonBoard24Regular, PeopleTeam20Regular } from '@vicons/fluent'
+import EmployeeLevelTag from './EmployeeLevelTag.vue'
 
 export default defineComponent({
   name: 'EmployeeCard',
@@ -9,7 +10,12 @@ export default defineComponent({
     NImage,
     NIcon,
     PersonBoard24Regular,
-    PeopleTeam20Regular
+    PeopleTeam20Regular,
+    EmployeeLevelTag
+  },
+  props: {
+    name: String,
+    level: String
   }
 })
 </script>
@@ -19,17 +25,9 @@ export default defineComponent({
     <div class="emps-image radius-4">
     </div>
     <div class="is-flex is-flex-direction-column gap-y-7">
-      <p class="has-text-weight-medium size-3">Natasya Aaron</p>
-      <p class="font-secondary has-text-weight-light size-5 emps-roleteam gap-x-7">
-        <n-icon class="size-1">
-          <PersonBoard24Regular />
-        </n-icon>
-        <span>Programmer</span>
-      </p>
+      <p class="has-text-weight-medium size-3">{{name}}</p>
+      <EmployeeLevelTag :level="level" />
       <p class="font-secondary has-text-weight-light size-5 emps-roleteam gap-x-6">
-        <n-icon class="size-1">
-          <PeopleTeam20Regular />
-        </n-icon>
         <span>Tim 7 - Ponorogo</span>
       </p>
     </div>

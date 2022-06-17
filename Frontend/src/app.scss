@@ -5,7 +5,7 @@
 }
 
 :root {
-  --bg-primary: rgb(27, 27, 27);
+  --bg-primary: rgb(33, 33, 33);
   --bg-secondary: rgb(44, 44, 44);
   @for $i from 0 through 3 {
     --color-primary-#{$i}: rgb( #{226 - $i*15},  #{226 - $i*15},  #{226 - $i*15});
@@ -17,6 +17,7 @@
   margin: 0;
   padding: 0;
   list-style: none;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -41,7 +42,7 @@ body {
 @for $i from 1 through 7 {
   .size- {
     &#{$i} {
-      font-size: calc(1rem - #{$i}px);
+      font-size: calc(1rem - #{$i}px) !important;
     }
   }
   .gap-x- {
@@ -91,4 +92,7 @@ body {
 // override naive-ui
 .n-notification-container .n-notification {
   background-color: var(--bg-primary) !important;
+}
+.n-base-selection .n-base-selection-label {
+  background-color: var(--bg-primary);
 }
