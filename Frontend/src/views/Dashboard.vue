@@ -2,12 +2,19 @@
 import { defineComponent } from 'vue';
 import { NDivider, NButton, NIcon } from 'naive-ui';
 import { ArrowCircleRight20Regular } from '@vicons/fluent'
+import { useCQuery } from '../apis/customQuery';
 import EmployeeCard from '../components/employee/EmployeeCard.vue';
 import ActivityCardGeneral from '../components/activity/ActivityCardGeneral.vue';
 import Layout from '../components/layout/Layout.vue'
 
 export default defineComponent({
   name: 'Dashboard',
+  setup: function() {
+    const { data: employees } = useCQuery('getEmployees', '/employees/list/', 'get', null)
+    return {
+      employees
+    }
+  },
   components: {
     EmployeeCard,
     NDivider,
@@ -25,7 +32,7 @@ export default defineComponent({
     <div class=" py-2 px-1 is-flex is-flex-direction-column">
       <h4 class="size-4 mb-3 color-secondary-0 has-text-weight-semibold font-secondary">Daftar Pegawai</h4>
       <div class="employee-list mb-4">
-        <employee-card v-for="i in 5" :key="i" level="leader" name="Natasya Iriana"/>
+        <employee-card v-for="employee in employees?.data" :key="employee.id" level="leader" :image="employee.photo || ''" :name="employee.name"/>
       </div>
       <n-button
         type="primary"

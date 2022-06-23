@@ -1,6 +1,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { NInput, NFormItem, NDivider } from 'naive-ui';
+import { useAddEmployeePayload } from '../stores/addEmployeePayload';
 import Layout from '../components/layout/Layout.vue';
 import SectionPanel from '../components/layout/SectionPanel.vue';
 import EmployeeGeneralEdit from '../components/employee/EmployeeGeneralEdit.vue';
@@ -11,6 +12,11 @@ import EmployeeActions from '../components/employee/EmployeeActions.vue';
 
 export default defineComponent({
   name: 'AddEmployee',
+  setup: function() {
+    return {
+      addPayload: useAddEmployeePayload()
+    }
+  },
   components: {
     Layout,
     SectionPanel,
@@ -30,14 +36,24 @@ export default defineComponent({
   <layout>
     <SectionPanel class="mt-3">
       <template #title>Tambahkan Pegawai</template>
-      <employee-general-edit />
-      <NDivider class="px-2" style="margin: 0;"/>
-      <employee-education-edit />
-      <NDivider class="px-2" style="margin: 0;"/>
-      <employee-marriage-edit />
-      <NDivider class="px-2" style="margin: 0;"/>
+      <employee-general-edit
+        v-model:name="addPayload.name"
+        v-model:email="addPayload.email"
+        v-model:gender="addPayload.gender"
+        v-model:placeBirth="addPayload.placeOfBirth"
+        v-model:dateBirth="addPayload.dateOfBirth"
+        v-model:address="addPayload.address"
+      />
+      <n-divider class="px-2" style="margin: 0;"/>
+      <employee-education-edit 
+        v-model:schools="addPayload.schools"
+      />
+      <n-divider class="px-2" style="margin: 0;"/>
+      <employee-marriage-edit 
+        v-model:marriage="addPayload.marriageStatus"
+      />
+      <n-divider class="px-2" style="margin: 0;"/>
       <employee-photo-edit />
-      <!-- <NDivider class="px-2" style="margin: 0;"/> -->
       <employee-actions class="mt-2" />
     </SectionPanel>
   </layout>

@@ -1,7 +1,9 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { NButton, NIcon } from 'naive-ui';
+import { NButton, NIcon, useMessage } from 'naive-ui';
 import { Save16Regular } from '@vicons/fluent'
+import { useAddEmployeePayload } from '../../stores/addEmployeePayload';
+import { useCMutation } from '../../apis/customMutation'
 
 export default defineComponent({
   name: 'EmployeeActions',
@@ -9,6 +11,30 @@ export default defineComponent({
     NButton,
     NIcon,
     Save16Regular
+  },
+  setup: function() {
+    const { isLoading, mutateAsync } = useCMutation('addEmployee', '/employees/create/', 'POST')
+    return {
+      addPayload: useAddEmployeePayload(),
+      message: useMessage(),
+      isLoading, 
+      mutateAsync
+    }
+  },
+  methods: {
+    createNew: function() {
+      this.mutateAsync(this.addPayload, {
+        onSuccess: () => {
+          this.message.success('Pegawai Berhasil ditambahkan')
+        },
+        onError: () => {
+          this.message.error('Data pegawai gagal dimasukan')
+        }
+      })
+    }
+  },
+  unmounted: function() {
+    this.addPayload.$reset();
   }
 })
 </script>
@@ -20,6 +46,8 @@ export default defineComponent({
       type="primary"
       size="small"
       class="radius-4"
+      @click="createNew"
+      :loading="isLoading"
     >
       <template #icon>
         <n-icon>

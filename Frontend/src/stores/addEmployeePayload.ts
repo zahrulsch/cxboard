@@ -1,24 +1,16 @@
 import { defineStore } from 'pinia'
-
-export interface AddEmployeePayload {
-  code: string
-  dateOfBirth: number
-  email: string
-  gender: string
-  marriageStatus: boolean
-  name: string
-  placeOfBirth: string
-  address: string
-  photo: string
-  schools?: {
-    
-  }
-}
+import type { Mutation } from '../apis/customMutation'
 
 export const useAddEmployeePayload = defineStore('addEmployeePayload', {
-  state: () => {
+  state: (): Mutation['addEmployee']['data'] => {
     return {
-
+      dateOfBirth: 0,
+      email: '',
+      gender: 'MALE',
+      marriageStatus: false,
+      name: '',
+      placeOfBirth: '',
+      address: '',
     }
   }
 })

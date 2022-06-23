@@ -3,6 +3,7 @@ import { payloadChecker } from '../helpers/payloadChecker'
 import { responseSender } from "../helpers/errorHandler"
 import type { Response, Request, NextFunction } from 'express'
 import { Prisma } from "@prisma/client";
+import { imageUploader } from "../helpers/imageUploader";
 
 type EmployeeCreatePayload = Parameters<typeof prisma.employees.create>['0']['data']
 type RolesCreatePayload = Parameters<typeof prisma.roles.create>['0']['data']
@@ -24,6 +25,12 @@ export default class EmployeeController {
     try {
       const { dateOfBirth, email, gender, marriageStatus, name, placeOfBirth, address, photo, schools, roles } = req.body
       payloadChecker<EmployeePayload>({ dateOfBirth, email, gender, marriageStatus, name, placeOfBirth })
+      let photoUrl = ''
+
+      if (photo) {
+        const imageUpload = await imageUploader(photo)
+        if (imageUpload) photoUrl = imageUpload
+      }
 
       await prisma.employees.create({
         data: { 
@@ -34,7 +41,7 @@ export default class EmployeeController {
           name, 
           placeOfBirth, 
           address, 
-          photo,
+          photo: photoUrl,
           schools: {
             create: schools?.map(school => {
               const { name, level, graduateYear, schoolId } = school

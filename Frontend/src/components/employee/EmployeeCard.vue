@@ -15,7 +15,14 @@ export default defineComponent({
   },
   props: {
     name: String,
-    level: String
+    level: String,
+    image: String
+  },
+  computed: {
+    imageUrl: function() {
+      if (this.image) return `url("${this.image}")`
+      return 'url("")'
+    }
   }
 })
 </script>
@@ -42,7 +49,7 @@ export default defineComponent({
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    background-image: url('https://ik.imagekit.io/q8c93uv11zf/employee-retention-rate_fPotu7E9w.webp?ik-sdk-version=javascript-1.4.3&updatedAt=1655192650740')
+    background-image: v-bind(imageUrl);
   };
   &-roleteam {
     color: var(--color-secondary-0);

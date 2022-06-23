@@ -2,17 +2,8 @@
 import { defineComponent } from 'vue'
 import { NInput, NButton, NIcon, useMessage } from 'naive-ui'
 import { ArrowCircleRight16Regular } from '@vicons/fluent'
-import { requester } from '../apis/generalRequester'
-
-interface LoginResponse {
-  data: { accessToken: string }
-}
-
-interface ErrorLogin {
-  code: number
-  status: string
-  message: any
-}
+import { useCMutation } from '../apis/customMutation'
+import { setInterceptor } from '../apis/client'
 
 export default defineComponent({
   name: 'Login',
@@ -23,33 +14,33 @@ export default defineComponent({
     ArrowCircleRight16Regular
   },
   setup: function() {
+    const { data, isLoading, mutateAsync } = useCMutation('login', '/users/login/', 'POST')
     return {
-      notif: useMessage()
+      notif: useMessage(),
+      data,
+      isLoading,
+      mutateAsync
     }
   },
   data: () => ({
     email: '',
     password: '',
-    loading: false
   }),
   methods: {
     login: function() {
-      requester<LoginResponse, ErrorLogin>('/users/login', 'post', {
-        email: this.email,
-        password: this.password
-      }, {
-        onSuccess: data => {
-          console.log(data.data.accessToken)
+      this.mutateAsync({ email: this.email, password: this.password }, {
+        onSuccess: ({ data }) => {
+          localStorage.setItem('cx_token', data.accessToken)
+          setInterceptor({ Authorization: data.accessToken })
           this.$router.push('/')
         },
-        onError: err => {
-          if (err) {
-            this.notif.error(err.message)
+        onError: e => {
+          if (typeof e.message === 'string') {
+            this.notif.error(e.message)
           } else {
-            this.notif.error('Error tidak terprediksi')
+            this.notif.error('unpredictable error!')
           }
-        },
-        onLoading: v => this.loading = v
+        }
       })
     }
   }
@@ -61,10 +52,10 @@ export default defineComponent({
     <div class="login-panel bg-panel-primary px-4 py-4">
       <h3 class="text-center has-text-weight-bold is-size-5">CXBoard</h3>
       <div class="input-panel">
-        <label class="has-text-weight-light size-3 font-secondary">Nama Pengguna</label>
+        <label class="has-text-weight-light size-3 font-secondary">Email Pengguna</label>
         <n-input 
           :bordered="false"
-          placeholder="username"
+          placeholder="email@gmail.com"
           class="size-3 font-secondary"
           v-model:value="email"
         />
@@ -82,9 +73,9 @@ export default defineComponent({
       </div>
       <n-button
         type="primary"
-        @click="login"
         size="medium"
-        :loading="loading"
+        :loading="isLoading"
+        @click="login"
       >
         <template #icon>
           <n-icon>
