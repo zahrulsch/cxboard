@@ -85,15 +85,17 @@ export default class EmployeeController {
 
       if (name) filter.push({ name: { contains: name, mode: 'insensitive' } })
       if (email) filter.push({ email: { equals: email, mode: 'insensitive' } })
-      if (gender) filter.push({ gender: { equals: gender as 'MALE'|'FEMALE' } })
+      if (gender) filter.push({ gender: { equals: gender as 'MALE'|'FEMALE'|undefined } })
 
       const result = await prisma.employees.findMany({
         where: {
-          AND: filter
+          AND: filter,
         },
-        orderBy: [{
-          [sortBy || 'createdAt']: sortType || 'asc'
-        }],
+        orderBy: [
+          {
+            [sortBy || "createdAt"]: sortType || "asc",
+          },
+        ],
         include: {
           schools: {
             select: {
@@ -101,40 +103,58 @@ export default class EmployeeController {
               schools: {
                 select: { name: true, id: true, level: true },
               },
-              id: true
-            }
+              id: true,
+            },
           },
           roles: {
             select: {
               roles: {
                 select: { name: true, id: true },
-              }
-            }
+              },
+            },
           },
           teams: {
             select: {
-              code: true,
               teams: {
                 select: {
                   name: true
                 }
+              },
+              role: {
+                select: {
+                  name: true
+                },
               }
             }
-          }
-        }
-      })
+          },
+        },
+      });
       responseSender(res, 200, {
-        data: result.map(res => {
-          const { schools } = res
-          return { ...res, schools: schools.map(sc => ({
-            id: sc.id,
-            name: sc.schools.name,
-            level: sc.schools.level,
-            schoolId: sc.schools.id,
-            graduateYear: sc.graduateYear
-          })) }
-        })
-      })
+        data: result.map((res) => {
+          const { schools, roles, teams } = res;
+          return {
+            ...res,
+            schools: schools.map((sc) => ({
+              id: sc.id,
+              name: sc.schools.name,
+              level: sc.schools.level,
+              schoolId: sc.schools.id,
+              graduateYear: sc.graduateYear,
+            })),
+            roles: roles
+              .map((r) => ({ name: r.roles.name, id: r.roles.id }))
+              .reduce((p, c) => {
+                const pd = [...p];
+                if (!pd.some(v => v.id === c.id)) pd.push(c);
+                return pd;
+              }, [] as { name: string; id: number }[]),
+            teams: teams.map((t) => ({
+              name: t.teams.name,
+              role: t.role.name,
+            })),
+          };
+        }),
+      });
     } catch (e) {
       next(e)
     }
@@ -191,6 +211,45 @@ export default class EmployeeController {
         where: { id: +id }
       })
       responseSender(res, 200, {data: `employee with id ${id} deleted successfully`})
+    } catch (e) {
+      next(e)
+    }
+  }
+
+  static async getOne(req: Request<any, any>, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params
+
+      const findOne = await prisma.employees.findFirst({
+        where: { id: +id },
+        include: {
+          schools: {
+            select: {
+              graduateYear: true,
+              schools: {
+                select: { name: true, id: true, level: true },
+              },
+              id: true
+            }
+          },
+          roles: true,
+          teams: true
+        }
+      })
+
+      if (!findOne) responseSender(res, 404, { data: findOne })
+      else responseSender(res, 200, { data: {
+        ...findOne,
+        schools: findOne.schools.map(sc => {
+          return {
+            id: sc.id,
+            name: sc.schools.name,
+            level: sc.schools.level,
+            schoolId: sc.schools.id,
+            graduateYear: sc.graduateYear
+          }
+        })
+      }})
     } catch (e) {
       next(e)
     }

@@ -1,3 +1,4 @@
+import { CreateTeamPayload } from './../stores/addTeamPayload';
 import axios, { AxiosResponse } from 'axios'
 import { useMutation, UseMutationReturnType } from 'vue-query'
 import client from './client'
@@ -8,7 +9,7 @@ interface Response<Data=any> {
 
 interface ErrorResponse {
   code: number
-  message: string | Object
+  message: string | any
   status: string
 }
 
@@ -49,12 +50,40 @@ export interface Mutation {
     response: string
     params: null
   }
+  editEmployee: {
+    url: '/employees'
+    method: 'PUT'
+    data: Partial<Mutation['addEmployee']['data']>
+    response: string
+    params: number
+  }
+  addRole: {
+    url: '/roles/create'
+    method: 'POST'
+    data: {
+      name: string
+      detail?: string
+    }
+    response: string
+    params: null
+  }
+  addTeam: {
+    url: '/teams/create'
+    method: 'POST'
+    data: CreateTeamPayload
+    response: string
+    params: null
+  }
 }
 
 export function useCMutation<K extends keyof Mutation, T extends Mutation>(mode: K, url: T[K]['url'], method: T[K]['method'], params?: T[K]['params']): UseMutationReturnType<AxiosResponse<Response<T[K]['response']>, unknown>['data'], ErrorResponse, T[K]['data'], any> {
   return useMutation(mode, async function(data?: T[K]['data']) {
     try {
-      const response: AxiosResponse<Response<T[K]['response']>, unknown> = await client({ url, method, data, params })
+      let uri = url as string
+
+      if (params) uri = uri + '/' + params
+
+      const response: AxiosResponse<Response<T[K]['response']>, unknown> = await client({ url: uri, method, data })
       return response.data
     } catch (e) {
       if (axios.isAxiosError(e)) {

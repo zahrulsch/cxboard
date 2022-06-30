@@ -42,7 +42,9 @@ model Employees {
 model EmployeeTeams {
   employeeId Int
   teamId Int
-  code String @unique
+  code String
+  roleId Int @default(2)
+  role Roles @relation(fields: [roleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   employees Employees @relation(fields: [employeeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   teams Teams @relation(fields: [teamId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   id Int @id @default(autoincrement())
@@ -89,6 +91,7 @@ model Roles {
   name String @unique
   detail String @default("")
   employees EmployeeRoles[]
+  team EmployeeTeams[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

@@ -1,22 +1,33 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { NImage, NIcon } from 'naive-ui'
-import { PersonBoard24Regular, PeopleTeam20Regular } from '@vicons/fluent'
+import { defineComponent, PropType } from 'vue'
+import { NImage, NIcon, NEllipsis } from 'naive-ui'
+import { PersonBoard24Regular, PeopleTeam20Regular, Circle16Filled } from '@vicons/fluent'
+import { kebab } from 'case'
 import EmployeeLevelTag from './EmployeeLevelTag.vue'
 
 export default defineComponent({
   name: 'EmployeeCard',
+  setup() {
+    return {
+      kebab
+    }
+  },
   components: {
     NImage,
     NIcon,
     PersonBoard24Regular,
     PeopleTeam20Regular,
-    EmployeeLevelTag
+    EmployeeLevelTag,
+    NEllipsis,
+    Circle16Filled
   },
   props: {
     name: String,
-    level: String,
-    image: String
+    level: {
+      type: Array as PropType<{ name: string; id: number }[]>
+    },
+    image: String,
+    teamcount: Number
   },
   computed: {
     imageUrl: function() {
@@ -28,14 +39,22 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="bg-panel-primary is-flex gap-x-4 radius-4 emps p-2">
+  <div class="bg-panel-primary is-flex gap-x-3 radius-4 emps p-2">
     <div class="emps-image radius-4">
     </div>
-    <div class="is-flex is-flex-direction-column gap-y-7">
-      <p class="has-text-weight-medium size-3">{{name}}</p>
-      <EmployeeLevelTag :level="level" />
-      <p class="font-secondary has-text-weight-light size-5 emps-roleteam gap-x-6">
-        <span>Tim 7 - Ponorogo</span>
+    <div style="max-width: 70%;" class="is-flex is-flex-direction-column is-justify-content-space-around">
+      <n-ellipsis >
+        <span class="has-text-weight-medium size-3">{{name}}</span>
+      </n-ellipsis>
+      <div style="overflow: hidden;" class="is-flex is-align-items-center">
+        <!-- <EmployeeLevelTag v-for="i in level" :level="i.name" /> -->
+        <span class="font-secondary color-primary-5 has-text-weight-light size-5 mr-1">{{ level?.length || 0 }} Roles</span>
+        <n-icon class="size-5" v-for="v in level">
+          <circle16-filled :class="[ `c-${kebab(v.name)}` ,'size-5']" />
+        </n-icon>
+      </div>
+      <p class="font-secondary has-text-weight-light size-5 color-primary-5 gap-x-6">
+        <span>Bergabung di {{teamcount||0}} team</span>
       </p>
     </div>
   </div>
@@ -50,6 +69,7 @@ export default defineComponent({
     background-repeat: no-repeat;
     background-size: cover;
     background-image: v-bind(imageUrl);
+    background-color: rgb(233, 233, 233);
   };
   &-roleteam {
     color: var(--color-secondary-0);

@@ -43,5 +43,6 @@ export default defineComponent({
 }
 .tags-color {
   color: black;
+  white-space: nowrap;
 }
 </style>

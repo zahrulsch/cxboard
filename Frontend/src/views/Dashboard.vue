@@ -6,13 +6,19 @@ import { useCQuery } from '../apis/customQuery';
 import EmployeeCard from '../components/employee/EmployeeCard.vue';
 import ActivityCardGeneral from '../components/activity/ActivityCardGeneral.vue';
 import Layout from '../components/layout/Layout.vue'
+import CommonFetchingError from '../components/common/CommonFetchingError.vue';
+import EmployeeZero from '../components/employee/EmployeeZero.vue';
+import CommonCardLoader from '../components/common/CommonCardLoader.vue';
+import ActivityZero from '../components/activity/ActivityZero.vue';
 
 export default defineComponent({
   name: 'Dashboard',
   setup: function() {
-    const { data: employees } = useCQuery('getEmployees', '/employees/list/', 'get', null)
+    const { data: employees, isLoading, isError } = useCQuery('getEmployees', '/employees/list/', 'get', null)
     return {
-      employees
+      employees,
+      isLoading, 
+      isError
     }
   },
   components: {
@@ -22,7 +28,11 @@ export default defineComponent({
     NButton,
     ArrowCircleRight20Regular,
     NIcon,
-    Layout
+    CommonFetchingError,
+    EmployeeZero,
+    Layout,
+    CommonCardLoader,
+    ActivityZero
   }
 })
 </script>
@@ -31,10 +41,16 @@ export default defineComponent({
   <layout>
     <div class=" py-2 px-1 is-flex is-flex-direction-column">
       <h4 class="size-4 mb-3 color-secondary-0 has-text-weight-semibold font-secondary">Daftar Pegawai</h4>
-      <div class="employee-list mb-4">
-        <employee-card v-for="employee in employees?.data" :key="employee.id" level="leader" :image="employee.photo || ''" :name="employee.name"/>
+      <common-fetching-error v-if="!isLoading && isError" />
+      <div class="employee-list mb-4" v-if="isLoading">
+        <CommonCardLoader  v-for="i in 5" :key="i" :height="100"/>
+      </div>
+      <div class="employee-list mb-4" v-if="employees">
+        <employee-zero class="zero" v-if="!employees.data.length" />
+        <employee-card v-for="employee in employees.data" :key="employee.id" class="is-clickable" @click="$router.push(`/employees/${employee.id}`)" :level="employee.roles" :teamcount="employee.teams.map(e => e.name).filter((e, i, s) => s.indexOf(e) === i).length" :image="employee.photo || ''" :name="employee.name"/>
       </div>
       <n-button
+        v-if="employees?.data.length"
         type="primary"
         size="small"
         class="radius-5 action-button"
@@ -52,9 +68,10 @@ export default defineComponent({
       <n-divider />
       <h4 class="size-4 mb-3 color-secondary-0 has-text-weight-semibold font-secondary">Aktivitas Terakhir</h4>
       <div class="activity-list mb-4">
-        <ActivityCardGeneral v-for="i in 4" :key="i" />
+        <ActivityZero class='zero'/>
+        <!-- <ActivityCardGeneral v-for="i in 4" :key="i" /> -->
       </div>
-      <n-button
+      <!-- <n-button
         icon-placement="right"
         type="primary"
         size="small"
@@ -67,13 +84,16 @@ export default defineComponent({
           </n-icon>
         </template>
         <span class="font-secondary size-5">Selengkapnya</span>
-      </n-button>
+      </n-button> -->
     </div>
   </layout>
 </template>
 
 <style lang="scss" scoped>
 .employee-list {
+  .zero {
+    grid-column: 1 / span 4;
+  }
   display: grid;
   width: 100%;
   gap: .65rem;
@@ -90,6 +110,9 @@ export default defineComponent({
   }
 }
 .activity-list {
+  .zero {
+    grid-column: 1 / span 5;
+  }
   display: grid;
   width: 100%;
   gap: .65rem;

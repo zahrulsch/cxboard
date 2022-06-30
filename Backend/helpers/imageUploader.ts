@@ -1,12 +1,12 @@
 import imagekit from 'imagekit'
 import { Md5 } from 'ts-md5/dist/md5'
 
+const imagePrivate = process.env.IMAGE_PRIVATE
 const imagePublic = process.env.IMAGE_PUBLIC
-const imageSecret = process.env.IMAGE_PRIVATE
 const imageUrl = process.env.IMAGE_URL
 
 const imgkit = new imagekit({
-  privateKey: imageSecret || '',
+  privateKey: imagePrivate || '',
   publicKey: imagePublic || '',
   urlEndpoint: imageUrl || ''
 })

@@ -1,7 +1,7 @@
 import client from './client'
 import axios from 'axios'
 
-interface RequesterOptions<Data=any, Err=Error> {
+export interface RequesterOptions<Data=any, Err=Error> {
   onSuccess?: (data: Data) => void
   onError?: (e?: Err) => void
   onLoading?: (loading: boolean) => void
@@ -9,9 +9,9 @@ interface RequesterOptions<Data=any, Err=Error> {
 
 type Methods = "head" | "options" | "put" | "post" | "patch" | "delete" | "get";
 
-export function requester<DataResponse=any, ErrorResponse=any, Variable=any>(endpoint: string, method: Methods, data?: Variable, options?: RequesterOptions<DataResponse, ErrorResponse>) {
+export function requester<DataResponse=any, ErrorResponse=any, Variable=any>(endpoint: string, method: Methods, data?: Variable, query?: any, options?: RequesterOptions<DataResponse, ErrorResponse>) {
   options?.onLoading?.(true)
-  client[method]<DataResponse>(endpoint, data)
+  client[method]<DataResponse>(endpoint, { data, params: query })
     .then(response => options?.onSuccess?.(response.data))
     .catch(error => {
       if (axios.isAxiosError(error)) {

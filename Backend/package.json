@@ -6,7 +6,7 @@
   "typings": "dist/index",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npx nodemon ./dist/server.js"
+    "dev": "node ./dist/server.js"
   },
   "keywords": [],
   "author": "",

@@ -68,7 +68,7 @@ export default defineComponent({
             <span>Aktivitas</span>
           </div>
         </router-link>
-        <router-link to="/">
+        <router-link to="/teams">
           <div class="nav-link gap-x-5">
             <n-icon>
               <PeopleTeam20Regular />

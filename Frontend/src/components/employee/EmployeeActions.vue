@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { NButton, NIcon, useMessage } from 'naive-ui';
+import { NButton, NIcon, useMessage, useNotification } from 'naive-ui';
 import { Save16Regular } from '@vicons/fluent'
 import { useAddEmployeePayload } from '../../stores/addEmployeePayload';
 import { useCMutation } from '../../apis/customMutation'
@@ -17,12 +17,25 @@ export default defineComponent({
     return {
       addPayload: useAddEmployeePayload(),
       message: useMessage(),
+      notif: useNotification(),
       isLoading, 
       mutateAsync
     }
   },
   methods: {
     createNew: function() {
+      const invalids = this.addPayload.validateAll()
+
+      if (invalids.length) {
+        this.notif.error({
+          title: 'Input Invalid',
+          description: invalids.map(inv => inv.name).join(', '),
+          closable: true,
+          duration: 3000
+        })
+        return
+      }
+
       this.mutateAsync(this.addPayload, {
         onSuccess: () => {
           this.message.success('Pegawai Berhasil ditambahkan')
@@ -35,6 +48,9 @@ export default defineComponent({
   },
   unmounted: function() {
     this.addPayload.$reset();
+    delete this.addPayload.schools
+    delete this.addPayload.photo
+    console.log(this.addPayload)
   }
 })
 </script>

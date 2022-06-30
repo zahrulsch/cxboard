@@ -9,6 +9,6 @@ export default defineComponent({
 <template>
   <div class="is-flex size-5 gap-y-6 is-flex-direction-column color-secondary-3 is-align-items-center mb-3 is-justify-content-center font-secondary gap-x-5">
     <span>Dibuat oleh</span>
-    <span>@mantracode - 2022</span>
+    <span>@zahrulsch - 2022</span>
   </div>
 </template>

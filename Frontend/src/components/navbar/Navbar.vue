@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { ArrowCircleLeft16Regular, Home16Regular, DocumentPercent20Regular, ShiftsActivity20Filled, PeopleTeam20Regular, TextAlignRight16Filled } from '@vicons/fluent'
+import { ArrowCircleLeft16Regular, Home16Regular, DocumentPercent20Regular, ShiftsActivity20Filled, PersonInfo16Regular, PeopleTeam20Regular, TextAlignRight16Filled } from '@vicons/fluent'
 import { NIcon } from 'naive-ui'
 import NavbarDrawer from './NavbarDrawer.vue'
 
@@ -14,6 +14,7 @@ export default defineComponent({
     PeopleTeam20Regular,
     TextAlignRight16Filled,
     NavbarDrawer,
+    PersonInfo16Regular,
     ArrowCircleLeft16Regular
   },
   data: () => ({
@@ -28,7 +29,7 @@ export default defineComponent({
     <n-icon class="is-clickable" @click="$router.back()" id="back" size="18" v-if="$route.path !== '/'">
       <ArrowCircleLeft16Regular />
     </n-icon>
-    <h4 class="logo gap-x-3 has-text-weight-bold size-2">
+    <h4 class="logo gap-x-3 has-text-weight-bold size-1">
       <router-link id="app-logo" to="/">CXBoard</router-link>
     </h4>
     <div class="nav-links-mobile">
@@ -43,6 +44,14 @@ export default defineComponent({
             <Home16Regular size="16" />
           </n-icon>
           <span>Beranda</span>
+        </div>
+      </router-link>
+      <router-link to="/employees">
+        <div class="nav-link gap-x-7">
+          <n-icon>
+            <PersonInfo16Regular size="16" />
+          </n-icon>
+          <span>Karyawan</span>
         </div>
       </router-link>
       <router-link to="/">
@@ -61,7 +70,7 @@ export default defineComponent({
           <span>Aktivitas</span>
         </div>
       </router-link>
-      <router-link to="/">
+      <router-link to="/teams">
         <div class="nav-link gap-x-7">
           <n-icon>
             <PeopleTeam20Regular />
@@ -75,7 +84,7 @@ export default defineComponent({
 
 <style scoped lang="scss">
   .app-nav {
-    background-color: rgb(189, 0, 79);
+    // background-color: rgb(189, 0, 79);
   }
   #back {
     display: flex;
@@ -87,7 +96,11 @@ export default defineComponent({
     }
   }
   #app-logo {
-    color: var(--color-primary-0)
+    color: var(--color-primary-0);
+    // text-shadow: 1.2px 1.2px rgb(7, 199, 87), -1.2px -1.2px rgb(255, 230, 0);
+    font-weight: 700;
+    // letter-spacing: .1rem;
+    color: rgb(101, 221, 161)
   }
   .logo {
     display: flex;
@@ -97,15 +110,15 @@ export default defineComponent({
     &-link {
       display: flex;
       align-items: center;
-      font-weight: 500;
-      color: #bebebe;
+      font-weight: 600;
+      color: var(--color-primary-1);
       transition: 250ms;
       cursor: pointer;
       &-active {
-        color: #dfdfdf;
+        color: var(--color-primary-0);
       }
       &:hover {
-        color: #dfdfdf;
+        color: var(--color-primary-0);
       }
     }
     &-links {

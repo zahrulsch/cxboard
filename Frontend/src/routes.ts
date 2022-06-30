@@ -11,7 +11,19 @@ const routes: RouteRecordRaw[] = [
     beforeEnter: [ titleChanger, isTokenExist ]
   },
   {
-    path: '/employees',
+    path: '/employees/edit/:id',
+    component: () => import('./views/EmployeeEdit.vue'),
+    meta: { pageTitle: 'Ubah Data Pegawai' },
+    beforeEnter: [ titleChanger, isTokenExist ],
+  },
+  {
+    path: '/employees/:id',
+    component: () => import('./views/EmployeeDetail.vue'),
+    meta: { pageTitle: 'Detail Pegawai' },
+    beforeEnter: [ titleChanger, isTokenExist ],
+  },
+  {
+    path: '/employees/',
     meta: { pageTitle: 'Pegawai' },
     component: () => import('./views/Employee.vue'),
     beforeEnter: [ titleChanger, isTokenExist ]
@@ -20,6 +32,30 @@ const routes: RouteRecordRaw[] = [
     path: '/add_employee',
     meta: { pageTitle: 'Tambahkan Pegawai' },
     component: () => import('./views/AddEmployee.vue'),
+    beforeEnter: [ titleChanger, isTokenExist ]
+  },
+  {
+    path: '/teams',
+    meta: { pageTitle: 'Teams' },
+    component: () => import('./views/Team.vue'),
+    beforeEnter: [ titleChanger, isTokenExist ]
+  },
+  {
+    path: '/teams/create',
+    meta: { pageTitle: 'Tambah Team' },
+    component: () => import('./views/TeamCreate.vue'),
+    beforeEnter: [ titleChanger, isTokenExist ]
+  },
+  {
+    path: '/teams/edit/:id',
+    meta: { pageTitle: 'Team Edit' },
+    component: () => import('./views/TeamEdit.vue'),
+    beforeEnter: [ titleChanger, isTokenExist ]
+  },
+  {
+    path: '/teams/:id',
+    meta: { pageTitle: 'Detail Team' },
+    component: () => import('./views/TeamDetail.vue'),
     beforeEnter: [ titleChanger, isTokenExist ]
   },
   {

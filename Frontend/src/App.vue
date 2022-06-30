@@ -22,13 +22,13 @@ export default defineComponent({
   <n-config-provider :theme="darkTheme">
     <n-message-provider :max="2">
       <n-notification-provider placement="bottom">
-        <n-layout style="height: 100vh;" :native-scrollbar="false">
+        <!-- <n-layout style="height: 100vh;" :native-scrollbar="false"> -->
           <router-view v-slot="{ Component }">
             <transition name="fade" mode="out-in">
               <component :is="Component"/>
             </transition>
           </router-view>
-        </n-layout>
+        <!-- </n-layout> -->
       </n-notification-provider>
     </n-message-provider>
   </n-config-provider>
@@ -37,7 +37,7 @@ export default defineComponent({
 <style lang="scss">
 @import "./app.scss";
 .fade-enter-active, .fade-leave-active {
-  transition: all .2s ease-in-out;
+  transition: all .1s ease-in-out;
 }
 .fade-enter-from {
   opacity: 0;

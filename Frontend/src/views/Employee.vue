@@ -7,6 +7,9 @@ import Layout from '../components/layout/Layout.vue';
 import SectionPanel from '../components/layout/SectionPanel.vue';
 import EmployeeCard from '../components/employee/EmployeeCard.vue';
 import EmployeeLevelCard from '../components/employee/EmployeeLevelCard.vue';
+import CommonCardLoader from '../components/common/CommonCardLoader.vue';
+import { useCQuery } from '../apis/customQuery';
+import { kebab } from 'case';
 
 export default defineComponent({
   name: 'Employee',
@@ -19,59 +22,29 @@ export default defineComponent({
     NDivider,
     NButton,
     Add16Regular,
+    CommonCardLoader,
     NIcon
   },
-  data: () => ({
-    emps: [
-      {
-        name: 'tim leader',
-        count: 12
-      },
-      {
-        name: 'Customer Service',
-        count: 80
-      },
-      {
-        name: 'uploader',
-        count: 6
-      },
-      {
-        name: 'admin',
-        count: 7
-      },
-      {
-        name: 'keuangan',
-        count: 9
-      },
-    ],
-    emps_data: [
-      {
-        name: 'tim leader',
-        count: 12,
-        nm: 'Muhammad Zahrul Wathoni'
-      },
-      {
-        name: 'Customer Service',
-        count: 80,
-        nm: 'Indra Kurniawan'
-      },
-      {
-        name: 'uploader',
-        count: 6,
-        nm: 'Bima Septian'
-      },
-      {
-        name: 'admin',
-        count: 7,
-        nm: 'Heri Santoso'
-      },
-      {
-        name: 'keuangan',
-        count: 9,
-        nm: 'Imdad Mustari'
-      },
-    ]
-  })
+  setup: function() {
+    const { data: employees, isLoading: loadEmps } = useCQuery('getEmployees', '/employees/list/', 'get')
+    const { data: roles, isLoading: loadRoles} = useCQuery('getRoles', '/roles/list', 'get')
+    return {
+      employees,
+      loadEmps,
+      roles,
+      loadRoles,
+      kebab
+    }
+  },
+  computed: {
+    croles: function() {
+      let r = <{name: string; count: number}[]>[]
+      if (this.roles) {
+        r = this.roles.data.map(r => ({count: r.employees.length, name: r.name})).sort((a, b) => a.count - b.count)
+      }
+      return r
+    }
+  }
 })
 </script>
 
@@ -80,7 +53,7 @@ export default defineComponent({
     <section-panel class="mt-4">
       <template #title>Level Jabatan</template>
       <div class="level-list">
-        <EmployeeLevelCard v-for="i in emps" :key="i.name" :level="i.name" :count="i.count" />
+        <EmployeeLevelCard :class="`c-${kebab(i.name)}`" v-for="i in croles" :key="i.name" :level="i.name" :count="i.count"/>
       </div>
     </section-panel>
     <NDivider />
@@ -102,7 +75,12 @@ export default defineComponent({
       </n-button>
       <div class="is-flex mt-2 is-flex-direction-column gap-y-2">
         <employee-filter />
-        <EmployeeCard v-for="i in emps_data" :key="i.count" :name="i.nm" :level="i.name" />
+        <div class="emplist">
+          <template v-if="loadEmps">
+            <common-card-loader v-for="i in 3" :key="i" :height="75"/>
+          </template>
+          <EmployeeCard class="is-clickable" v-for="p in employees?.data" :key="p.id" :image="p.photo || 'https://ik.imagekit.io/pv5j1g25r/download-icon-group_people_team_users_icon-1320196240876938595_512_xbk2gytLr.png?ik-sdk-version=javascript-1.4.3&updatedAt=1656044876345'" @click="$router.push(`/employees/${p.id}`)" :name="p.name" :level="p.roles" :teamcount="p.teams.map(e => e.name).filter((e, i, s) => s.indexOf(e) === i).length" />
+        </div>
       </div>
     </section-panel>
   </layout>
@@ -129,6 +107,27 @@ export default defineComponent({
   }
   @include res('xlarge') {
     grid-template-columns: repeat(7, 1fr);
+  }
+}
+.emplist {
+  display: grid;
+  min-height: 50vh;
+  align-items: start;
+  grid-template-columns: repeat(1fr, auto);
+  align-content: start;
+  gap: .6rem;
+
+  @include res('small') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @include res('medium') {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @include res('large') {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @include res('xlarge') {
+    grid-template-columns: repeat(5, 1fr);
   }
 }
 </style>

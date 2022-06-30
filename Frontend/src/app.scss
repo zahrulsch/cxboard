@@ -7,7 +7,7 @@
 :root {
   --bg-primary: rgb(33, 33, 33);
   --bg-secondary: rgb(44, 44, 44);
-  @for $i from 0 through 3 {
+  @for $i from 0 through 7 {
     --color-primary-#{$i}: rgb( #{226 - $i*15},  #{226 - $i*15},  #{226 - $i*15});
     --color-secondary-#{$i}: rgb( #{128 - $i*15},  #{128 - $i*15},  #{128 - $i*15});
   }
@@ -30,7 +30,7 @@ body {
 }
 
 // utility
-@for $i from 0 through 3 {
+@for $i from 0 through 7 {
   .color-secondary-#{$i} {
     color: var(--color-secondary-#{$i});
   }
@@ -87,6 +87,50 @@ body {
   &-primary {
     background-color: var(--bg-primary);
   }
+}
+
+.customer-service {
+  background-color: rgb(0, 128, 128) !important;
+}
+.leader, .tim-leader {
+  background-color: rgb(255, 217, 0) !important;
+}
+.admin {
+  background-color: rgb(255, 69, 0) !important;
+}
+.uploader {
+  background-color: rgb(255, 55, 188) !important;
+}
+.keuangan {
+  background-color: rgb(79, 238, 30) !important;
+}
+.programmer {
+  background-color: rgb(1, 219, 201) !important;
+}
+.role {
+  background-color: gray;
+}
+
+.c-customer-service {
+  color: rgb(0, 128, 128) !important;
+}
+.c-leader, .c-tim-leader {
+  color: rgb(255, 217, 0) !important;
+}
+.c-admin {
+  color: rgb(255, 69, 0) !important;
+}
+.c-uploader {
+  color: rgb(255, 55, 188) !important;
+}
+.c-keuangan {
+  color: rgb(79, 238, 30) !important;
+}
+.c-programmer {
+  color: rgb(1, 219, 201) !important;
+}
+.c-role {
+  color: gray;
 }
 
 // override naive-ui

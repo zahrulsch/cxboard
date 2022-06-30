@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken'
 
 const secret = process.env.SECRET_JWT
-
 export function signToken(payload: any) {
   return new Promise<string|undefined>((resolve, reject) => {
     jwt.sign(payload, secret || '', {}, function(err, encoded) {
