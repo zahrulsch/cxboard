@@ -5,11 +5,18 @@
 }
 
 :root {
-  --bg-primary: rgb(33, 33, 33);
-  --bg-secondary: rgb(44, 44, 44);
+  --bg-primary: rgba(0, 0, 0, 0.9);
+  --bg-secondary: rgb(44, 44, 44, 0.5);
+  @include res('small') {
+    --bg-primary: rgba(32, 32, 32, 0.3);
+    --bg-secondary: rgb(44, 44, 44, 0.4);
+  }
   @for $i from 0 through 7 {
     --color-primary-#{$i}: rgb( #{226 - $i*15},  #{226 - $i*15},  #{226 - $i*15});
     --color-secondary-#{$i}: rgb( #{128 - $i*15},  #{128 - $i*15},  #{128 - $i*15});
+    @if $i != 0 {
+      --space-#{$i}: #{math.div(1.5rem, $i)};
+    }
   }
 }
 
@@ -113,24 +120,45 @@ body {
 
 .c-customer-service {
   color: rgb(0, 128, 128) !important;
+  & .n-base-selection-input__content {
+    color: rgb(0, 128, 128) !important;
+  }
 }
 .c-leader, .c-tim-leader {
   color: rgb(255, 217, 0) !important;
+  & .n-base-selection-input__content {
+    color: rgb(255, 217, 0) !important;
+  }
 }
 .c-admin {
   color: rgb(255, 69, 0) !important;
+  & .n-base-selection-input__content {
+    color: rgb(255, 69, 0) !important;
+  }
 }
 .c-uploader {
   color: rgb(255, 55, 188) !important;
+  & .n-base-selection-input__content {
+    color: rgb(255, 55, 188) !important;
+  }
 }
 .c-keuangan {
   color: rgb(79, 238, 30) !important;
+  & .n-base-selection-input__content {
+    color: rgb(79, 238, 30) !important;
+  }
 }
 .c-programmer {
   color: rgb(1, 219, 201) !important;
+  & .n-base-selection-input__content {
+    color: rgb(1, 219, 201) !important;
+  }
 }
 .c-role {
   color: gray;
+  & .n-base-selection-input__content {
+    color: gray;
+  }
 }
 
 // override naive-ui

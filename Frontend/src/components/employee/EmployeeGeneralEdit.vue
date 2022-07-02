@@ -1,13 +1,13 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { NInput, NFormItem, NSelect, NDatePicker } from 'naive-ui';
+import { NInput, NFormItem, NSelect, NDatePicker, NInputNumber } from 'naive-ui';
 import validate from 'validator/es/lib/isEmail'
 
 type Validation = 'error' | 'warning' | 'success'
 
 export default defineComponent({
   name: 'EmployeeGeneralEdit',
-  components: { NInput, NFormItem, NSelect, NDatePicker },
+  components: { NInput, NFormItem, NSelect, NDatePicker, NInputNumber },
   data: () => ({
     vname: 'success' as Validation,
     vemail: 'success' as Validation,
@@ -34,9 +34,10 @@ export default defineComponent({
     gender: String as PropType<'MALE'|'FEMALE'>,
     placeBirth: String,
     dateBirth: Number,
-    address: String
+    address: String,
+    handphone: Number
   },
-  emits: ['update:name', 'update:email', 'update:gender', 'update:placeBirth', 'update:dateBirth', 'update:address'],
+  emits: ['update:name', 'update:email', 'update:gender', 'update:placeBirth', 'update:dateBirth', 'update:address', 'update:handphone'],
   methods: {
     validateName: function() {
       if (this.name) {
@@ -82,6 +83,11 @@ export default defineComponent({
     <n-form-item label="Email" :show-feedback="false" :label-props="{class: 'size-3'}">
       <n-input :status="vemail" @focus="validateEmail" @blur="validateEmail" :value="email" @update:value="v => $emit('update:email', v)" type="text" class="bg-panel-primary" placeholder="michellin@yahoo.com"/>
     </n-form-item>
+    <n-form-item label="No Handphone" :show-feedback="false" :label-props="{class: 'size-3'}">
+      <n-input-number :show-button="false" style="width: 100%;" :value="handphone" @update:value="v => $emit('update:handphone', v)" type="text" class="bg-panel-primary" placeholder="82237320907">
+        <template #prefix>+62</template>
+      </n-input-number>
+    </n-form-item>
     <n-form-item style="width: 100%;" label="Jenis Kelamin" :show-feedback="false" :label-props="{class: 'size-3'}">
       <n-select :value="gender" @update:value="v => $emit('update:gender', v)" :options="genders" placeholder="Pilih Jenis Kelamin"/>
     </n-form-item>
@@ -106,3 +112,11 @@ export default defineComponent({
     </n-form-item>
   </div>
 </template>
+
+<style lang="scss">
+.n-date-picker {
+  & > * {
+    --n-color: var(--bg-primary) !important;
+  }
+}
+</style>

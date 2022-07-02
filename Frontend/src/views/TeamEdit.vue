@@ -1,10 +1,11 @@
 <script lang="ts" setup>
 import { useRoute } from 'vue-router'
 import { useCQuery } from '../apis/customQuery';
-import { NInput, NFormItem, NDivider, NButton, NIcon } from 'naive-ui'
+import { NInput, NFormItem, NDivider, NButton, NIcon, useMessage } from 'naive-ui'
 import { useEditTeamPayload } from '../stores/editTeamPayload';
 import { onUnmounted } from 'vue';
 import { Save16Regular } from '@vicons/fluent'
+import { useCMutation } from '../apis/customMutation';
 import Layout from '../components/layout/Layout.vue';
 import CommonLoader from '../components/common/CommonLoader.vue';
 import CommonFetchingError from '../components/common/CommonFetchingError.vue';
@@ -13,33 +14,37 @@ import SectionPanel from '../components/layout/SectionPanel.vue';
 import TeamPictureEdit from '../components/team/TeamPictureEdit.vue';
 import TeamMemberEdit from '../components/team/TeamMemberEdit.vue';
 
+const message = useMessage()
 const pteam = useEditTeamPayload()
 const { id } = useRoute().params
 const { data: team, isLoading: loadTeam, isError: loadTeamError } = useCQuery('getTeam', '/teams', 'get', +id, null, {
   onSuccess: ({ data }) => {
-    pteam.$patch({
-      name: data.name,
-      address: data.address,
-      code: data.code,
-      image: data.image,
-    })
     if (data.employees) {
+      pteam.$patch( { address: data.address, code: data.code, image: data.image || '', name: data.name } )
       pteam.$patch({
         employees: data.employees.map(e => ({
-          employeeCode: e.employeeCode,
-          employeeId: e.id,
-          name: e.name,
-          role: e.role,
-          roleId: e.roleId
+          code: e.employeeCode,
+          employeeId: e.employee.id,
+          id: e.id,
+          roleId: e.role.id,
+          name: e.employee.name,
+          teamId: +id
         }))
       })
     }
+    else pteam.$patch( { address: data.address, code: data.code, image: data.image || '', name: data.name } )
   },
   refetchOnWindowFocus: false,
 })
 
+const { mutateAsync: editRequest, isLoading: loadEdit } = useCMutation('editTeam', '/teams', 'PUT', +id)
+
 const update = () => {
-  console.log(JSON.stringify(pteam.$state, null, 2))
+  editRequest(pteam.$state, {
+    onSuccess: res => {
+      message.success(res.data, { closable: true, duration: 2750 })
+    }
+  })
 }
 
 onUnmounted(() => {
@@ -98,6 +103,8 @@ onUnmounted(() => {
               block
               type="primary"
               size="small"
+              @click="update"
+              :loading="loadEdit"
             >
               <template #icon>
                 <n-icon>

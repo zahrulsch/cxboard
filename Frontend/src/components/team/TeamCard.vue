@@ -66,12 +66,16 @@ const props = defineProps<TeamCardProp>()
 .tim-card {
   display: flex;
   align-items: center;
+  transition: .25s ease;
+  &:hover {
+    box-shadow: 0 0 10px 1px rgba(255, 255, 255, 0.075);
+  }
   &-image {
     width: 65px;
     height: 65px;
     display: flex;
     align-items: center;
-    background-color: rgb(39, 39, 39);
+    background-color: rgba(39, 39, 39, 0.397);
     background-position: center;
     background-size: cover;
     padding: .5rem;

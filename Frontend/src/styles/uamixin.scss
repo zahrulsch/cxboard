@@ -1,0 +1,5 @@
+@mixin ua($key, $value) {
+  @each $var in ('-webkit-', '-moz-', '-ms-', '-o-', '') {
+    #{$var}#{$key}: #{$value};
+  }
+}

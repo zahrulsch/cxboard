@@ -14,7 +14,7 @@ const { data: teams, isLoading, isError } = useCQuery('getTeams', '/teams/list',
 
 <template>
   <layout>
-    <common-fetching-error v-if="isError" />
+    <common-fetching-error style="min-height: 75vh;" v-if="isError" />
     <div class="teams-list" v-if="isLoading">
       <common-card-loader v-for="i in 5" :key="i" :height="75" speed="medium" />
     </div>

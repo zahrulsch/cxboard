@@ -11,7 +11,7 @@ import { Add16Filled } from '@vicons/fluent'
       :src="noact"
       width="75"
     />
-    <span class="size-4 color-primary-4 has-text-weight-light">Belum ada aktivitas apapun</span>
+    <span class="size-5 color-primary-4 has-text-weight-light">Belum ada aktivitas apapun</span>
     <router-link to="/">
       <n-button
         text

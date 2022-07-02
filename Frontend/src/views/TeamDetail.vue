@@ -60,18 +60,18 @@ const cbgimage = computed(() => {
         <h4 class="size-2 font-secondary">Anggota Team</h4>
         <div class="teammember-list">
           <div v-for="e in team.data.employees" :key="e.id" class="member-list p-2 radius-5">
-            <router-link class="link-overlay" :to="`/employees/${e.id}`"></router-link>
+            <router-link class="link-overlay" :to="`/employees/${e.employee.id}`"></router-link>
             <div 
               class="image radius-5"
               :style="{
-                backgroundImage: `url('${e.photo}')` || `url('/src/assets/nophotos.png')`
+                backgroundImage: e.employee.photo ? `url('${e.employee.photo}')` : `url('/src/assets/nophotos.png')`
               }"
             >
             </div>
             <n-ellipsis class="mt-1">
-              <span class="font-secondary has-text-weight-medium size-3">{{e.name}}</span>
+              <span class="font-secondary has-text-weight-medium size-3">{{e.employee.name}}</span>
             </n-ellipsis>
-            <span :class="[kebab(e.role), 'role font-secondary mt-1 px-1 radius-7 size-5']">{{e.role}}</span>
+            <span :class="[kebab(e.role.name), 'role font-secondary mt-1 px-1 radius-7 size-5']">{{e.role.name}}</span>
           </div>
         </div>
       </div>
@@ -109,11 +109,15 @@ const cbgimage = computed(() => {
     }
 
     & .member-list {
+      &:hover {
+        box-shadow: 0 0 10px 1px rgba(255, 255, 255, 0.05);
+      }
       display: flex;
       flex-direction: column;
       align-items: start;
       background: var(--bg-primary);
       position: relative;
+      transition: .25s ease;
       & .link-overlay {
         position: absolute;
         width: 100%;
@@ -129,7 +133,7 @@ const cbgimage = computed(() => {
         padding-top: 100%;
         background-position: center;
         background-size: contain;
-        background-color: rgba(51, 51, 51, 0.534);
+        background-color: rgba(51, 51, 51, 0.151);
         backdrop-filter: blur(2px);
         -webkit-backdrop-filter: blur(2px);
       }

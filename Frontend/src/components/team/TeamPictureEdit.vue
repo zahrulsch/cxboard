@@ -2,8 +2,8 @@
 import SectionPanel from '../layout/SectionPanel.vue';
 import { NFormItem, NImage, NIcon, NButton } from 'naive-ui'
 import { Image16Regular, Delete16Regular } from '@vicons/fluent'
-import { onMounted, ref } from 'vue';
-import { isUri } from 'valid-url'
+import { onMounted, ref, watch } from 'vue';
+import { isHttpsUri } from 'valid-url'
 import { tFileReader, tFileReaderDrop } from '../../helpers/fileReader';
 
 // define data
@@ -47,9 +47,15 @@ const onchange = (e: Event) => {
 }
 
 // define hooks
+watch(() => props.image, (n) => {
+  if (n) {
+    if (isHttpsUri(String(n))) imageurl.value = String(n)
+  }
+}, { immediate: true })
+
 onMounted(() => {
   if (props.image) {
-    if (isUri(String(props.image))) imageurl.value = String(props.image)
+    if (isHttpsUri(String(props.image))) imageurl.value = String(props.image)
   }
 })
 </script>

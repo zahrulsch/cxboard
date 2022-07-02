@@ -3,7 +3,7 @@ import { NButton, NIcon } from 'naive-ui';
 import { Add16Filled } from '@vicons/fluent'
 import { ref } from 'vue';
 import { useEditTeamPayload } from '../../stores/editTeamPayload';
-import TeamMemberField from './TeamMemberField.vue';
+import TeamMemberEditField from './TeamMemberEditField.vue';
 import TeamRoleModal from './TeamRoleModal.vue';
 
 const openModal = ref(false)
@@ -12,12 +12,13 @@ const team = useEditTeamPayload()
 const onAddEmployeeTeam = () => {
   if (!team.employees) team.employees = []
   team.employees.push({
-    employeeCode: '',
+    code: '',
     employeeId: 0,
-    role: '',
+    id: 0,
+    name: '',
     roleId: 0,
-    name: ''
-  })  
+    teamId: 0
+  })
 }
 // end method
 </script>
@@ -39,7 +40,7 @@ const onAddEmployeeTeam = () => {
       </n-button>
     </div>
     <div class="add-emp-list gap-y-4">
-      <team-member-field v-for="(emp, index) in team.employees" v-model:employees="team.employees" :index="index" :key="index" />
+      <team-member-edit-field v-for="(emp, index) in team.employees" v-model:employees="team.employees" :index="index" :key="index" />
     </div>
     <n-button
       type="info"

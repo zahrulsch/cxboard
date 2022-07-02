@@ -9,7 +9,7 @@ import { NImage } from 'naive-ui'
       :src="error"
       width="75"
     />
-    <span class="size-4 has-text-weight-light color-primary-4">
+    <span class="size-4 px-6 has-text-weight-light color-primary-6">
       Oops!!! proses pengambilan data mengalami kendala teknis silahkan coba lagi / refresh halaman
     </span>
   </div>
@@ -20,6 +20,7 @@ import { NImage } from 'naive-ui'
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 
   span {
     text-align: center;

@@ -1,7 +1,17 @@
 import { defineStore } from "pinia";
 import { Mutation } from "../apis/customMutation";
 
-type EditTeamPayload = Partial<Mutation["addTeam"]["data"]>;
+type EditTeamPayloadStore = Partial<Mutation["addTeam"]["data"]>;
+export interface EditTeamPayload extends Omit<EditTeamPayloadStore, "employees"> {
+  employees?: {
+    id: number
+    employeeId: number
+    code: string
+    roleId: number
+    name: string
+    teamId: number
+  }[]
+}
 
 export const useEditTeamPayload = defineStore('editTeamPayload', {
   state: (): EditTeamPayload => ({

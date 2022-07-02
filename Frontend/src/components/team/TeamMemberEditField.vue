@@ -4,10 +4,9 @@ import { Delete16Filled } from '@vicons/fluent'
 import { requester } from '../../apis/generalRequester';
 import { Query } from '../../apis/customQuery';
 import { computed, reactive, ref } from 'vue';
-import { useAddTeamPayload } from '../../stores/addTeamPayload';
 import { useCQuery } from '../../apis/customQuery';
-import { emit } from 'process';
 import { useEditTeamPayload } from '../../stores/editTeamPayload';
+import { kebab } from 'case';
 
 const { isLoading, data: roles } = useCQuery('getRoles', '/roles/list', 'get') 
 
@@ -15,11 +14,12 @@ const { isLoading, data: roles } = useCQuery('getRoles', '/roles/list', 'get')
 const props = defineProps<{
   index: number
   employees?: {
+    id: number
     employeeId: number
-    role: string
+    code: string
     roleId: number
-    employeeCode: string
-    name?: string
+    name: string
+    teamId?: number
   }[]
   code?: string
 }>()
@@ -32,7 +32,7 @@ const emits = defineEmits<{
 // end emits
 
 // start state
-const team = useAddTeamPayload()
+const team = useEditTeamPayload()
 const employeeOptions: AutoCompleteOption[] = reactive([])
 const loadingSuggest = ref(false)
 // end state
@@ -85,7 +85,7 @@ const onSelectChange = (v: any) => {
     const rep = [...props.employees]
     rep[props.index].roleId = value
     if (roleOptions.value.filter(o => o.value === v).length) {
-      rep[props.index].role = roleOptions.value.filter(o => o.value === v)[0].label
+      rep[props.index].roleId = +roleOptions.value.filter(o => o.value === v)[0].value
     }
     emits('update:employees', rep)
   }
@@ -94,7 +94,7 @@ const onSelectChange = (v: any) => {
 const onCodeChange = (code: any) => {
   if (props.employees) {
     const rep = [...props.employees]
-    rep[props.index].employeeCode = code
+    rep[props.index].code = code
     emits('update:employees', rep)
   }
 }
@@ -127,7 +127,7 @@ const roleOptions = computed<{
     <n-select
       placeholder="Role"
       :options="roleOptions"
-      class="roles"
+      :class="['c-' + kebab(roleOptions.filter(ro => +ro.value === employees?.[index].roleId)[0]?.label), 'roles']"
       :loading="isLoading"
       :value="String(employees?.[index].roleId)"
       @update:value="onSelectChange"
@@ -137,7 +137,7 @@ const roleOptions = computed<{
       <n-input 
         class="bg-panel-primary"
         placeholder="1"
-        :value="employees?.[index].employeeCode"
+        :value="employees?.[index].code"
         @update:value="onCodeChange"
       />
     </n-input-group>

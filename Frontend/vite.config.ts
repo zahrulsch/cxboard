@@ -9,7 +9,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@import 'src/styles/respmixin.scss';`
+        additionalData: `@import 'src/styles/respmixin.scss'; @import 'src/styles/uamixin.scss';`
       }
     }
   }

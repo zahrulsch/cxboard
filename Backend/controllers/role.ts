@@ -20,14 +20,26 @@ export default class RoleController {
     try {
       const result = await prisma.roles.findMany({
         include: {
-          employees: {
+          team: {
             select: {
-              employeeId: true
+              employees: {
+                select: { name: true, id: true }
+              }
             }
           }
         }
       })
-      responseSender(res, 200, { data: result })
+      const parseResult = result.map(r => {
+        const { team, ...rest } = r
+        return {
+          ...rest,
+          employees: team.map((t) => ({
+            employeeId: t.employees.id,
+            name: t.employees.name,
+          })),
+        };
+      })
+      responseSender(res, 200, { data: parseResult })
     } catch (e) {
       next(e)
     }

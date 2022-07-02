@@ -1,3 +1,4 @@
+import { EditTeamPayload } from './../stores/editTeamPayload';
 import { CreateTeamPayload } from './../stores/addTeamPayload';
 import axios, { AxiosResponse } from 'axios'
 import { useMutation, UseMutationReturnType } from 'vue-query'
@@ -46,6 +47,12 @@ export interface Mutation {
         schoolId: number
       }[]
       photo?: string
+      handphone?: number
+      officeEmail?: string
+      officeEmailPassword?: string
+      startWork?: number
+      endWork?: number
+      status?: string
     }
     response: string
     params: null
@@ -73,6 +80,13 @@ export interface Mutation {
     data: CreateTeamPayload
     response: string
     params: null
+  }
+  editTeam : {
+    url: '/teams'
+    method: 'PUT'
+    data: EditTeamPayload
+    response: string
+    params: number
   }
 }
 

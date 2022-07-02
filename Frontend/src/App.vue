@@ -23,11 +23,15 @@ export default defineComponent({
     <n-message-provider :max="2">
       <n-notification-provider placement="bottom">
         <!-- <n-layout style="height: 100vh;" :native-scrollbar="false"> -->
-          <router-view v-slot="{ Component }">
-            <transition name="fade" mode="out-in">
-              <component :is="Component"/>
-            </transition>
-          </router-view>
+          <div class="before-container">
+            <div class="before-container-layer">
+              <router-view v-slot="{ Component }">
+                <!-- <transition name="fade" mode="out-in"> -->
+                  <component :is="Component"/>
+                <!-- </transition> -->
+              </router-view>
+            </div>
+          </div>
         <!-- </n-layout> -->
       </n-notification-provider>
     </n-message-provider>

@@ -131,7 +131,12 @@ export default defineComponent({
   </n-form-item>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.n-auto-complete, .n-input-number {
+  & > * {
+    --n-color: var(--bg-primary) !important;
+  }
+}
 .ed-row {
   flex-wrap: wrap;
   width: 100%;

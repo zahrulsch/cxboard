@@ -1,13 +1,16 @@
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { computed, defineComponent, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useCQuery } from '../apis/customQuery'
 import { NDivider, NIcon, NButton } from 'naive-ui'
-import { QuestionCircle20Regular, Edit16Regular } from '@vicons/fluent'
+import { QuestionCircle20Regular, Edit16Regular, Circle16Filled } from '@vicons/fluent'
+import { kebab } from 'case';
+import { requester } from '../apis/generalRequester';
 import Layout from '../components/layout/Layout.vue';
 import SectionPanel from '../components/layout/SectionPanel.vue';
 import EmployeeSchoolLevel from '../components/employee/EmployeeSchoolLevel.vue';
 import CommonLoader from '../components/common/CommonLoader.vue';
+import SuggestEmployee from '../components/suggest/SuggestEmployee.vue';
 
 export default defineComponent({
   name: 'EmployeeDetail',
@@ -20,16 +23,49 @@ export default defineComponent({
     QuestionCircle20Regular,
     NButton,
     Edit16Regular,
-    CommonLoader
+    CommonLoader,
+    Circle16Filled,
+    SuggestEmployee
   },
   setup: function() {
     const route = useRoute()
-    const { id } = route.params
-    const { data, isLoading } = useCQuery('getEmployee', '/employees', 'get', +id)
+    const loadingSuggests = ref(false)
+    const suggests = ref<{ name: string; id: number; type: string; photo: string | null; }[]>([])
+    const { data, isLoading, isFetching, refetch } = useCQuery('getEmployee', '/employees', 'get', computed(() => +route.params.id), null, { enabled: false,  })
+
+    requester<{ data: typeof suggests.value }>('/suggests/employee/' + +route.params.id, 'get', null, null, {
+      onSuccess: ({ data }) => {
+        suggests.value = data
+      },
+      onLoading: v => loadingSuggests.value = v
+    })
 
     return {
       employee: data,
-      isLoading
+      isLoading,
+      kebab,
+      refetch,
+      suggests,
+      loadingSuggests,
+      requester,
+      isFetching
+    }
+  },
+  watch: {
+    '$route.params.id': {
+      handler: function(n) {
+        console.log(n)
+        if (n) {
+          this.refetch()
+          this.requester<{ data: { name: string; id: number; type: string; photo: string | null; }[] }>('/suggests/employee/' + n, 'get', null, null, {
+            onSuccess: ({ data }) => {
+              this.suggests = data
+            },
+            onLoading: v => this.loadingSuggests = v
+          })
+        }
+      },
+      immediate: true
     }
   },
   computed: {
@@ -70,8 +106,8 @@ export default defineComponent({
 <template>
   <layout>
     <div class="is-flex is-flex-direction-column py-2 gap-y-3">
-      <common-loader v-if="isLoading"/>
-      <template v-if="employee">
+      <common-loader v-if="isLoading || isFetching"/>
+      <template v-if="employee && !isLoading && !isFetching">
         <h4 class="font-secondary size-4 color-secondary-0 has-text-weight-semibold">Data Pegawai - {{ employee?.data?.name }}</h4>
         <div class="dpanel mt-1">
           <div class="left">
@@ -79,24 +115,42 @@ export default defineComponent({
               <img v-if="!employee.data.photo" src="https://ik.imagekit.io/pv5j1g25r/download-icon-group_people_team_users_icon-1320196240876938595_512_xbk2gytLr.png?ik-sdk-version=javascript-1.4.3&updatedAt=1656044876345"/>
               <img v-else :src="employee.data.photo"/>
             </div>
-            <n-button
-              type="info"
-              size="small"
-              secondary
-              @click="$router.push(`/employees/edit/${employee?.data?.id}`)"
-            >
-              <template #icon>
-                <n-icon>
-                  <edit16-regular class="size-3" />
-                </n-icon>
-              </template>
-              <span class="font-secondary size-4">Edit</span>
-            </n-button>
+            <div class="left-secondary gap-y-4">
+              <n-divider class="my-1"/>
+              <h4 class="size-2 color-primary-0 font-secondary has-text-weight-semibold">Peran</h4>
+              <div v-if="employee.data?.teams.length" v-for="(t, i) in employee.data?.teams" class="bg-panel-primary p-2 radius-5 drow" :key="i">
+                <div class="is-flex is-align-items-start gap-x-7">
+                  <n-icon
+                    :class="kebab('c ' + t.role)"
+                  ><circle16-filled class="size-7" /></n-icon>
+                  <span class="size-4">{{" " + t.role}}</span>
+                  <span class="size-4">di {{" " + t.team}}</span>
+
+                </div>
+              </div>
+              <div class="p-2 bg-panel-primary radius-5" v-else>
+                <span class="size-3 color-primary-5 has-text-weight-light"> Belum ada peran di team manapun </span>
+              </div>
+            </div>
           </div>
           <n-divider class="vdivider" vertical/>
           <div class="right gap-y-4">
             <section-panel>
               <template #title>Data Personal</template>
+              <n-button
+                @click="$router.push(`/employees/edit/${employee?.data?.id}`)"
+                class="edit-nonmobile"
+                type="info"
+                size="small"
+                text
+              >
+                <template #icon>
+                  <n-icon>
+                    <edit16-regular class="size-3" />
+                  </n-icon>
+                </template>
+                <span class="font-secondary size-4">Ubah Data</span>
+              </n-button>
               <div v-if="employee?.data" class="is-flex is-flex-direction-column gap-y-3">
                 <div class="data gap-y-6 radius-6">
                   <span class="data-label font-secondary size-7 color-primary-5">Nama lengkap</span>
@@ -130,23 +184,39 @@ export default defineComponent({
               <div v-if="employee?.data" class="is-flex is-flex-direction-column gap-y-3">
                 <EmployeeSchoolLevel v-if="employee.data.schools.length" class="bg-panel-primary radius-6" v-for="sc in emps" :key="sc.id" :name="sc.name" :graduate-year="sc.graduateYear" :level="sc.level"/>
                 <div class="no-edu gap-y-4" v-else>
-                  <n-icon class="color-secondary-2" size="25">
+                  <n-icon class="color-primary-6" size="25">
                     <QuestionCircle20Regular />
                   </n-icon>
                   <span class="font-secondary size-4 color-primary-5">Belum ada data pendidikan</span>
-                  <n-button
-                    size="small"
-                    type="primary"
-                    quaternary
-                  >
-                    <template #icon>
-                      <n-icon>
-                        <Edit16Regular class="size-3" />
-                      </n-icon>
-                    </template>
-                    <span class="font-secondary size-4">Edit</span>
-                  </n-button>
                 </div>
+              </div>
+            </section-panel>
+            <n-button
+              @click="$router.push(`/employees/edit/${employee?.data?.id}`)"
+              class="edit-mobile"
+              type="info"
+              size="small"
+              secondary
+            >
+              <template #icon>
+                <n-icon>
+                  <edit16-regular class="size-3" />
+                </n-icon>
+              </template>
+              <span class="font-secondary size-4">Ubah Data</span>
+            </n-button>
+            <n-divider class="my-2" style="margin: 0;"/>
+            <section-panel>
+              <template #title>Pegawai Terkait</template>
+              <div class="suggestion-list">
+                <suggest-employee 
+                  v-for="e in suggests"
+                  :key="e.id"
+                  :id="e.id"
+                  :name="e.name"
+                  :type="e.type"
+                  :photo="e.photo"
+                />
               </div>
             </section-panel>
           </div>
@@ -175,6 +245,7 @@ export default defineComponent({
 .no-edu {
   width: 100%;
   display: flex;
+  min-height: 200px;
   justify-content: center;
   flex-direction: column;
   align-items: center;
@@ -195,6 +266,16 @@ export default defineComponent({
     row-gap: .5rem;
     width: 100%;
 
+    &-secondary {
+      display: flex;
+      flex-direction: column;
+
+      & .drow {
+        display: flex;
+        align-items: center;
+      }
+    }
+
     @include res('small') {
       width: 25%;
     }
@@ -212,6 +293,36 @@ export default defineComponent({
     flex: 1;
     display: flex;
     flex-direction: column;
+    position: relative;
+    & .edit-mobile {
+      display: inherit;
+      @include res('small') {
+        display: none;
+      }
+    }
+    & .edit-nonmobile {
+      position: absolute;
+      right: 0;
+      margin-right: 2px;
+      display: none;
+      @include res('small') {
+        display: inherit;
+      }
+    }
   }
+}
+.suggestion-list {
+  display: grid;
+  gap: var(--space-3);
+  grid-auto-rows: minmax(20px, 1fr);
+  grid-template-columns: repeat(1, 1fr);
+  
+  @include res('medium') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @include res('xlarge') {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
 }
 </style>

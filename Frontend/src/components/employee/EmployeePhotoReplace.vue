@@ -70,6 +70,11 @@ export default defineComponent({
       },
       immediate: true
     }
+  },
+  computed: {
+    imgurl: function() {
+      if (this.imageUrl) return `url("${this.imageUrl}")`
+    }
   }
 })
 </script>
@@ -86,7 +91,7 @@ export default defineComponent({
         </label>
         <input @change="change" @drop="drop" @dragover.prevent="dropText = 'Lepaskan file'" @dragleave.prevent="dropText = 'Drop file disini / Klik untuk memilih foto'" id="pic" type="file" accept=".png,.jpeg" />
       </div>
-      <div class="upload-preview" v-else>
+      <div class="upload-preview radius-7" v-else>
         <n-icon
           class="is-clickable has-text-danger upload-preview-eraser"
           @click="erase"
@@ -96,6 +101,7 @@ export default defineComponent({
         </n-icon>
         <n-image 
           :src="imageUrl"
+          class="radius-7 imgs"
         />
       </div>
     </n-form-item>
@@ -109,7 +115,7 @@ export default defineComponent({
   justify-content: center;
   flex-direction: column;
   background-color: var(--bg-primary);
-  width: 85%;
+  width: 100%;
   height: 300px;
 }
 .upload {
@@ -128,6 +134,31 @@ export default defineComponent({
 
   &-preview {
     position: relative;
+    display: flex;
+    width: 100%;
+    padding-top: 100%;
+    background-image: v-bind(imgurl);
+    background-position: center;
+    background-size: cover;
+    &::before {
+      content: '';
+      background-color: rgba(0, 0, 0, 0.829);
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      position: absolute;
+      top: 0;
+      left: 0;
+      @include ua('backdrop-filter', 'blur(6px)')
+    }
+    & .imgs {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      width: max-content;
+    }
     &-eraser {
       position: absolute;
       background-color: white;
@@ -135,7 +166,9 @@ export default defineComponent({
       width: max-content;
       height: max-content;
       margin: 5px 0 0 5px;
-      border-radius: 5px
+      border-radius: 5px;
+      top: 0;
+      z-index: 2;
     }
   }
 }

@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { NDivider, NButton, NIcon } from 'naive-ui';
+import { NDivider, NButton, NIcon, NImage } from 'naive-ui';
 import { Add16Regular } from '@vicons/fluent';
 import EmployeeFilter from '../components/employee/EmployeeFilter.vue';
 import Layout from '../components/layout/Layout.vue';
@@ -10,6 +10,7 @@ import EmployeeLevelCard from '../components/employee/EmployeeLevelCard.vue';
 import CommonCardLoader from '../components/common/CommonCardLoader.vue';
 import { useCQuery } from '../apis/customQuery';
 import { kebab } from 'case';
+import responsibility from '../assets/responsibility.png'
 
 export default defineComponent({
   name: 'Employee',
@@ -23,7 +24,8 @@ export default defineComponent({
     NButton,
     Add16Regular,
     CommonCardLoader,
-    NIcon
+    NIcon,
+    NImage
   },
   setup: function() {
     const { data: employees, isLoading: loadEmps } = useCQuery('getEmployees', '/employees/list/', 'get')
@@ -33,7 +35,8 @@ export default defineComponent({
       loadEmps,
       roles,
       loadRoles,
-      kebab
+      kebab,
+      responsibility
     }
   },
   computed: {
@@ -52,8 +55,12 @@ export default defineComponent({
   <layout>
     <section-panel class="mt-4">
       <template #title>Level Jabatan</template>
-      <div class="level-list">
+      <div class="level-list" v-if="croles.length">
         <EmployeeLevelCard :class="`c-${kebab(i.name)}`" v-for="i in croles" :key="i.name" :level="i.name" :count="i.count"/>
+      </div>
+      <div class="no-roles" v-else>
+        <n-image class="no-roles-img" width="75" :src="responsibility"/>
+        <span class="size-4 color-primary-5">Belum ada role jabatan yang tersedia</span>
       </div>
     </section-panel>
     <NDivider />
@@ -79,7 +86,7 @@ export default defineComponent({
           <template v-if="loadEmps">
             <common-card-loader v-for="i in 3" :key="i" :height="75"/>
           </template>
-          <EmployeeCard class="is-clickable" v-for="p in employees?.data" :key="p.id" :image="p.photo || 'https://ik.imagekit.io/pv5j1g25r/download-icon-group_people_team_users_icon-1320196240876938595_512_xbk2gytLr.png?ik-sdk-version=javascript-1.4.3&updatedAt=1656044876345'" @click="$router.push(`/employees/${p.id}`)" :name="p.name" :level="p.roles" :teamcount="p.teams.map(e => e.name).filter((e, i, s) => s.indexOf(e) === i).length" />
+          <EmployeeCard class="is-clickable" v-for="p in employees?.data" :key="p.id" :image="p.photo || 'https://ik.imagekit.io/pv5j1g25r/download-icon-group_people_team_users_icon-1320196240876938595_512_xbk2gytLr.png?ik-sdk-version=javascript-1.4.3&updatedAt=1656044876345'" @click="$router.push(`/employees/${p.id}`)" :name="p.name" :level="p.teams.map(t => ({name: t.role}))" :teamcount="p.teams.map(e => e.name).filter((e, i, s) => s.indexOf(e) === i).length" />
         </div>
       </div>
     </section-panel>
@@ -126,8 +133,20 @@ export default defineComponent({
   @include res('large') {
     grid-template-columns: repeat(4, 1fr);
   }
-  @include res('xlarge') {
-    grid-template-columns: repeat(5, 1fr);
+}
+.no-roles {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 40vh;
+  justify-content: center;
+  row-gap: .65rem;
+
+  & &-img {
+    filter: brightness(.85);
+    -webkit-filter: brightness(.85);
+    -moz-filter: brightness(.85);
+    -o-filter: brightness(.85);
   }
 }
 </style>

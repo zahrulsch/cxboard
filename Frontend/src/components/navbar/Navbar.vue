@@ -83,9 +83,6 @@ export default defineComponent({
 </template>
 
 <style scoped lang="scss">
-  .app-nav {
-    // background-color: rgb(189, 0, 79);
-  }
   #back {
     display: flex;
     align-items: center;
@@ -97,10 +94,8 @@ export default defineComponent({
   }
   #app-logo {
     color: var(--color-primary-0);
-    // text-shadow: 1.2px 1.2px rgb(7, 199, 87), -1.2px -1.2px rgb(255, 230, 0);
-    font-weight: 700;
-    // letter-spacing: .1rem;
-    color: rgb(101, 221, 161)
+    font-weight: 800;
+    color: #55c09c
   }
   .logo {
     display: flex;

@@ -97,7 +97,7 @@ export function tFileReader(e: Event, options?: FileReaderOptions) {
         reader.onload = data => {
           if (data.target?.result) {
             options?.onSuccess?.({
-              base64Text: String( data.target.result).replace(/^data:image\/[a-z]+;base64,/, ""),
+              base64Text: String( data.target.result),
               fileBlobUrl: createFileUrl
             })
           } else {
@@ -157,7 +157,7 @@ export function tFileReaderDrop(e: DragEvent, options?: FileReaderDropOptions) {
         } else {
           context.drawImage(imageElement, 0, 0)
           const base64Image = canvas.toDataURL('image/png')
-          const base64ImageFilter = base64Image.replace(/^data:image\/(png|jpg);base64,/, '')
+          const base64ImageFilter = base64Image
 
           options?.onSuccess?.({
             base64Text: base64ImageFilter,

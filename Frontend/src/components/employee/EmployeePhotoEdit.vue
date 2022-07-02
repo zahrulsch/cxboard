@@ -76,7 +76,7 @@ export default defineComponent({
         </label>
         <input @change="change" @drop="drop" @dragover.prevent="dropText = 'Lepaskan file'" @dragleave.prevent="dropText = 'Drop file disini / Klik untuk memilih foto'" id="pic" type="file" accept=".png,.jpeg" />
       </div>
-      <div class="upload-preview" v-else>
+      <div class="upload-preview radius-5" v-else>
         <n-icon
           class="is-clickable has-text-danger upload-preview-eraser"
           @click="erase"
@@ -86,6 +86,7 @@ export default defineComponent({
         </n-icon>
         <n-image 
           :src="imageUrl"
+          class="upload-preview-image radius-5"
         />
       </div>
     </n-form-item>
@@ -99,7 +100,7 @@ export default defineComponent({
   justify-content: center;
   flex-direction: column;
   background-color: var(--bg-primary);
-  width: 85%;
+  width: 100%;
   height: 300px;
 }
 .upload {
@@ -118,6 +119,14 @@ export default defineComponent({
 
   &-preview {
     position: relative;
+    width: 100%;
+    background-image: url('v-bind(imageUrl)');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    background-color: var(--bg-primary);
     &-eraser {
       position: absolute;
       background-color: white;
@@ -125,8 +134,11 @@ export default defineComponent({
       width: max-content;
       height: max-content;
       margin: 5px 0 0 5px;
-      border-radius: 5px
+      border-radius: 5px;
+      top: 0;
+      left: 0;
     }
+
   }
 }
 </style>

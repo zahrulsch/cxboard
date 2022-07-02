@@ -9,7 +9,8 @@ export default defineComponent({
   components: {
     NavbarVue,
     FooterVue,
-    NDivider
+    NDivider,
+    NLayout
   }
 })
 </script>
@@ -17,14 +18,14 @@ export default defineComponent({
 <template>
   <div class="before-container">
     <div class="before-container-layer">
-        <n-layout style="height: 100vh;" :native-scrollbar="false">
-          <div class="p-2 container">
-            <navbar-vue class="mb-1 mt-2" />
-            <slot name="default"></slot>
-            <NDivider />
-            <footer-vue />
-          </div>
-        </n-layout>
+      <n-layout style="height: 100vh; background-color: transparent;" :native-scrollbar="false">
+        <div class="p-2 container">
+          <navbar-vue class="mb-1 mt-2" />
+          <slot name="default"></slot>
+          <NDivider />
+          <footer-vue />
+        </div>
+      </n-layout>
     </div>
   </div>
 </template>
@@ -33,20 +34,23 @@ export default defineComponent({
 .before-container {
   width: 100%;
   height: 100vh;
-  background-color:hsla(0,100%,50%,1);
+  overflow-y: auto;
+  background-color:#ff9999;
   background-image:
-  radial-gradient(at 40% 20%, hsla(28,100%,74%,1) 0px, transparent 50%),
-  radial-gradient(at 80% 0%, hsla(189,100%,56%,1) 0px, transparent 50%),
-  radial-gradient(at 0% 50%, hsla(355,100%,93%,1) 0px, transparent 50%),
-  radial-gradient(at 80% 50%, hsla(340,100%,76%,1) 0px, transparent 50%),
-  radial-gradient(at 0% 100%, hsla(22,100%,77%,1) 0px, transparent 50%),
-  radial-gradient(at 80% 100%, hsla(242,100%,70%,1) 0px, transparent 50%),
-  radial-gradient(at 0% 0%, hsla(343,100%,76%,1) 0px, transparent 50%);
+  radial-gradient(at 49% 51%, hsla(0,100%,72%,1) 0px, transparent 50%),
+  radial-gradient(at 28% 14%, hsla(286,63%,76%,1) 0px, transparent 50%),
+  radial-gradient(at 72% 75%, hsla(60,89%,62%,1) 0px, transparent 50%);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 
   & &-layer {
-    background-color: rgba(0, 0, 0, 0.863);
-    height: 100%;
-    backdrop-filter: blur(5px);
+    background-color: rgba(12, 12, 12, 0.96);
+    @include res('small') {
+      background-color: rgba(0, 0, 0, 0.98);
+    }
+    @include ua('backdrop-filter', 'blur(5px)');
+    height: auto;
   }
 }
 </style>

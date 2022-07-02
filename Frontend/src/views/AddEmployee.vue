@@ -9,6 +9,7 @@ import EmployeeEducationEdit from '../components/employee/EmployeeEducationEdit.
 import EmployeeMarriageEdit from '../components/employee/EmployeeMarriageEdit.vue';
 import EmployeePhotoEdit from '../components/employee/EmployeePhotoEdit.vue';
 import EmployeeActions from '../components/employee/EmployeeActions.vue';
+import EmployeeOfficeDataEdit from '../components/employee/EmployeeOfficeDataEdit.vue';
 
 export default defineComponent({
   name: 'AddEmployee',
@@ -27,7 +28,8 @@ export default defineComponent({
     NDivider,
     EmployeeMarriageEdit,
     EmployeePhotoEdit,
-    EmployeeActions
+    EmployeeActions,
+    EmployeeOfficeDataEdit
   }
 })
 </script>
@@ -45,6 +47,16 @@ export default defineComponent({
             v-model:placeBirth="addPayload.placeOfBirth"
             v-model:dateBirth="addPayload.dateOfBirth"
             v-model:address="addPayload.address"
+            v-model:handphone="addPayload.handphone"
+          />
+          <!-- <n-divider class="px-2" style="margin: 0;"/> -->
+          <employee-office-data-edit 
+            class="px-2"
+            v-model:startWork="addPayload.startWork"
+            v-model:endWork="addPayload.endWork"
+            v-model:status="addPayload.status"
+            v-model:officeEmail="addPayload.officeEmail"
+            v-model:officeEmailPassword="addPayload.officeEmailPassword"
           />
           <n-divider class="px-2" style="margin: 0;"/>
           <employee-education-edit 
@@ -90,7 +102,6 @@ export default defineComponent({
   &-right {
     display: flex;
     flex-direction: column;
-    row-gap: 1em;
     flex: 1;
     & .dvd {
       @include res('small') {

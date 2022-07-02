@@ -23,7 +23,7 @@ interface EmployeePayload extends Omit<EmployeeCreatePayload, 'schools' | 'roles
 export default class EmployeeController {
   static async create(req: Request<any, any, EmployeePayload>, res: Response, next: NextFunction) {
     try {
-      const { dateOfBirth, email, gender, marriageStatus, name, placeOfBirth, address, photo, schools, roles } = req.body
+      const { dateOfBirth, email, gender, marriageStatus, name, placeOfBirth, address, photo, schools, roles, startWork, endWork, status, officeEmail, officeEmailPassword, handphone } = req.body
       payloadChecker<EmployeePayload>({ dateOfBirth, email, gender, marriageStatus, name, placeOfBirth })
       let photoUrl = ''
 
@@ -42,6 +42,12 @@ export default class EmployeeController {
           placeOfBirth, 
           address, 
           photo: photoUrl,
+          startWork: new Date(startWork||0),
+          status,
+          endWork: endWork ? new Date(endWork) : null,
+          officeEmail,
+          officeEmailPassword,
+          handphone,
           schools: {
             create: schools?.map(school => {
               const { name, level, graduateYear, schoolId } = school
@@ -162,8 +168,13 @@ export default class EmployeeController {
 
   static async edit(req: Request<any, any, Partial<EmployeePayload>>, res: Response, next: NextFunction) {
     try {
-      const { address, dateOfBirth, email, gender, marriageStatus, name, photo, placeOfBirth, schools } = req.body
+      let { address, dateOfBirth, email, gender, marriageStatus, name, photo, placeOfBirth, schools } = req.body
       const { id } = req.params
+
+      if (photo) {
+        const uploader = await imageUploader(photo)
+        if (uploader) photo = uploader
+      }
 
       await prisma.employees.update({
         where: { id: +id },
@@ -233,23 +244,40 @@ export default class EmployeeController {
             }
           },
           roles: true,
-          teams: true
+          teams: {
+            include: {
+              teams: { select: { name: true, id: true } },
+              role: { select: { name: true, id: true } }
+            }
+          }
         }
       })
 
-      if (!findOne) responseSender(res, 404, { data: findOne })
-      else responseSender(res, 200, { data: {
-        ...findOne,
-        schools: findOne.schools.map(sc => {
-          return {
-            id: sc.id,
-            name: sc.schools.name,
-            level: sc.schools.level,
-            schoolId: sc.schools.id,
-            graduateYear: sc.graduateYear
-          }
-        })
-      }})
+      if (!findOne) responseSender(res, 404, { data: findOne });
+      else
+        responseSender(res, 200, {
+          data: {
+            ...findOne,
+            schools: findOne.schools.map((sc) => {
+              return {
+                id: sc.id,
+                name: sc.schools.name,
+                level: sc.schools.level,
+                schoolId: sc.schools.id,
+                graduateYear: sc.graduateYear,
+              };
+            }),
+            teams: findOne.teams.map((t) => {
+              const { role, teams } = t;
+              return {
+                role: role.name,
+                roleId: role.id,
+                team: teams.name,
+                teamId: teams.id,
+              };
+            }),
+          },
+        });
     } catch (e) {
       next(e)
     }

@@ -37,7 +37,8 @@ export default defineComponent({
           schools: data?.schools,
           photo: data?.photo
         })
-      }
+      },
+      refetchOnWindowFocus: false
     })
 
     return {
@@ -68,9 +69,10 @@ export default defineComponent({
           <n-divider class="my-1 px-3" />
           <EmployeeEducationEdit 
             v-model:schools="edit.schools"
+            id="edu-edit"
           />
         </div>
-        <div class="edit-panel-right">
+        <div class="edit-panel-right gap-y-3">
           <n-divider class="my-1 px-3 res-divider" />
           <employee-photo-replace />
           <employee-put-action />
@@ -108,10 +110,13 @@ export default defineComponent({
   }
   &-right {
     flex: 1;
+    display: flex;
+    flex-direction: column;
   }
 }
 .res-divider {
   display: inherit;
+  
   @include res('small') {
     display: none;
   }

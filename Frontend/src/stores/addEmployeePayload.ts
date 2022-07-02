@@ -11,7 +11,13 @@ export const useAddEmployeePayload = defineStore('addEmployeePayload', {
       marriageStatus: false,
       name: '',
       placeOfBirth: '',
-      address: ''
+      address: '',
+      endWork: 0,
+      officeEmail: '',
+      officeEmailPassword: '',
+      startWork: 0,
+      status: 'active',
+      photo: '',
     }
   },
   actions: {

@@ -36,7 +36,7 @@ const cheight = computed(() => {
 })
 
 const cspeed = computed(() => {
-  let s = '1000ms'
+  let s = '750ms'
   if (props.speed) {
     switch(props.speed) {
       case 'fast':
@@ -65,14 +65,14 @@ const cspeed = computed(() => {
 
 <style lang="scss">
 .mloader {
-  background-color: rgb(34, 34, 34);
-  animation: blink 1s ease-in-out infinite;
+  background-color: rgba(34, 34, 34, 0.15);
+  animation: blink 1s linear infinite;
 }
 @keyframes blink {
   0%, 100% {
     opacity: 1;
   }
-  60% {
+  50% {
     opacity: .87;
   }
 }

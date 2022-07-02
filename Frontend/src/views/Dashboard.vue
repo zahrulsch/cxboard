@@ -47,7 +47,7 @@ export default defineComponent({
       </div>
       <div class="employee-list mb-4" v-if="employees">
         <employee-zero class="zero" v-if="!employees.data.length" />
-        <employee-card v-for="employee in employees.data" :key="employee.id" class="is-clickable" @click="$router.push(`/employees/${employee.id}`)" :level="employee.roles" :teamcount="employee.teams.map(e => e.name).filter((e, i, s) => s.indexOf(e) === i).length" :image="employee.photo || ''" :name="employee.name"/>
+        <employee-card v-for="employee in employees.data" :key="employee.id" class="is-clickable" @click="$router.push(`/employees/${employee.id}`)" :level="employee.teams.map(t => ({name: t.role}))" :teamcount="employee.teams.map(e => e.name).filter((e, i, s) => s.indexOf(e) === i).length" :image="employee.photo || ''" :name="employee.name"/>
       </div>
       <n-button
         v-if="employees?.data.length"

@@ -37,7 +37,7 @@ export default defineComponent({
 
 <template>
   <div class="font-secondary is-flex is-flex-direction-column gap-y-4 px-2">
-    <h4 class="pl-1 size-3">Riwayat Pendidikan</h4>
+    <h4 class="size-3">Riwayat Pendidikan</h4>
     <EmployeeEducationField 
       v-for="(f, index) in schools"
       :key="index"
