@@ -12,6 +12,12 @@ export const useEditEmployeePayload = defineStore('editEmployeePayload', {
       marriageStatus: false,
       photo: '',
       placeOfBirth: '',
+      officeEmail: '',
+      startWork: 0,
+      endWork: null,
+      handphone: '0',
+      officeEmailPassword: '',
+      status: 'active',
       schools: []
     }
   }

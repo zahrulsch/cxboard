@@ -39,8 +39,11 @@ export interface Query {
       roles: any[];
       teams: { name: string; role: string }[];
     }[];
-    params: MaybeRef<number>;
-    query: null;
+    params: MaybeRef<number|null> | null;
+    query: MaybeRef<{
+      name?: string
+      gender?: 'MALE' | 'FEMALE'
+    }> | any;
   };
   getEmployee: {
     url: "/employees";
@@ -49,6 +52,11 @@ export interface Query {
       id: number;
       name: string;
       email: string;
+      handphone: string;
+      officeEmail: string;
+      officeEmailPassword: string;
+      startWork: string | null;
+      endWork: string | null;
       gender: "MALE" | "FEMALE";
       placeOfBirth: string;
       dateOfBirth: string;
@@ -57,6 +65,7 @@ export interface Query {
       address: string;
       createdAt: string;
       updatedAt: string;
+      status: string;
       schools: {
         id: number;
         name: string;
@@ -68,7 +77,7 @@ export interface Query {
       teams: { role: string; roleId: number; team: string; teamId: number }[];
     } | null;
     params: MaybeRef<number>;
-    query: null;
+    query: MaybeRef<any>;
   };
   getSchools: {
     url: "/schools/list";
@@ -82,11 +91,11 @@ export interface Query {
       updatedAt: string;
     }[];
     params: null;
-    query: {
+    query: MaybeRef<{
       limit?: number;
       name?: string;
       level?: "tk" | "sd" | "smp" | "sma" | "pts" | "ptn";
-    };
+    }>;
   };
   getRoles: {
     url: "/roles/list";
@@ -100,7 +109,7 @@ export interface Query {
       employees: { employeeId: number; name: string }[];
     }[];
     params: null;
-    query: any;
+    query: MaybeRef<any>;
   };
   getTeams: {
     url: "/teams/list";
@@ -114,7 +123,7 @@ export interface Query {
       _count: { employees: number };
     }[];
     params: null;
-    query: any;
+    query: MaybeRef<any>;
   };
   getTeam: {
     url: "/teams";
@@ -142,22 +151,29 @@ export interface Query {
         | null;
     };
     params: MaybeRef<number>;
-    query: any;
+    query: MaybeRef<any>;
   };
+  getActivities: {
+    url: '/activities/list'
+    method: 'get'
+    response: any[]
+    params: MaybeRef<any>
+    query: MaybeRef<any>
+  }
 }
 
 type QueryOptions<T> = UseQueryOptions<T, ErrorResponse>
 
 export function useCQuery<K extends keyof Query, T extends Query>(mode: K, url: T[K]['url'], method: T[K]['method'], params?: T[K]['params'], query?: T[K]['query'], options?: QueryOptions<Response<T[K]['response']>>): UseQueryReturnType<Response<T[K]['response']>, ErrorResponse> {
   return useQuery<Response<T[K]["response"]>, ErrorResponse, Response<T[K]["response"]>, any>({
-    queryKey: [mode, params],
+    queryKey: [mode, params, query],
     queryFn: async ({ queryKey }: { queryKey: any }) => {
       try {
         let uri = url as string
         if (queryKey[1]) {
           uri = url + '/' + queryKey[1]
         }
-        const res: AxiosResponse<Response<T[K]['response']>, any> = await client({ url: uri, method, params: query })
+        const res: AxiosResponse<Response<T[K]['response']>, any> = await client({ url: uri, method, params: queryKey[2] })
         return res.data
       } catch (e) {
         if (axios.isAxiosError(e)) {
@@ -172,29 +188,4 @@ export function useCQuery<K extends keyof Query, T extends Query>(mode: K, url: 
     },
     ...options
   })
-
-  // return useQuery<Response<T[K]["response"]>, ErrorResponse, Response<T[K]["response"]>, any>([mode, params], async ({ queryKey, meta }) => {
-  //   try {
-  //     console.log(queryKey)
-  //     // console.log(meta)
-  //     let uri = url as string
-  //     if (queryKey[1]) {
-  //       uri = url + '/' + queryKey[1]
-  //     }
-  //     // if (meta?.value) {
-  //     //   uri = url + '/' + meta.value
-  //     // }
-  //     const res: AxiosResponse<Response<T[K]['response']>, any> = await client({ url: uri, method, params: query })
-  //     return res.data
-  //   } catch (e) {
-  //     if (axios.isAxiosError(e)) {
-  //       throw e.response?.data
-  //     }
-  //     throw {
-  //       message: 'unpredictable error occurred!',
-  //       code: 500,
-  //       status: 'internal server error'
-  //     }
-  //   }
-  // }, { ...options })
 }

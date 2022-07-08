@@ -35,19 +35,15 @@ export default defineComponent({
   width: 100%;
   height: 100vh;
   overflow-y: auto;
-  background-color:#ff9999;
-  background-image:
-  radial-gradient(at 49% 51%, hsla(0,100%,72%,1) 0px, transparent 50%),
-  radial-gradient(at 28% 14%, hsla(286,63%,76%,1) 0px, transparent 50%),
-  radial-gradient(at 72% 75%, hsla(60,89%,62%,1) 0px, transparent 50%);
+  background-color:#042407;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 
   & &-layer {
-    background-color: rgba(12, 12, 12, 0.96);
+    background-color: rgba(12, 12, 12, 0.89);
     @include res('small') {
-      background-color: rgba(0, 0, 0, 0.98);
+      background-color: rgba(0, 0, 0, 0.85);
     }
     @include ua('backdrop-filter', 'blur(5px)');
     height: auto;

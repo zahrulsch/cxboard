@@ -2,14 +2,15 @@
 import { defineComponent } from 'vue';
 import { NDivider, NButton, NIcon, NImage } from 'naive-ui';
 import { Add16Regular } from '@vicons/fluent';
+import { useCQuery } from '../apis/customQuery';
+import { kebab } from 'case';
 import EmployeeFilter from '../components/employee/EmployeeFilter.vue';
 import Layout from '../components/layout/Layout.vue';
 import SectionPanel from '../components/layout/SectionPanel.vue';
 import EmployeeCard from '../components/employee/EmployeeCard.vue';
 import EmployeeLevelCard from '../components/employee/EmployeeLevelCard.vue';
 import CommonCardLoader from '../components/common/CommonCardLoader.vue';
-import { useCQuery } from '../apis/customQuery';
-import { kebab } from 'case';
+import CommonHeader from '../components/common/CommonHeader.vue';
 import responsibility from '../assets/responsibility.png'
 
 export default defineComponent({
@@ -25,7 +26,8 @@ export default defineComponent({
     Add16Regular,
     CommonCardLoader,
     NIcon,
-    NImage
+    NImage,
+    CommonHeader
   },
   setup: function() {
     const { data: employees, isLoading: loadEmps } = useCQuery('getEmployees', '/employees/list/', 'get')
@@ -54,7 +56,7 @@ export default defineComponent({
 <template>
   <layout>
     <section-panel class="mt-4">
-      <template #title>Level Jabatan</template>
+      <common-header font-weight="semibold">Level Jabatan</common-header>
       <div class="level-list" v-if="croles.length">
         <EmployeeLevelCard :class="`c-${kebab(i.name)}`" v-for="i in croles" :key="i.name" :level="i.name" :count="i.count"/>
       </div>
@@ -65,7 +67,7 @@ export default defineComponent({
     </section-panel>
     <NDivider />
     <section-panel class="mt-4 is-relative">
-      <template #title>Daftar Karyawan</template>
+      <common-header font-weight="semibold">Daftar Pegawai</common-header>
       <n-button
         class="radius-3 add-employee"
         size="small"

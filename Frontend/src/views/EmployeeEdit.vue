@@ -10,6 +10,7 @@ import EmployeeGeneralEdit from "../components/employee/EmployeeGeneralEdit.vue"
 import EmployeeEducationEdit from "../components/employee/EmployeeEducationEdit.vue"
 import EmployeePhotoReplace from "../components/employee/EmployeePhotoReplace.vue"
 import EmployeePutAction from "../components/employee/EmployeePutAction.vue"
+import EmployeeOfficeDataEdit from "../components/employee/EmployeeOfficeDataEdit.vue"
 
 export default defineComponent({
   name: 'EmployeeEdit',
@@ -20,23 +21,33 @@ export default defineComponent({
     EmployeeEducationEdit,
     NDivider,
     EmployeePhotoReplace,
-    EmployeePutAction
+    EmployeePutAction,
+    EmployeeOfficeDataEdit
   },
   setup: function() {
     const edit = useEditEmployeePayload()
     const { id } = useRoute().params
     const { data } = useCQuery('getEmployee', '/employees', 'get', +id, null, {
       onSuccess: ({ data }) => {
-        edit.$patch({
-          name: data?.name,
-          email: data?.email,
-          gender: data?.gender,
-          placeOfBirth: data?.placeOfBirth,
-          address: data?.address,
-          dateOfBirth: new Date(data?.dateOfBirth || 0).getTime(),
-          schools: data?.schools,
-          photo: data?.photo
-        })
+        if (data) {
+          const { startWork, endWork } = data
+          edit.$patch({
+            name: data.name,
+            email: data.email,
+            gender: data.gender,
+            placeOfBirth: data.placeOfBirth,
+            address: data.address,
+            dateOfBirth: new Date(data.dateOfBirth || 0).getTime(),
+            schools: data.schools,
+            photo: data.photo,
+            officeEmail: data.officeEmail,
+            officeEmailPassword: data.officeEmailPassword,
+            handphone: data.handphone,
+            status: data.status
+          })
+          startWork && edit.$patch({ startWork: new Date(startWork).getTime() })
+          endWork && edit.$patch({ endWork: new Date(endWork).getTime() })
+        }
       },
       refetchOnWindowFocus: false
     })
@@ -65,6 +76,15 @@ export default defineComponent({
             v-model:place-birth="edit.placeOfBirth"
             v-model:address="edit.address"
             v-model:date-birth="edit.dateOfBirth"
+            v-model:handphone="edit.handphone"
+          />
+          <n-divider class="my-1 px-3" />
+          <employee-office-data-edit class="px-2" 
+            v-model:officeEmail="edit.officeEmail"
+            v-model:startWork="edit.startWork"
+            v-model:endWork="edit.endWork"
+            v-model:officeEmailPassword="edit.officeEmailPassword"
+            v-model:status="edit.status"
           />
           <n-divider class="my-1 px-3" />
           <EmployeeEducationEdit 

@@ -11,6 +11,7 @@ import SectionPanel from '../components/layout/SectionPanel.vue';
 import EmployeeSchoolLevel from '../components/employee/EmployeeSchoolLevel.vue';
 import CommonLoader from '../components/common/CommonLoader.vue';
 import SuggestEmployee from '../components/suggest/SuggestEmployee.vue';
+import CommonHeader from '../components/common/CommonHeader.vue';
 
 export default defineComponent({
   name: 'EmployeeDetail',
@@ -25,20 +26,14 @@ export default defineComponent({
     Edit16Regular,
     CommonLoader,
     Circle16Filled,
-    SuggestEmployee
+    SuggestEmployee,
+    CommonHeader
   },
   setup: function() {
     const route = useRoute()
     const loadingSuggests = ref(false)
     const suggests = ref<{ name: string; id: number; type: string; photo: string | null; }[]>([])
     const { data, isLoading, isFetching, refetch } = useCQuery('getEmployee', '/employees', 'get', computed(() => +route.params.id), null, { enabled: false,  })
-
-    requester<{ data: typeof suggests.value }>('/suggests/employee/' + +route.params.id, 'get', null, null, {
-      onSuccess: ({ data }) => {
-        suggests.value = data
-      },
-      onLoading: v => loadingSuggests.value = v
-    })
 
     return {
       employee: data,
@@ -54,7 +49,6 @@ export default defineComponent({
   watch: {
     '$route.params.id': {
       handler: function(n) {
-        console.log(n)
         if (n) {
           this.refetch()
           this.requester<{ data: { name: string; id: number; type: string; photo: string | null; }[] }>('/suggests/employee/' + n, 'get', null, null, {
@@ -98,6 +92,24 @@ export default defineComponent({
         return [...this.employee.data.schools].sort((a, b) => a.graduateYear - b.graduateYear)
       }
       return []
+    },
+    handphone: function() {
+      if (this.employee?.data?.handphone) {
+        return '+62' + String(this.employee.data.handphone)
+      }
+      return '-'
+    },
+    startDate: function() {
+      if (this.employee?.data?.startWork) {
+        return new Date(this.employee.data.startWork).toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' })
+      }
+      return '-'
+    },
+    endDate: function() {
+      if (this.employee?.data?.endWork) {
+        return new Date(this.employee.data.endWork).toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' })
+      }
+      return '-'
     }
   }
 })
@@ -108,7 +120,7 @@ export default defineComponent({
     <div class="is-flex is-flex-direction-column py-2 gap-y-3">
       <common-loader v-if="isLoading || isFetching"/>
       <template v-if="employee && !isLoading && !isFetching">
-        <h4 class="font-secondary size-4 color-secondary-0 has-text-weight-semibold">Data Pegawai - {{ employee?.data?.name }}</h4>
+        <common-header :font-weight="'semibold'">Data Pegawai - {{ employee?.data?.name }}</common-header>
         <div class="dpanel mt-1">
           <div class="left">
             <div class="bg-panel-primary radius-5 is-flex is-align-items-center is-justify-content-center" v-if="employee.data">
@@ -135,7 +147,7 @@ export default defineComponent({
           </div>
           <n-divider class="vdivider" vertical/>
           <div class="right gap-y-4">
-            <section-panel>
+            <section-panel accesskey="d">
               <template #title>Data Personal</template>
               <n-button
                 @click="$router.push(`/employees/edit/${employee?.data?.id}`)"
@@ -173,8 +185,43 @@ export default defineComponent({
                   <span class="data-value size-3">{{ employee.data.email }}</span>
                 </div>
                 <div class="data gap-y-6 radius-6">
+                  <span class="data-label font-secondary size-7 color-primary-5">No. Handphone</span>
+                  <span class="data-value size-3">{{ handphone }}</span>
+                </div>
+                <div class="data gap-y-6 radius-6">
                   <span class="data-label font-secondary size-7 color-primary-5">Alamat</span>
-                  <span class="data-value size-3">{{ employee.data.address }}</span>
+                  <span class="data-value size-3">{{ employee.data.address||'-' }}</span>
+                </div>
+              </div>
+            </section-panel>
+            <n-divider class="my-2" style="margin: 0;"/>
+            <section-panel v-if="employee.data">
+              <template #title>Data Kantor</template>
+              <div class="is-flex is-flex-direction-column gap-y-3">
+                <div class="data gap-y-6 radius-6">
+                  <span class="data-label font-secondary size-7 color-primary-5">Status Kerja</span>
+                  <div class="is-flex is-align-items-center gap-x-7">
+                    <n-icon>
+                      <circle16-filled :class="[`status-${employee.data.status}`, 'size-7']"/>
+                    </n-icon>
+                    <span class="data-value size-3 is-capitalized">{{ employee.data.status }}</span>
+                  </div>
+                </div>
+                <div class="data gap-y-6 radius-6">
+                  <span class="data-label font-secondary size-7 color-primary-5">Email Kantor</span>
+                  <span class="data-value size-3">{{ employee.data.officeEmail || '-' }}</span>
+                </div>
+                <div class="data gap-y-6 radius-6">
+                  <span class="data-label font-secondary size-7 color-primary-5">Password Email</span>
+                  <span class="data-value size-3">{{ employee.data.officeEmailPassword || '-' }}</span>
+                </div>
+                <div class="data gap-y-6 radius-6">
+                  <span class="data-label font-secondary size-7 color-primary-5">Mulai Berkerja</span>
+                  <span class="data-value size-3">{{ startDate }}</span>
+                </div>
+                <div class="data gap-y-6 radius-6">
+                  <span class="data-label font-secondary size-7 color-primary-5">Berhenti Kerja</span>
+                  <span class="data-value size-3">{{ endDate }}</span>
                 </div>
               </div>
             </section-panel>
@@ -227,6 +274,14 @@ export default defineComponent({
 </template>
 
 <style lang="scss" scoped>
+.status {
+  &-active {
+    color: rgb(40, 228, 40);
+  }
+  &-nonactive {
+    color: rgb(102, 102, 102);
+  }
+}
 .vdivider {
   height: auto;
   margin: 0;

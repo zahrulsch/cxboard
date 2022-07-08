@@ -35,7 +35,7 @@ export default defineComponent({
     placeBirth: String,
     dateBirth: Number,
     address: String,
-    handphone: Number
+    handphone: String
   },
   emits: ['update:name', 'update:email', 'update:gender', 'update:placeBirth', 'update:dateBirth', 'update:address', 'update:handphone'],
   methods: {
@@ -77,29 +77,29 @@ export default defineComponent({
 
 <template>
   <div class="font-secondary is-flex is-flex-direction-column gap-y-2 px-2">
-    <n-form-item label="Nama" :show-feedback="false" :label-props="{class: 'size-3'}">
+    <n-form-item label="Nama" :show-feedback="false" :label-props="{class: 'size-5 mb-1'}">
       <n-input :status="vname" @focus="validateName" @blur="validateName" :value="name" @update:value="v => $emit('update:name', v)" class="bg-panel-primary" placeholder="Michelle xx"/>
     </n-form-item>
-    <n-form-item label="Email" :show-feedback="false" :label-props="{class: 'size-3'}">
+    <n-form-item label="Email" :show-feedback="false" :label-props="{class: 'size-5 mb-1'}">
       <n-input :status="vemail" @focus="validateEmail" @blur="validateEmail" :value="email" @update:value="v => $emit('update:email', v)" type="text" class="bg-panel-primary" placeholder="michellin@yahoo.com"/>
     </n-form-item>
-    <n-form-item label="No Handphone" :show-feedback="false" :label-props="{class: 'size-3'}">
-      <n-input-number :show-button="false" style="width: 100%;" :value="handphone" @update:value="v => $emit('update:handphone', v)" type="text" class="bg-panel-primary" placeholder="82237320907">
+    <n-form-item label="No Handphone" :show-feedback="false" :label-props="{class: 'size-5 mb-1'}">
+      <n-input :show-button="false" style="width: 100%;" :value="handphone" @update:value="v => $emit('update:handphone', v)" type="text" class="bg-panel-primary" placeholder="82237320907">
         <template #prefix>+62</template>
-      </n-input-number>
+      </n-input>
     </n-form-item>
-    <n-form-item style="width: 100%;" label="Jenis Kelamin" :show-feedback="false" :label-props="{class: 'size-3'}">
+    <n-form-item style="width: 100%;" label="Jenis Kelamin" :show-feedback="false" :label-props="{class: 'size-5 mb-1'}">
       <n-select :value="gender" @update:value="v => $emit('update:gender', v)" :options="genders" placeholder="Pilih Jenis Kelamin"/>
     </n-form-item>
     <div class="is-flex gap-x-4">
-      <n-form-item label="Tempat Lahir" :show-feedback="false" :label-props="{class: 'size-3'}">
+      <n-form-item label="Tempat Lahir" :show-feedback="false" :label-props="{class: 'size-5 mb-1'}">
         <n-input :status="vplace" @focus="validatePlace" @blur="validatePlace" :value="placeBirth" @update:value="v => $emit('update:placeBirth', v)" class="bg-panel-primary" placeholder="California"/>
       </n-form-item>
-      <n-form-item style="flex: 1;" label="Tanggal Lahir" :show-feedback="false" :label-props="{class: 'size-3'}">
+      <n-form-item style="flex: 1;" label="Tanggal Lahir" :show-feedback="false" :label-props="{class: 'size-5 mb-1'}">
         <n-date-picker :status="vdate" @focus="validateDate" @blur="validateDate" format="dd/MM/yyyy" :value="dateBirth" @update:value="v => $emit('update:dateBirth', v)" class="bg-panel-primary" placeholder="Pilih Tanggal Lahir" type="date" clearable/>
       </n-form-item>
     </div>
-    <n-form-item style="flex: 1;" label="Alamat" :show-feedback="false" :label-props="{class: 'size-3'}">
+    <n-form-item style="flex: 1;" label="Alamat" :show-feedback="false" :label-props="{class: 'size-5 mb-1'}">
       <n-input
         :value="address"
         @update:value="v => $emit('update:address', v)"

@@ -6,6 +6,8 @@ import schoolRouter from './schools'
 import teamRouter from './teams'
 import roleRouter from './roles'
 import suggestRouter from './suggests'
+import reportRouter from './reports'
+import activityRouter from './activities'
 
 const router = Router()
 
@@ -15,5 +17,7 @@ router.use('/schools', auth, schoolRouter)
 router.use('/teams', auth, teamRouter)
 router.use('/roles', auth, roleRouter)
 router.use('/suggests', auth, suggestRouter)
+router.use('/reports', auth, reportRouter)
+router.use('/activities', auth, activityRouter)
 
 export default router

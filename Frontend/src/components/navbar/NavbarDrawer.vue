@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { NDrawer, NDrawerContent, NIcon } from 'naive-ui'
+import { NDrawer, NDrawerContent, NIcon, NButton, NDivider } from 'naive-ui'
 import { Home16Regular, DocumentPercent20Regular, PersonInfo16Regular, ShiftsActivity20Filled, PeopleTeam20Regular, Dismiss20Filled } from '@vicons/fluent'
 
 export default defineComponent({
@@ -11,11 +11,19 @@ export default defineComponent({
     NIcon,
     Home16Regular, DocumentPercent20Regular, ShiftsActivity20Filled, PeopleTeam20Regular,
     Dismiss20Filled,
-    PersonInfo16Regular
+    PersonInfo16Regular,
+    NButton,
+    NDivider
   },
   emits: ['on-update:show'],
   props: {
     show: Boolean
+  },
+  methods: {
+    logout: function() {
+      localStorage.clear()
+      window.location.replace('/login')
+    }
   }
 })
 </script>
@@ -60,7 +68,7 @@ export default defineComponent({
             <span>Keuangan</span>
           </div>
         </router-link>
-        <router-link to="/">
+        <router-link to="/activities">
           <div class="nav-link gap-x-5">
             <n-icon>
               <ShiftsActivity20Filled />
@@ -77,6 +85,16 @@ export default defineComponent({
           </div>
         </router-link>
       </div>
+      <n-divider class="mt-1"/>
+      <div class="drawer-bottom">
+        <n-button
+          size="small"
+          type="error"
+          @click="logout"
+        >
+          <span class="font-secondary size-4">Keluar</span>
+        </n-button>
+      </div>
     </n-drawer-content>
   </n-drawer>
 </template>
@@ -89,6 +107,10 @@ export default defineComponent({
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+}
+.drawer-bottom {
+  display: flex;
+  align-items: center;
 }
 .nav {
     &-link {

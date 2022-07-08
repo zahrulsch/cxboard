@@ -8,6 +8,7 @@ import TeamCard from '../components/team/TeamCard.vue';
 import CommonFetchingError from '../components/common/CommonFetchingError.vue'
 import SectionPanel from '../components/layout/SectionPanel.vue';
 import CommonCardLoader from '../components/common/CommonCardLoader.vue';
+import CommonHeader from '../components/common/CommonHeader.vue';
 
 const { data: teams, isLoading, isError } = useCQuery('getTeams', '/teams/list', 'get')
 </script>
@@ -21,7 +22,7 @@ const { data: teams, isLoading, isError } = useCQuery('getTeams', '/teams/list',
     <template v-if="teams">
       <no-team v-if="!teams.data.length"/>
       <section-panel class="mt-3 teams" v-else>
-        <template #title>Daftar Team</template>
+        <common-header class="px-1" font-weight="semibold">Daftar Team</common-header>
         <router-link class="add-button" to="/teams/create">
           <n-button 
             class="pr-1"

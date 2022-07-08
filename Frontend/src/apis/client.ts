@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const client = axios.create({
-  baseURL: 'https://4e58-2001-448a-5040-983b-a138-1199-5427-70e6.ap.ngrok.io/apis'
+  baseURL: 'https://3905-2001-448a-5040-287-588a-9772-e3e1-748.ap.ngrok.io/apis'
 })
 
 let interceptor: number = 1
@@ -9,7 +9,6 @@ let interceptor: number = 1
 if (localStorage.cx_token) {
   setInterceptor({ Authorization: localStorage.cx_token })
 }
-
 
 export function setInterceptor(data: {[key: string]: string}) {
   interceptor = client.interceptors.request.use(config => {

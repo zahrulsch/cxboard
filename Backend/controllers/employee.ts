@@ -85,13 +85,15 @@ export default class EmployeeController {
   
   static async list(req: Request<any, any>, res: Response, next: NextFunction) {
     try {
-      const { name, email, sortBy, sortType, gender } = req.query as {[key: string]: string | undefined}
-
+      const { name, email, sortBy, sortType, gender, teams, roles } = req.query as {[key: string]: any | undefined}
+      
       const filter: Prisma.Enumerable<Prisma.EmployeesWhereInput> = []
 
       if (name) filter.push({ name: { contains: name, mode: 'insensitive' } })
       if (email) filter.push({ email: { equals: email, mode: 'insensitive' } })
       if (gender) filter.push({ gender: { equals: gender as 'MALE'|'FEMALE'|undefined } })
+      if (teams) { if (Array.isArray(teams)) { filter.push({ teams: { some: { teamId: { in: teams.map((t) => +t), }, }, }, }); } if (roles) { if (Array.isArray(roles)) { filter.push({ teams: { some: { roleId: { in: roles.map((r) => +r), }, teamId: { in: teams.map((t: string | number) => +t), }, }, }, }); } } }
+      if (roles) { if (Array.isArray(roles)) { filter.push({ teams: { some: { roleId: { in: roles.map((r) => +r), }, }, }, }); } }
 
       const result = await prisma.employees.findMany({
         where: {
@@ -168,7 +170,7 @@ export default class EmployeeController {
 
   static async edit(req: Request<any, any, Partial<EmployeePayload>>, res: Response, next: NextFunction) {
     try {
-      let { address, dateOfBirth, email, gender, marriageStatus, name, photo, placeOfBirth, schools } = req.body
+      let { address, dateOfBirth, email, gender, marriageStatus, name, photo, placeOfBirth, schools, handphone, endWork, officeEmail, officeEmailPassword, startWork, status } = req.body
       const { id } = req.params
 
       if (photo) {
@@ -179,6 +181,12 @@ export default class EmployeeController {
       await prisma.employees.update({
         where: { id: +id },
         data: { 
+          endWork: endWork ? new Date(endWork) : null, 
+          officeEmail, 
+          officeEmailPassword, 
+          startWork: new Date(startWork||0), 
+          status,
+          handphone,
           address, 
           dateOfBirth: dateOfBirth ? new Date(dateOfBirth) : dateOfBirth, 
           email, 

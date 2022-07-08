@@ -10,11 +10,13 @@ import CommonFetchingError from '../components/common/CommonFetchingError.vue';
 import EmployeeZero from '../components/employee/EmployeeZero.vue';
 import CommonCardLoader from '../components/common/CommonCardLoader.vue';
 import ActivityZero from '../components/activity/ActivityZero.vue';
+import CommonGoogleButtonSign from '../components/common/CommonGoogleButtonSign.vue';
+import CommonHeader from '../components/common/CommonHeader.vue';
 
 export default defineComponent({
   name: 'Dashboard',
   setup: function() {
-    const { data: employees, isLoading, isError } = useCQuery('getEmployees', '/employees/list/', 'get', null)
+    const { data: employees, isLoading, isError } = useCQuery('getEmployees', '/employees/list/', 'get')
     return {
       employees,
       isLoading, 
@@ -32,7 +34,9 @@ export default defineComponent({
     EmployeeZero,
     Layout,
     CommonCardLoader,
-    ActivityZero
+    ActivityZero,
+    CommonGoogleButtonSign,
+    CommonHeader
   }
 })
 </script>
@@ -40,7 +44,7 @@ export default defineComponent({
 <template>
   <layout>
     <div class=" py-2 px-1 is-flex is-flex-direction-column">
-      <h4 class="size-4 mb-3 color-secondary-0 has-text-weight-semibold font-secondary">Daftar Pegawai</h4>
+      <common-header class="mb-3" font-weight="semibold">Daftar Pegawai</common-header>
       <common-fetching-error v-if="!isLoading && isError" />
       <div class="employee-list mb-4" v-if="isLoading">
         <CommonCardLoader  v-for="i in 5" :key="i" :height="100"/>
@@ -49,24 +53,25 @@ export default defineComponent({
         <employee-zero class="zero" v-if="!employees.data.length" />
         <employee-card v-for="employee in employees.data" :key="employee.id" class="is-clickable" @click="$router.push(`/employees/${employee.id}`)" :level="employee.teams.map(t => ({name: t.role}))" :teamcount="employee.teams.map(e => e.name).filter((e, i, s) => s.indexOf(e) === i).length" :image="employee.photo || ''" :name="employee.name"/>
       </div>
-      <n-button
-        v-if="employees?.data.length"
-        type="primary"
-        size="small"
-        class="radius-5 action-button"
-        icon-placement="right"
-        quaternary
-        @click="$router.push('/employees')"
-      >
-        <template #icon>
-          <n-icon>
-            <ArrowCircleRight20Regular />
-          </n-icon>
-        </template>
-        <span class="font-secondary size-5">Selengkapnya</span>
-      </n-button>
+      <router-link to="/employees" class="is-inline-flex">
+        <n-button
+          v-if="employees?.data.length"
+          type="primary"
+          size="small"
+          class="radius-5 action-button"
+          icon-placement="right"
+          quaternary
+        >
+          <template #icon>
+            <n-icon>
+              <ArrowCircleRight20Regular />
+            </n-icon>
+          </template>
+          <span class="font-secondary size-5">Selengkapnya</span>
+        </n-button>
+      </router-link>
       <n-divider />
-      <h4 class="size-4 mb-3 color-secondary-0 has-text-weight-semibold font-secondary">Aktivitas Terakhir</h4>
+      <common-header class="mb-3" font-weight="semibold">Aktivitas Terakhir</common-header>
       <div class="activity-list mb-4">
         <ActivityZero class='zero'/>
         <!-- <ActivityCardGeneral v-for="i in 4" :key="i" /> -->

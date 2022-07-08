@@ -4,7 +4,7 @@ import { computed } from 'vue';
 
 const props = defineProps<{
   startWork?: number
-  endWork?: number
+  endWork?: number | null
   status?: string
   officeEmail?: string
   officeEmailPassword?: string
@@ -68,7 +68,7 @@ const cstatus = computed(() => {
           <n-date-picker 
             style="width: 100%;" 
             placeholder="Pilih tanggal awal"
-            format="dd-MMMM-yyyy"
+            format="dd MMMM yyyy"
             :value="props.startWork"
             @update:value="v => emit('update:startWork', v)"
           />

@@ -22,17 +22,13 @@ export default defineComponent({
   <n-config-provider :theme="darkTheme">
     <n-message-provider :max="2">
       <n-notification-provider placement="bottom">
-        <!-- <n-layout style="height: 100vh;" :native-scrollbar="false"> -->
           <div class="before-container">
             <div class="before-container-layer">
               <router-view v-slot="{ Component }">
-                <!-- <transition name="fade" mode="out-in"> -->
-                  <component :is="Component"/>
-                <!-- </transition> -->
+                <component :is="Component"/>
               </router-view>
             </div>
           </div>
-        <!-- </n-layout> -->
       </n-notification-provider>
     </n-message-provider>
   </n-config-provider>
@@ -48,6 +44,24 @@ export default defineComponent({
 }
 .fade-leave-to {
   opacity: 0;
+}
+.before-container {
+  width: 100%;
+  height: 100vh;
+  overflow-y: auto;
+  background-color:#042407;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  & &-layer {
+    background-color: rgba(12, 12, 12, 0.96);
+    @include res('small') {
+      background-color: rgba(0, 0, 0, 0.98);
+    }
+    @include ua('backdrop-filter', 'blur(5px)');
+    height: auto;
+  }
 }
 </style>
 

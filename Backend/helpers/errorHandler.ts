@@ -30,5 +30,6 @@ export default function errorHandler(e: any, req: Request, res: Response, next: 
   } else {
     errorResponseSender(res, 500, { status: 'Error', message: 'internal server error', code: 500 })
   }
+  // console.log(JSON.stringify(e))
   console.log(e)
 }

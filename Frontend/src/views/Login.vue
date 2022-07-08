@@ -49,10 +49,10 @@ export default defineComponent({
 
 <template>
   <div class="login">
-    <div class="login-panel bg-panel-primary px-4 py-4">
-      <h3 class="text-center has-text-weight-bold is-size-5">CXBoard</h3>
+    <div class="login-panel radius-5 bg-panel-primary px-4 py-4">
+      <h3 class="text-center has-text-weight-bold is-size-5 cxboard">CXBoard</h3>
       <div class="input-panel">
-        <label class="has-text-weight-light size-3 font-secondary">Email Pengguna</label>
+        <label class="has-text-weight-medium color-primary-2 size-3 font-secondary">Email Pengguna</label>
         <n-input 
           :bordered="false"
           placeholder="email@gmail.com"
@@ -61,7 +61,7 @@ export default defineComponent({
         />
       </div>
       <div class="input-panel">
-        <label class="has-text-weight-light size-3 font-secondary">Kata Sandi</label>
+        <label class="has-text-weight-medium color-primary-2 size-3 font-secondary">Kata Sandi</label>
         <n-input 
           :bordered="false"
           placeholder="••••••••"
@@ -97,17 +97,23 @@ export default defineComponent({
   display: flex;
   height: 100vh;
   width: 100%;
-  padding: 1rem;
   align-items: center;
   justify-content: center;
 
+  @include res('small') {
+    padding: 1rem;
+  }
+
   &-panel {
     align-items: center;
+    justify-content: center;
     row-gap: 1em;
     width: 100%;
+    height: 100%;
     @include flexColumn;
     @include res('small') {
       width: 40%;
+      height: auto;
     }
     @include res('large') {
       width: 30%;
@@ -124,7 +130,9 @@ export default defineComponent({
     }
   }
 }
-
+.cxboard {
+  color: #55c09c;
+}
 .input-panel {
   @include flexColumn;
   row-gap: .5em;

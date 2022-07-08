@@ -62,7 +62,7 @@ export default defineComponent({
           <span>Keuangan</span>
         </div>
       </router-link>
-      <router-link to="/">
+      <router-link to="/activities">
         <div class="nav-link gap-x-7">
           <n-icon>
             <ShiftsActivity20Filled />

@@ -59,6 +59,18 @@ const routes: RouteRecordRaw[] = [
     beforeEnter: [ titleChanger, isTokenExist ]
   },
   {
+    path: '/activities/create',
+    meta: { pageTitle: 'Tambahkan Aktivitas' },
+    component: () => import('./views/AddActivity.vue'),
+    beforeEnter: [ titleChanger, isTokenExist ]
+  },
+  {
+    path: '/activities',
+    meta: { pageTitle: 'Semua Aktivitas' },
+    component: () => import('./views/Activity.vue'),
+    beforeEnter: [ titleChanger, isTokenExist ]
+  },
+  {
     path: '/',
     meta: { pageTitle: 'Beranda' },
     component: () => import('./views/Dashboard.vue'),

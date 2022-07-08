@@ -1,3 +1,4 @@
+import { ActivityPayload } from './../stores/addActivityPayload';
 import { EditTeamPayload } from './../stores/editTeamPayload';
 import { CreateTeamPayload } from './../stores/addTeamPayload';
 import axios, { AxiosResponse } from 'axios'
@@ -47,11 +48,11 @@ export interface Mutation {
         schoolId: number
       }[]
       photo?: string
-      handphone?: number
+      handphone?: string
       officeEmail?: string
       officeEmailPassword?: string
       startWork?: number
-      endWork?: number
+      endWork?: number | null
       status?: string
     }
     response: string
@@ -87,6 +88,13 @@ export interface Mutation {
     data: EditTeamPayload
     response: string
     params: number
+  }
+  addactivity: {
+    url: '/activities/create'
+    method: 'POST'
+    data: ActivityPayload
+    response: string
+    params: any
   }
 }
 

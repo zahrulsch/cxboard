@@ -3,6 +3,7 @@ import Layout from '../components/layout/Layout.vue';
 import CommonFetchingError from '../components/common/CommonFetchingError.vue';
 import meeting from '../assets/meeting.png'
 import CommonLoader from '../components/common/CommonLoader.vue';
+import CommonHeader from '../components/common/CommonHeader.vue';
 import { useRoute } from 'vue-router'
 import { useCQuery } from '../apis/customQuery';
 import { NImage, NDivider, NEllipsis } from 'naive-ui'
@@ -25,7 +26,8 @@ const cbgimage = computed(() => {
   <layout>
     <common-fetching-error v-if="isError && !isLoading" class="p-6" style="min-height: 78vh; align-items: center; justify-content: center;"/>
     <common-loader v-if="isLoading"/>
-    <div class="teamdetail gap-y-3 mt-2" v-if="team?.data">
+    <div class="teamdetail gap-y-3 mt-3" v-if="team?.data">
+      <common-header font-weight="semibold">Detail Team - {{team.data.name}}</common-header>
       <div class="details gap-x-3 gap-y-3">
         <div class="details-photo radius-5">
           <div class="details-photo-layer">
@@ -36,7 +38,6 @@ const cbgimage = computed(() => {
         </div>
         <n-divider class="mx-1" style="height: auto" vertical />
         <div class="details-detail gap-y-3">
-          <h4 class="size-2 font-secondary">Data General</h4>
           <div class="detailrow px-2 py-1 radius-5">
             <span class="size-6 font-secondary color-primary-5">Nama Team</span>
             <p class="size-3">{{team.data.name}}</p>
@@ -57,7 +58,7 @@ const cbgimage = computed(() => {
       </div>
       <n-divider class="dvd my-1"/>
       <div class="teammember gap-y-2">
-        <h4 class="size-2 font-secondary">Anggota Team</h4>
+        <common-header font-weight="semibold">Anggota Team</common-header>
         <div class="teammember-list">
           <div v-for="e in team.data.employees" :key="e.id" class="member-list p-2 radius-5">
             <router-link class="link-overlay" :to="`/employees/${e.employee.id}`"></router-link>
