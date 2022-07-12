@@ -33,7 +33,7 @@ const actStore =  useAddActivityPayload()
         <n-divider class="dvd-h my-2"/>
         <n-divider class="dvd-v mx-0" vertical/>
         <div class="right">
-          <activity-photos-edit />
+          <activity-photos-edit v-model:photo="actStore.photo" />
           <activity-add-action class="mt-0" />
         </div>
       </div>
@@ -63,7 +63,7 @@ const actStore =  useAddActivityPayload()
       width: 40%;
       display: flex;
       flex-direction: column;
-      row-gap: var(--space-3);
+      row-gap: var(--space-2);
     }
     & .left {
       flex: 1;

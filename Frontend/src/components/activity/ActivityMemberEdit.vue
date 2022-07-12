@@ -99,7 +99,7 @@ employeesRequester(query)
         <span class="size-5 has-text-weight-medium mt-2">Team</span>
         <div class="is-flex is-flex-direction-column gap-y-3">
           <template v-if="loadTeams">
-            <common-card-loader v-for="i in 5" :key="i" :height="18"/>
+            <common-card-loader v-for="i in 3" :key="i" :height="18"/>
           </template>
           <n-checkbox 
             v-for="s in teamSelections"
@@ -112,7 +112,7 @@ employeesRequester(query)
         <span class="size-5 has-text-weight-medium mt-2">Role Pegawai</span>
         <div class="is-flex is-flex-direction-column gap-y-3">
           <template v-if="loadRoles">
-            <common-card-loader v-for="i in 5" :key="i" :height="18"/>
+            <common-card-loader v-for="i in 3" :key="i" :height="18"/>
           </template>
           <n-checkbox 
             v-for="s in roleSelections"
@@ -135,7 +135,7 @@ employeesRequester(query)
           </div>
         </template>
         <template v-else>
-          <common-card-loader v-for="i in 6" :key="i" :height="30" />
+          <common-card-loader v-for="i in 2" :key="i" :height="30" />
         </template>
       </div>
     </div>

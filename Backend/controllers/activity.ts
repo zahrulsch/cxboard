@@ -35,4 +35,33 @@ export default class ActivityController {
       next(e)
     }
   }
+
+  static async getOne(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params
+      const findOne = await prisma.activities.findFirst({
+        where: { id: +id },
+        include: {
+          employees: {
+            select: {
+              employee: {
+                select: {
+                  name: true,
+                  id: true,
+                  photo: true,
+                }
+              }
+            }
+          }
+        }
+      })
+      if(findOne) {
+        responseSender(res, 200, { data: { ...findOne, employees: findOne.employees.map(e => e.employee) }, });
+      } else {
+        responseSender(res, 200, { data: findOne })
+      }
+    } catch(e) {
+      next(e)
+    }
+  }
 }

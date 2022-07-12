@@ -65,7 +65,7 @@ const cspeed = computed(() => {
 
 <style lang="scss">
 .mloader {
-  background-color: rgba(34, 34, 34, 0.15);
+  background-color: rgba(79, 79, 79, 0.3);
   animation: blink 1s linear infinite;
 }
 @keyframes blink {

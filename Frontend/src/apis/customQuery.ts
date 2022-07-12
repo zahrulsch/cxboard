@@ -156,8 +156,38 @@ export interface Query {
   getActivities: {
     url: '/activities/list'
     method: 'get'
-    response: any[]
+    response: {
+      detail: string
+      endDate: string | null
+      id: number
+      name: string
+      photo: string | null
+      startDate: string | null
+      status: string
+      venue: string      
+    }[]
     params: MaybeRef<any>
+    query: MaybeRef<any>
+  }
+  getActivity: {
+    url: '/activities'
+    method: 'get'
+    response: {
+      detail: string
+      endDate: string | null
+      id: number
+      name: string
+      photo: string | null
+      startDate: string | null
+      status: string
+      venue: string
+      employees: {
+        name: string
+        id: number
+        photo: string | null
+      }[]
+    } | null
+    params: MaybeRef<number>
     query: MaybeRef<any>
   }
 }

@@ -55,9 +55,9 @@ const imageurl = computed(() => {
 }
 .selection {
   transition: 250ms ease;
-  background: rgba(10, 167, 172, 0.05);
+  background: rgba(10, 167, 172, 0.15);
   &:hover {
-    background: rgba(10, 167, 172, 0.0875);
+    background: rgba(10, 167, 172, 0.175);
   }
   &-wrapper {
     position: relative;

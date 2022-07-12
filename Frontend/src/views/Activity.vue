@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { NButton } from 'naive-ui'
 import { useCQuery } from '../apis/customQuery';
+import { computed } from 'vue';
 import Layout from '../components/layout/Layout.vue'
 import ActivitySingleCard from '../components/activity/ActivitySingleCard.vue'
 import ActivityFilter from '../components/activity/ActivityFilter.vue';
-import { computed } from 'vue';
 
 const { data } = useCQuery('getActivities', '/activities/list', 'get')
+
 const activities = computed(() => {
   if (data.value) {
     return data.value.data
@@ -29,10 +30,18 @@ const activities = computed(() => {
           </n-button>
         </router-link>
       </div>
-      <!-- <n-divider class="my-1" /> -->
       <activity-filter />
       <div class="activity-list mt-2">
-        <activity-single-card v-for="i in activities" :key="i" />
+        <activity-single-card 
+          v-for="i in activities" 
+          :key="i.id"
+          :name="i.name"
+          :pic="i.photo"
+          :place="i.venue"
+          :date="i.startDate"
+          :status="i.status"
+          :id="i.id"
+        />
       </div>
     </div>
   </layout>
@@ -63,7 +72,7 @@ const activities = computed(() => {
     grid-template-columns: repeat(4, 1fr);
   }
   @include res('xlarge') {
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(6, 1fr);
   }
 }
 </style>

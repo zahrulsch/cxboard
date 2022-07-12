@@ -67,6 +67,7 @@ const statusoptions = [
         <n-date-picker
           class="font-secondary size-3"
           placeholder="Pilih Tanggal"
+          format="dd MMMM yyyy"
           style="width: 100%;"
           :value="startDate"
           @update:value="v => emits('update:startDate', v)"
@@ -76,6 +77,7 @@ const statusoptions = [
         <n-date-picker
           class="font-secondary size-3"
           placeholder="Pilih Tanggal"
+          format="dd MMMM yyyy"
           style="width: 100%;"
           :value="endDate"
           @update:value="v => emits('update:endDate', v)"
