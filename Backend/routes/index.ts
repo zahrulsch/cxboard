@@ -8,6 +8,7 @@ import roleRouter from './roles'
 import suggestRouter from './suggests'
 import reportRouter from './reports'
 import activityRouter from './activities'
+import participantRouter from './participants'
 
 const router = Router()
 
@@ -19,5 +20,6 @@ router.use('/roles', auth, roleRouter)
 router.use('/suggests', auth, suggestRouter)
 router.use('/reports', auth, reportRouter)
 router.use('/activities', auth, activityRouter)
+router.use('/participants', auth, participantRouter)
 
 export default router

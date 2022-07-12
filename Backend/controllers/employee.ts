@@ -239,27 +239,7 @@ export default class EmployeeController {
     try {
       const { id } = req.params
 
-      const findOne = await prisma.employees.findFirst({
-        where: { id: +id },
-        include: {
-          schools: {
-            select: {
-              graduateYear: true,
-              schools: {
-                select: { name: true, id: true, level: true },
-              },
-              id: true
-            }
-          },
-          roles: true,
-          teams: {
-            include: {
-              teams: { select: { name: true, id: true } },
-              role: { select: { name: true, id: true } }
-            }
-          }
-        }
-      })
+      const findOne = await prisma.employees.findFirst({ where: { id: +id }, include: { schools: { select: { graduateYear: true, schools: { select: { name: true, id: true, level: true }, }, id: true, }, }, roles: true, teams: { include: { teams: { select: { name: true, id: true } }, role: { select: { name: true, id: true } }, }, }, activities: { select: { activity: { select: { name: true, id: true, photo: true, startDate: true, endDate: true, status: true, venue: true, }, }, }, }, }, });
 
       if (!findOne) responseSender(res, 404, { data: findOne });
       else
@@ -284,6 +264,7 @@ export default class EmployeeController {
                 teamId: teams.id,
               };
             }),
+            activities: findOne.activities.map(a => a.activity)
           },
         });
     } catch (e) {
