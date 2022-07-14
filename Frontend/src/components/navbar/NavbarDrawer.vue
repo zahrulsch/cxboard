@@ -37,7 +37,7 @@ export default defineComponent({
         </n-icon>
       </div>
       <div class="p-2 font-secondary mb-2 is-flex gap-x-2 is-align-items-center">
-        <div class="avatar-image radius-4"></div>
+        <div class="avatar-image"></div>
         <div>
           <p class="size-2 color-primary">Muhammad Zahrul</p>
           <p class="size-4 color-secondary-2 has-text-weight-light">mantracode@yahoo.com</p>

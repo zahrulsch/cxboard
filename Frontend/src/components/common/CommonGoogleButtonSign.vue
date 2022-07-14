@@ -58,7 +58,7 @@ onMounted(() => {
 
 <template>
   <div v-bind="attributes">
-    <div :class="props.buttonClass || 'g-pick-btn radius-7 px-2 py-1'" @click="onRequest">
+    <div :class="props.buttonClass || 'g-pick-btn px-2 py-1'" @click="onRequest">
       <img width="14" height="14" :src="googleImage" alt="google-logo"/>
       <span class="size-4 font-secondary has-text-weight-medium">{{props.text || "Gunakan akun Google saya"}}</span>
     </div>

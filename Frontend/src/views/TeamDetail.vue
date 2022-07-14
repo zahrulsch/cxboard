@@ -29,7 +29,7 @@ const cbgimage = computed(() => {
     <div class="teamdetail gap-y-3 mt-3" v-if="team?.data">
       <common-header font-weight="semibold">Detail Team - {{team.data.name}}</common-header>
       <div class="details gap-x-3 gap-y-3">
-        <div class="details-photo radius-5">
+        <div class="details-photo">
           <div class="details-photo-layer">
             <n-image 
               :src="team.data.image || meeting"
@@ -38,19 +38,19 @@ const cbgimage = computed(() => {
         </div>
         <n-divider class="mx-1" style="height: auto" vertical />
         <div class="details-detail gap-y-3">
-          <div class="detailrow px-2 py-1 radius-5">
+          <div class="detailrow px-2 py-1">
             <span class="size-6 font-secondary color-primary-5">Nama Team</span>
             <p class="size-3">{{team.data.name}}</p>
           </div>
-          <div class="detailrow px-2 py-1 radius-5">
+          <div class="detailrow px-2 py-1">
             <span class="size-6 font-secondary color-primary-5">Kode Team</span>
             <p class="size-3">{{team.data.code}}</p>
           </div>
-          <div class="detailrow px-2 py-1 radius-5">
+          <div class="detailrow px-2 py-1">
             <span class="size-6 font-secondary color-primary-5">Jumlah Anggota</span>
             <p class="size-3">{{team.data.employees?.length}}</p>
           </div>
-          <div class="detailrow px-2 py-1 radius-5">
+          <div class="detailrow px-2 py-1">
             <span class="size-6 font-secondary color-primary-5">Alamat</span>
             <p class="size-3">{{team.data.address}}</p>
           </div>
@@ -60,10 +60,10 @@ const cbgimage = computed(() => {
       <div class="teammember gap-y-2">
         <common-header font-weight="semibold">Anggota Team</common-header>
         <div class="teammember-list">
-          <div v-for="e in team.data.employees" :key="e.id" class="member-list p-2 radius-5">
+          <div v-for="e in team.data.employees" :key="e.id" class="member-list p-2">
             <router-link class="link-overlay" :to="`/employees/${e.employee.id}`"></router-link>
             <div 
-              class="image radius-5"
+              class="image"
               :style="{
                 backgroundImage: e.employee.photo ? `url('${e.employee.photo}')` : `url('/src/assets/nophotos.png')`
               }"
@@ -72,7 +72,7 @@ const cbgimage = computed(() => {
             <n-ellipsis class="mt-1">
               <span class="font-secondary has-text-weight-medium size-3">{{e.employee.name}}</span>
             </n-ellipsis>
-            <span :class="[kebab(e.role.name), 'role font-secondary mt-1 px-1 radius-7 size-5']">{{e.role.name}}</span>
+            <span :class="[kebab(e.role.name), 'role font-secondary mt-1 px-1 size-5']">{{e.role.name}}</span>
           </div>
         </div>
       </div>

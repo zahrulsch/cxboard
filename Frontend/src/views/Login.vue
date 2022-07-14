@@ -4,6 +4,7 @@ import { NInput, NButton, NIcon, useMessage } from 'naive-ui'
 import { ArrowCircleRight16Regular } from '@vicons/fluent'
 import { useCMutation } from '../apis/customMutation'
 import { setInterceptor } from '../apis/client'
+import { capitalized } from '../helpers/capitalized'
 
 export default defineComponent({
   name: 'Login',
@@ -36,7 +37,7 @@ export default defineComponent({
         },
         onError: e => {
           if (typeof e.message === 'string') {
-            this.notif.error(e.message)
+            this.notif.error(capitalized(e.message))
           } else {
             this.notif.error('unpredictable error!')
           }
@@ -49,7 +50,7 @@ export default defineComponent({
 
 <template>
   <div class="login">
-    <div class="login-panel radius-5 bg-panel-primary px-4 py-4">
+    <div class="login-panel bg-panel-primary px-4 py-4">
       <h3 class="text-center has-text-weight-bold is-size-5 cxboard">CXBoard</h3>
       <div class="input-panel">
         <label class="has-text-weight-medium color-primary-2 size-3 font-secondary">Email Pengguna</label>
@@ -58,6 +59,7 @@ export default defineComponent({
           placeholder="email@gmail.com"
           class="size-3 font-secondary"
           v-model:value="email"
+          @keypress.enter="login"
         />
       </div>
       <div class="input-panel">
@@ -69,6 +71,7 @@ export default defineComponent({
           type="password"
           v-model:value="password"
           show-password-on="click"
+          @keypress.enter="login"
         />
       </div>
       <n-button
@@ -77,12 +80,7 @@ export default defineComponent({
         :loading="isLoading"
         @click="login"
       >
-        <template #icon>
-          <n-icon>
-            <arrow-circle-right16-regular />
-          </n-icon>          
-        </template>
-        <span class="font-secondary size-4">Masuk</span>
+        <span class="font-secondary size-4 has-text-weight-semibold">Masuk</span>
       </n-button>
     </div>
   </div>

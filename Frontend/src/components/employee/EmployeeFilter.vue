@@ -26,7 +26,7 @@ export default defineComponent({
     <n-input 
       size="medium"
       placeholder="Temukan sesuatu..."
-      class="bg-panel-primary radius-4 size-4 has-text-weight-light"
+      class="bg-panel-primary size-4 has-text-weight-light"
       :bordered="!1"
     >
       <template #prefix>
@@ -35,14 +35,14 @@ export default defineComponent({
         </n-icon>
       </template>
     </n-input>
-    <button @click="showDrawer = !showDrawer" class="bg-panel-primary radius-4 filter-button">
+    <button @click="showDrawer = !showDrawer" class="bg-panel-primary filter-button">
       <n-icon>
         <Filter28Filled class="size-2"/>
       </n-icon>
     </button>
     <n-button
       size="medium"
-      class="radius-4 size-4"
+      class="size-4"
       :bordered="!1"
       type="primary"
       secondary

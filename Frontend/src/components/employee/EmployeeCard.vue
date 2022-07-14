@@ -39,8 +39,8 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="bg-panel-primary is-flex gap-x-3 radius-4 emps p-2">
-    <div class="emps-image radius-4">
+  <div class="bg-panel-primary is-flex gap-x-3 emps p-2">
+    <div class="emps-image">
     </div>
     <div style="max-width: 70%;" class="is-flex is-flex-direction-column is-justify-content-space-around">
       <n-ellipsis >

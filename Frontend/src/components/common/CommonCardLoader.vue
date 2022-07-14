@@ -58,7 +58,7 @@ const cspeed = computed(() => {
       height: cheight,
       animationDuration: cspeed
     }"
-    class="mloader radius-7"
+    class="mloader"
   >
   </div>
 </template>

@@ -14,15 +14,14 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="bg-panel-primary act is-flex is-flex-direction-column gap-y-6 radius-3 p-2">
-    <p class="size-4 radius-5 act-badge font-secondary">
+  <div class="bg-panel-primary act is-flex is-flex-direction-column gap-y-6 p-2">
+    <p class="size-4 act-badge font-secondary">
       <n-icon>
         <CheckmarkStarburst16Filled />
       </n-icon>
       <span class="ml-1 has-text-weight-medium">Sukses</span>
     </p>
     <n-image
-      class="radius-4"
       src="https://ik.imagekit.io/q8c93uv11zf/Liburan_Korea_Selatan_2022-Tue_Feb_01_2022_02_40_14_GMT_0700__Indochina_Time_-korea_selatan--pdc-images_l7MTgtWGQ?ik-sdk-version=javascript-1.4.3&updatedAt=1643725116606"
     />
     <h4 class="size-3 color-primary-1">Liburan Musim 2022 Destinasi Korea Selatan</h4>

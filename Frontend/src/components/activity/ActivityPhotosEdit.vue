@@ -43,7 +43,7 @@ const onRemovePhoto = () => {
 
 <template>
   <n-form-item label="Foto" :show-feedback="false" :label-props="{class: 'size-5 mb-1'}">
-    <div v-if="!photo" class="activity-photos-input radius-5">
+    <div v-if="!photo" class="activity-photos-input">
       <div>
         <input 
           type="file" 
@@ -59,7 +59,7 @@ const onRemovePhoto = () => {
         <label class="text-center size-5 color-secondary-2 font-secondary px-4">{{droptext}}</label>
       </div>
     </div>
-    <div class="activity-photos-preview radius-5" v-else>
+    <div class="activity-photos-preview" v-else>
       <div>
         <n-image 
           :src="photo"

@@ -14,8 +14,8 @@ const props = defineProps<TeamCardProp>()
 </script>
 
 <template>
-  <div class="tim-card gap-x-2 p-2 bg-panel-primary radius-5">
-    <div :style="{ backgroundImage: `url('${props.image || 'https://ik.imagekit.io/pv5j1g25r/download-icon-group_people_team_users_icon-1320196240876938595_512_xbk2gytLr.png?ik-sdk-version=javascript-1.4.3&updatedAt=1656044876345'}')` }" class="tim-card-image radius-5">
+  <div class="tim-card gap-x-2 p-2 bg-panel-primary">
+    <div :style="{ backgroundImage: `url('${props.image || 'https://ik.imagekit.io/pv5j1g25r/download-icon-group_people_team_users_icon-1320196240876938595_512_xbk2gytLr.png?ik-sdk-version=javascript-1.4.3&updatedAt=1656044876345'}')` }" class="tim-card-image">
     </div>
     <div class="tim-card-detail gap-y-5">
       <p class="size-3 has-text-weight-medium font-secondary">{{props.name || '-' }}</p>

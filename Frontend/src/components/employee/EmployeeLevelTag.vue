@@ -29,7 +29,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <p class="font-secondary gap-x-7 level-tag-color radius-5">
+  <p class="font-secondary gap-x-7 level-tag-color">
     <span class="size-5 has-text-weight-medium is-capitalized tags-color">{{ level }}</span>
   </p>
 </template>

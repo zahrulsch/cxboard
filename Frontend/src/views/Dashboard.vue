@@ -59,7 +59,7 @@ export default defineComponent({
           v-if="employees?.data.length"
           type="primary"
           size="small"
-          class="radius-5 action-button"
+          class="action-button"
           icon-placement="right"
           secondary
         >
@@ -95,7 +95,7 @@ export default defineComponent({
           icon-placement="right"
           type="primary"
           size="small"
-          class="radius-5 action-button"
+          class="action-button"
           secondary
         >
           <template #icon>

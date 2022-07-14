@@ -64,7 +64,6 @@ export default defineComponent({
           <div class="is-flex gap-x-4">
             <N-button
               size="small"
-              class="radius-4"
               type="success"
             >
               <template #icon>
@@ -76,7 +75,6 @@ export default defineComponent({
             </N-button>
             <N-button
               size="small"
-              class="radius-4"
               secondary
             >
               <template #icon>

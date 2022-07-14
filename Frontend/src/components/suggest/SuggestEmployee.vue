@@ -11,11 +11,11 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div class="employee-suggestions radius-5">
+  <div class="employee-suggestions">
     <template v-if="props.id">
       <router-link class="link" :to="`/employees/${props.id}`" />
     </template>
-    <div class="photo radius-5">
+    <div class="photo">
       <n-image 
         :src="props.photo || user"
         width="50"

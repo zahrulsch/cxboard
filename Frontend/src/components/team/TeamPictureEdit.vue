@@ -64,7 +64,7 @@ onMounted(() => {
   <section-panel>
     <section-panel class="px-1 font-secondary">
       <n-form-item v-if="imageurl" :show-feedback="false" label="Gambar team">
-        <div :style="{width: '100%', backgroundImage: `url(${imageurl})`}" v-if="imageurl" class="radius-5 bg-panel-primary iexist">
+        <div :style="{width: '100%', backgroundImage: `url(${imageurl})`}" v-if="imageurl" class="bg-panel-primary iexist">
           <n-button
             type="error"
             size="small"
@@ -77,12 +77,11 @@ onMounted(() => {
           </n-button>
           <n-image 
             :src="imageurl"
-            class="radius-5"
           />
         </div>
       </n-form-item>
       <n-form-item v-else :show-feedback="false" label="Gambar team">
-        <div class="iunexist radius-5 bg-panel-primary">
+        <div class="iunexist bg-panel-primary">
           <input 
             type="file" 
             accept=".jpeg,.jpg,.png"

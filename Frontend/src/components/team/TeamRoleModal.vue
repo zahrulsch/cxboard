@@ -68,7 +68,7 @@ watch(() => props.show, () => {
     class="cs-modal"
     :transform-origin="'center'"
   >
-    <div class="bg-panel-primary-solid is-flex is-flex-direction-column gap-y-3 p-3 radius-5 size-3">
+    <div class="bg-panel-primary-solid is-flex is-flex-direction-column gap-y-3 p-3 size-3">
       <common-header font-weight="semibold">Tambahkan Role Team</common-header>
       <n-divider class="my-0"/>
       <div class="is-flex is-flex-direction-column gap-y-3">

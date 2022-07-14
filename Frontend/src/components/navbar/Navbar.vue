@@ -27,7 +27,7 @@ const { data, isLoading: loadUser } = useCQuery('getUserInfo', '/users/info', 'g
 </script>
 
 <template>
-  <div class="bg-panel-primary radius-4 container size-2 p-3 px-4 is-flex is-align-items-center is-justify-content-space-between app-nav">
+  <div class="bg-panel-primary container size-2 p-3 px-4 is-flex is-align-items-center is-justify-content-space-between app-nav">
     <NavbarDrawer style="background-color: var(--bg-primary-solid); width: 80%;" :show="showDrawer" @on-update:show="v => showDrawer = v"/>
     <n-icon class="is-clickable" @click="$router.back()" id="back" size="18" v-if="$route.path !== '/'">
       <ArrowCircleLeft16Regular />

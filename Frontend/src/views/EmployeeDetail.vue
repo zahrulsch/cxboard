@@ -125,14 +125,14 @@ export default defineComponent({
         <common-header :font-weight="'semibold'">Data Pegawai - {{ employee?.data?.name }}</common-header>
         <div class="dpanel mt-1">
           <div class="left">
-            <div class="bg-panel-primary radius-5 is-flex is-align-items-center is-justify-content-center" v-if="employee.data">
+            <div class="bg-panel-primary is-flex is-align-items-center is-justify-content-center" v-if="employee.data">
               <img v-if="!employee.data.photo" src="https://ik.imagekit.io/pv5j1g25r/download-icon-group_people_team_users_icon-1320196240876938595_512_xbk2gytLr.png?ik-sdk-version=javascript-1.4.3&updatedAt=1656044876345"/>
               <img v-else :src="employee.data.photo"/>
             </div>
             <div class="left-secondary gap-y-4">
               <n-divider class="my-1"/>
               <h4 class="size-2 color-primary-0 font-secondary has-text-weight-semibold">Peran</h4>
-              <div v-if="employee.data?.teams.length" v-for="(t, i) in employee.data?.teams" class="bg-panel-primary p-2 radius-5 drow" :key="i">
+              <div v-if="employee.data?.teams.length" v-for="(t, i) in employee.data?.teams" class="bg-panel-primary p-2 drow" :key="i">
                 <div class="is-flex is-align-items-start gap-x-7">
                   <n-icon
                     :class="kebab('c ' + t.role)"
@@ -142,7 +142,7 @@ export default defineComponent({
 
                 </div>
               </div>
-              <div class="px-2 py-1 bg-panel-primary radius-5" v-else>
+              <div class="px-2 py-1 bg-panel-primary" v-else>
                 <span class="size-4 color-primary-5 has-text-weight-light"> Belum ada peran di team manapun</span>
               </div>
             </div>
@@ -150,7 +150,7 @@ export default defineComponent({
             <section-panel>
               <template #title>Riwayat Pendidikan</template>
               <div v-if="employee?.data" class="is-flex is-flex-direction-column gap-y-3">
-                <EmployeeSchoolLevel v-if="employee.data.schools.length" class="bg-panel-primary radius-6" v-for="sc in emps" :key="sc.id" :name="sc.name" :graduate-year="sc.graduateYear" :level="sc.level"/>
+                <EmployeeSchoolLevel v-if="employee.data.schools.length" class="bg-panel-primary" v-for="sc in emps" :key="sc.id" :name="sc.name" :graduate-year="sc.graduateYear" :level="sc.level"/>
                 <div class="no-edu gap-y-4" v-else>
                   <n-icon class="color-primary-6" size="25">
                     <QuestionCircle20Regular />
@@ -179,32 +179,32 @@ export default defineComponent({
                 <span class="font-secondary size-4">Ubah Data</span>
               </n-button>
               <div v-if="employee?.data" class="is-flex is-flex-direction-column gap-y-3">
-                <div class="data gap-y-6 radius-6">
-                  <span class="data-label font-secondary size-7 color-primary-5">Nama lengkap</span>
+                <div class="data gap-y-6">
+                  <span class="data-label font-secondary size-6 color-primary-5">Nama lengkap</span>
                   <span class="data-value size-3">{{employee.data.name}}</span>
                 </div>
-                <div class="data gap-y-6 radius-6">
-                  <span class="data-label font-secondary size-7 color-primary-5">Tempat, tanggal lahir</span>
+                <div class="data gap-y-6">
+                  <span class="data-label font-secondary size-6 color-primary-5">Tempat, tanggal lahir</span>
                   <span class="data-value size-3 is-capitalized">{{ employee.data.placeOfBirth }}, {{dateBirth}}</span>
                 </div>
-                <div class="data gap-y-6 radius-6">
-                  <span class="data-label font-secondary size-7 color-primary-5">Status pernikahan</span>
+                <div class="data gap-y-6">
+                  <span class="data-label font-secondary size-6 color-primary-5">Status pernikahan</span>
                   <span class="data-value size-3 is-capitalized">{{ marriageStatus }}</span>
                 </div>
-                <div class="data gap-y-6 radius-6">
-                  <span class="data-label font-secondary size-7 color-primary-5">Gender</span>
+                <div class="data gap-y-6">
+                  <span class="data-label font-secondary size-6 color-primary-5">Gender</span>
                   <span class="data-value size-3">{{ gender }}</span>
                 </div>
-                <div class="data gap-y-6 radius-6">
-                  <span class="data-label font-secondary size-7 color-primary-5">Email</span>
+                <div class="data gap-y-6">
+                  <span class="data-label font-secondary size-6 color-primary-5">Email</span>
                   <span class="data-value size-3">{{ employee.data.email }}</span>
                 </div>
-                <div class="data gap-y-6 radius-6">
-                  <span class="data-label font-secondary size-7 color-primary-5">No. Handphone</span>
+                <div class="data gap-y-6">
+                  <span class="data-label font-secondary size-6 color-primary-5">No. Handphone</span>
                   <span class="data-value size-3">{{ handphone }}</span>
                 </div>
-                <div class="data gap-y-6 radius-6">
-                  <span class="data-label font-secondary size-7 color-primary-5">Alamat</span>
+                <div class="data gap-y-6">
+                  <span class="data-label font-secondary size-6 color-primary-5">Alamat</span>
                   <span class="data-value size-3">{{ employee.data.address||'-' }}</span>
                 </div>
               </div>
@@ -213,8 +213,8 @@ export default defineComponent({
             <section-panel v-if="employee.data">
               <template #title>Data Kantor</template>
               <div class="is-flex is-flex-direction-column gap-y-3">
-                <div class="data gap-y-6 radius-6">
-                  <span class="data-label font-secondary size-7 color-primary-5">Status Kerja</span>
+                <div class="data gap-y-6">
+                  <span class="data-label font-secondary size-6 color-primary-5">Status Kerja</span>
                   <div class="is-flex is-align-items-center gap-x-7">
                     <n-icon>
                       <circle16-filled :class="[`status-${employee.data.status}`, 'size-7']"/>
@@ -222,20 +222,20 @@ export default defineComponent({
                     <span class="data-value size-3 is-capitalized">{{ employee.data.status }}</span>
                   </div>
                 </div>
-                <div class="data gap-y-6 radius-6">
-                  <span class="data-label font-secondary size-7 color-primary-5">Email Kantor</span>
+                <div class="data gap-y-6">
+                  <span class="data-label font-secondary size-6 color-primary-5">Email Kantor</span>
                   <span class="data-value size-3">{{ employee.data.officeEmail || '-' }}</span>
                 </div>
-                <div class="data gap-y-6 radius-6">
-                  <span class="data-label font-secondary size-7 color-primary-5">Password Email</span>
+                <div class="data gap-y-6">
+                  <span class="data-label font-secondary size-6 color-primary-5">Password Email</span>
                   <span class="data-value size-3">{{ employee.data.officeEmailPassword || '-' }}</span>
                 </div>
-                <div class="data gap-y-6 radius-6">
-                  <span class="data-label font-secondary size-7 color-primary-5">Mulai Berkerja</span>
+                <div class="data gap-y-6">
+                  <span class="data-label font-secondary size-6 color-primary-5">Mulai Berkerja</span>
                   <span class="data-value size-3">{{ startDate }}</span>
                 </div>
-                <div class="data gap-y-6 radius-6">
-                  <span class="data-label font-secondary size-7 color-primary-5">Berhenti Kerja</span>
+                <div class="data gap-y-6">
+                  <span class="data-label font-secondary size-6 color-primary-5">Berhenti Kerja</span>
                   <span class="data-value size-3">{{ endDate }}</span>
                 </div>
               </div>
@@ -267,7 +267,7 @@ export default defineComponent({
             <!-- <section-panel>
               <template #title>Pernah Mengkuti Kegiatan</template>
               <div v-if="employee?.data" class="is-flex is-flex-direction-column gap-y-3">
-                <EmployeeSchoolLevel v-if="employee.data.schools.length" class="bg-panel-primary radius-6" v-for="sc in emps" :key="sc.id" :name="sc.name" :graduate-year="sc.graduateYear" :level="sc.level"/>
+                <EmployeeSchoolLevel v-if="employee.data.schools.length" class="bg-panel-primary" v-for="sc in emps" :key="sc.id" :name="sc.name" :graduate-year="sc.graduateYear" :level="sc.level"/>
                 <div class="no-edu gap-y-4" v-else>
                   <n-icon class="color-primary-6" size="25">
                     <QuestionCircle20Regular />

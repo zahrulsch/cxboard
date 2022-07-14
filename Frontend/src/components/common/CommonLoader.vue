@@ -4,7 +4,7 @@
 <template>
   <div class="__loader is-flex gap-y-3 is-flex-direction-column is-align-items-center is-justify-content-center">
     <div class="boxes">
-      <span class="radius-2" v-for="i in 3" :key="i" :style="{ animationDelay: `${i*100}ms` }"></span>
+      <span v-for="i in 3" :key="i" :style="{ animationDelay: `${i*100}ms` }"></span>
     </div>
     <p class="text-loader size-5 color-secondary-0">Sedang mendapatkan data</p>
   </div>

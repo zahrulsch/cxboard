@@ -27,14 +27,13 @@ const imageurl = computed(() => {
   <div class="selection-wrapper">
     <n-popover placement="top-start">
       <template #trigger>
-        <div @click="onclick" :class="[props.checked && 'checked', 'px-3 py-1 radius-5 is-clickable selection']">
+        <div @click="onclick" :class="[props.checked && 'checked', 'px-3 py-1 is-clickable selection']">
           <span class="font-secondary size-4 has-text-weight-medium color-primary-2">{{name}}</span>
         </div>
       </template>
       <div class="is-flex">
         <n-image 
           width="125"
-          class="radius-5"
           preview-disabled
           :src="imageurl"
         />
@@ -47,7 +46,6 @@ const imageurl = computed(() => {
 .n-popover {
   --n-color: #02100c !important;
   padding: 5px !important;
-  border-radius: var(--space-5) !important;
 }
 .checked {
   box-shadow: 0 0 1px 1px rgba(255, 255, 255, 0.5);

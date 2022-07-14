@@ -69,7 +69,7 @@ export default defineComponent({
     <n-form-item label="Photo Karyawan" :show-feedback="false" :label-props="{class: 'size-5 font-primary'}">
       <div v-if="!imageUrl" class="upload">
         <div>
-          <label for="pic" id="label-pic" class="radius-7">
+          <label for="pic" id="label-pic">
             <n-icon size="30" class="color-secondary-2">
               <Image20Regular />
             </n-icon>
@@ -78,7 +78,7 @@ export default defineComponent({
           <input @change="change" @drop="drop" @dragover.prevent="dropText = 'Lepaskan file'" @dragleave.prevent="dropText = 'Drop file disini / Klik untuk memilih foto'" id="pic" type="file" accept=".png,.jpeg" />
         </div>
       </div>
-      <div class="upload-preview radius-7" v-else>
+      <div class="upload-preview" v-else>
         <n-icon
           class="is-clickable has-text-danger upload-preview-eraser"
           @click="erase"
@@ -88,7 +88,7 @@ export default defineComponent({
         </n-icon>
         <n-image 
           :src="imageUrl"
-          class="upload-preview-image radius-6"
+          class="upload-preview-image"
         />
       </div>
     </n-form-item>

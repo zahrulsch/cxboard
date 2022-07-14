@@ -28,8 +28,8 @@ const cdate = computed(() => {
 </script>
 
 <template>
-  <div class="activity-item radius-5">
-    <span class="status px-2 py-1 size-5 radius-5">{{ props.status }}</span>
+  <div class="activity-item">
+    <span class="status px-2 py-1 size-5">{{ props.status }}</span>
     <div class="activity-item-info p-2">
       <router-link :to="`/activities/${props.id}`" class="is-inline-flex color-primary-0">
         <n-ellipsis>
@@ -88,6 +88,7 @@ const cdate = computed(() => {
   background-size: cover;
   background-color: rgb(18, 18, 18);
   cursor: pointer;
+  overflow: hidden;
 
   & > .status {
     position: absolute;

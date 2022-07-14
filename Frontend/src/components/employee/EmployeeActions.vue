@@ -61,7 +61,6 @@ export default defineComponent({
       :bordered="!1"
       type="primary"
       size="small"
-      class="radius-7"
       @click="createNew"
       :loading="isLoading"
     >

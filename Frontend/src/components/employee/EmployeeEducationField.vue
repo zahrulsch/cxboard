@@ -111,12 +111,12 @@ export default defineComponent({
         :value="schools?.[index].name" 
         @update:value="updateName" 
         size="medium" 
-        class="ed-row-name radius-4" 
+        class="ed-row-name" 
         placeholder="SMA Negeri 1 Blitar" 
         :bordered="!1"
       />
       <n-select :options="levelOptions" @update-value="updateLevel" :value="schools?.[index].level" size="medium" class="ed-row-level" placeholder="Level"/>
-      <n-input-number :value="schools?.[index].graduateYear" @update:value="updateYear" size="medium" :show-button="false" class="ed-row-date radius-4" placeholder="Tahun Lulus" :bordered="!1"/>
+      <n-input-number :value="schools?.[index].graduateYear" @update:value="updateYear" size="medium" :show-button="false" class="ed-row-date" placeholder="Tahun Lulus" :bordered="!1"/>
       <n-button
         type="warning"
         :bordered="false"
