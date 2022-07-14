@@ -88,7 +88,6 @@ const cbgimage = computed(() => {
 .teammember {
   display: flex;
   flex-direction: column;
-  min-height: 50vh;
 
   & &-list {
     display: grid;

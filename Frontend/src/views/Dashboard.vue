@@ -4,29 +4,30 @@ import { NDivider, NButton, NIcon } from 'naive-ui';
 import { ArrowCircleRight20Regular } from '@vicons/fluent'
 import { useCQuery } from '../apis/customQuery';
 import EmployeeCard from '../components/employee/EmployeeCard.vue';
-import ActivityCardGeneral from '../components/activity/ActivityCardGeneral.vue';
 import Layout from '../components/layout/Layout.vue'
 import CommonFetchingError from '../components/common/CommonFetchingError.vue';
 import EmployeeZero from '../components/employee/EmployeeZero.vue';
 import CommonCardLoader from '../components/common/CommonCardLoader.vue';
 import ActivityZero from '../components/activity/ActivityZero.vue';
-import CommonGoogleButtonSign from '../components/common/CommonGoogleButtonSign.vue';
 import CommonHeader from '../components/common/CommonHeader.vue';
+import ActivitySingleCard from '../components/activity/ActivitySingleCard.vue';
 
 export default defineComponent({
   name: 'Dashboard',
   setup: function() {
     const { data: employees, isLoading, isError } = useCQuery('getEmployees', '/employees/list/', 'get')
+    const { data: activities, isLoading: loadActivities } = useCQuery('getActivities', '/activities/list', 'get')
     return {
       employees,
       isLoading, 
-      isError
+      isError,
+      activities,
+      loadActivities
     }
   },
   components: {
     EmployeeCard,
     NDivider,
-    ActivityCardGeneral,
     NButton,
     ArrowCircleRight20Regular,
     NIcon,
@@ -35,8 +36,8 @@ export default defineComponent({
     Layout,
     CommonCardLoader,
     ActivityZero,
-    CommonGoogleButtonSign,
-    CommonHeader
+    CommonHeader,
+    ActivitySingleCard
   }
 })
 </script>
@@ -60,7 +61,7 @@ export default defineComponent({
           size="small"
           class="radius-5 action-button"
           icon-placement="right"
-          quaternary
+          secondary
         >
           <template #icon>
             <n-icon>
@@ -73,23 +74,38 @@ export default defineComponent({
       <n-divider />
       <common-header class="mb-3" font-weight="semibold">Aktivitas Terakhir</common-header>
       <div class="activity-list mb-4">
-        <ActivityZero class='zero'/>
-        <!-- <ActivityCardGeneral v-for="i in 4" :key="i" /> -->
-      </div>
-      <!-- <n-button
-        icon-placement="right"
-        type="primary"
-        size="small"
-        class="radius-5 action-button"
-        quaternary
-      >
-        <template #icon>
-          <n-icon>
-            <ArrowCircleRight20Regular />
-          </n-icon>
+        <template v-if="activities?.data.length">
+          <activity-single-card 
+            v-for="k in activities.data"
+            :id="k.id"
+            :name="k.name"
+            :place="k.venue"
+            :pic="k.photo"
+            :date="k.startDate"
+            :status="k.status"
+          />
         </template>
-        <span class="font-secondary size-5">Selengkapnya</span>
-      </n-button> -->
+        <template v-else>
+          <ActivityZero class='zero'/>
+        </template>
+      </div>
+      <router-link to="/activities">
+        <n-button
+          v-if="activities?.data.length"
+          icon-placement="right"
+          type="primary"
+          size="small"
+          class="radius-5 action-button"
+          secondary
+        >
+          <template #icon>
+            <n-icon>
+              <ArrowCircleRight20Regular />
+            </n-icon>
+          </template>
+          <span class="font-secondary size-5">Selengkapnya</span>
+        </n-button>
+      </router-link>
     </div>
   </layout>
 </template>
@@ -98,6 +114,7 @@ export default defineComponent({
 .employee-list {
   .zero {
     grid-column: 1 / span 4;
+    min-height: 400px;
   }
   display: grid;
   width: 100%;
@@ -116,7 +133,8 @@ export default defineComponent({
 }
 .activity-list {
   .zero {
-    grid-column: 1 / span 5;
+    grid-column: 1 / span 8;
+    min-height: 400px;
   }
   display: grid;
   width: 100%;
@@ -131,7 +149,7 @@ export default defineComponent({
     grid-template-columns: repeat(4, 1fr);
   }
   @include res('xlarge') {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(8, 1fr);
   }
 }
 

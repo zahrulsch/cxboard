@@ -1,5 +1,5 @@
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { useCQuery } from '../apis/customQuery'
 import { NDivider, NIcon, NButton } from 'naive-ui'
@@ -12,6 +12,7 @@ import EmployeeSchoolLevel from '../components/employee/EmployeeSchoolLevel.vue'
 import CommonLoader from '../components/common/CommonLoader.vue';
 import SuggestEmployee from '../components/suggest/SuggestEmployee.vue';
 import CommonHeader from '../components/common/CommonHeader.vue';
+import ActivitySingleCard from '../components/activity/ActivitySingleCard.vue';
 
 export default defineComponent({
   name: 'EmployeeDetail',
@@ -27,7 +28,8 @@ export default defineComponent({
     CommonLoader,
     Circle16Filled,
     SuggestEmployee,
-    CommonHeader
+    CommonHeader,
+    ActivitySingleCard
   },
   setup: function() {
     const route = useRoute()
@@ -140,10 +142,23 @@ export default defineComponent({
 
                 </div>
               </div>
-              <div class="p-2 bg-panel-primary radius-5" v-else>
-                <span class="size-3 color-primary-5 has-text-weight-light"> Belum ada peran di team manapun </span>
+              <div class="px-2 py-1 bg-panel-primary radius-5" v-else>
+                <span class="size-4 color-primary-5 has-text-weight-light"> Belum ada peran di team manapun</span>
               </div>
             </div>
+            <n-divider class="my-2" style="margin: 0;"/>
+            <section-panel>
+              <template #title>Riwayat Pendidikan</template>
+              <div v-if="employee?.data" class="is-flex is-flex-direction-column gap-y-3">
+                <EmployeeSchoolLevel v-if="employee.data.schools.length" class="bg-panel-primary radius-6" v-for="sc in emps" :key="sc.id" :name="sc.name" :graduate-year="sc.graduateYear" :level="sc.level"/>
+                <div class="no-edu gap-y-4" v-else>
+                  <n-icon class="color-primary-6" size="25">
+                    <QuestionCircle20Regular />
+                  </n-icon>
+                  <span class="font-secondary size-4 color-primary-5">Belum ada data pendidikan</span>
+                </div>
+              </div>
+            </section-panel>
           </div>
           <n-divider class="vdivider" vertical/>
           <div class="right gap-y-4">
@@ -226,8 +241,31 @@ export default defineComponent({
               </div>
             </section-panel>
             <n-divider class="my-2" style="margin: 0;"/>
-            <section-panel>
-              <template #title>Data Pendidikan</template>
+            <section-panel class="mb-2">
+              <template #title>Pernah Mengikuti Kegiatan</template>
+              <div v-if="employee?.data" class="is-flex is-flex-direction-column gap-y-3">
+                <div class="list-of-activities" v-if="employee.data.activities.length">
+                  <activity-single-card 
+                    v-for="a in employee.data.activities"
+                    :id="a.id"
+                    :name="a.name"
+                    :pic="a.photo"
+                    :date="a.startDate"
+                    :status="a.status"
+                    :place="a.venue"
+                  />
+                </div>
+                <div v-else class="no-edu gap-y-4">
+                  <n-icon class="color-primary-7" size="25">
+                    <QuestionCircle20Regular />
+                  </n-icon>
+                  <span class="font-secondary size-4 color-primary-7">Belum ada aktivitas pada pegawai ini</span>
+                </div>
+              </div>
+            </section-panel>
+            <!-- <n-divider class="my-2" style="margin: 0;"/> -->
+            <!-- <section-panel>
+              <template #title>Pernah Mengkuti Kegiatan</template>
               <div v-if="employee?.data" class="is-flex is-flex-direction-column gap-y-3">
                 <EmployeeSchoolLevel v-if="employee.data.schools.length" class="bg-panel-primary radius-6" v-for="sc in emps" :key="sc.id" :name="sc.name" :graduate-year="sc.graduateYear" :level="sc.level"/>
                 <div class="no-edu gap-y-4" v-else>
@@ -237,7 +275,7 @@ export default defineComponent({
                   <span class="font-secondary size-4 color-primary-5">Belum ada data pendidikan</span>
                 </div>
               </div>
-            </section-panel>
+            </section-panel> -->
             <n-button
               @click="$router.push(`/employees/edit/${employee?.data?.id}`)"
               class="edit-mobile"
@@ -274,6 +312,23 @@ export default defineComponent({
 </template>
 
 <style lang="scss" scoped>
+.list-of-activities {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+  @include res('small') {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @include res('large') {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @include res('xlarge') {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  @include res('xxlarge') {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
 .status {
   &-active {
     color: rgb(40, 228, 40);
@@ -312,7 +367,6 @@ export default defineComponent({
   row-gap: .75rem;
 
   @include res('small') {
-    min-height: 80vh;
     column-gap: 1rem;
   }
   & .left {

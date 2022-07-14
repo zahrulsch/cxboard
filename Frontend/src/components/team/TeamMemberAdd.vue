@@ -26,16 +26,16 @@ const onAddEmployeeTeam = () => {
   <div class="is-flex is-flex-direction-column gap-y-4">
     <team-role-modal v-model:show="openModal" />
     <div class="is-flex is-align-items-center is-justify-content-space-between px-1">
-      <h4 class="font-secondary size-2">Anggota team</h4>
+      <h4 class="font-primary size-5">Anggota team</h4>
       <n-button 
         type="info"
         text
         @click="openModal = !openModal"
       >
         <template #icon>
-          <n-icon><add16-filled class="size-4" /></n-icon>
+          <n-icon size="14"><add16-filled /></n-icon>
         </template>
-        <span class="font-secondary size-4">Tambah Role</span>
+        <span class="font-secondary has-text-weight-medium size-5">Tambah Role</span>
       </n-button>
     </div>
     <div class="add-emp-list gap-y-4">
@@ -51,7 +51,7 @@ const onAddEmployeeTeam = () => {
           <add16-filled class="size-4" />
         </n-icon>
       </template>
-      <span class="font-secondary size-3">Tambah</span>
+      <span class="font-secondary has-text-weight-medium size-4">Tambah</span>
     </n-button>
   </div>
 </template>

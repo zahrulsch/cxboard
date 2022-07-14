@@ -3,6 +3,7 @@ import Layout from "../components/layout/Layout.vue";
 import SectionPanel from "../components/layout/SectionPanel.vue";
 import TeamPictureAdd from "../components/team/TeamPictureAdd.vue";
 import TeamMemberAdd from "../components/team/TeamMemberAdd.vue";
+import CommonHeader from "../components/common/CommonHeader.vue";
 import { NInput, NFormItem, NDivider, NButton, NIcon, useMessage } from "naive-ui";
 import { Save16Filled } from '@vicons/fluent'
 import { useAddTeamPayload } from "../stores/addTeamPayload";
@@ -29,25 +30,25 @@ const onAddTeam = () => {
 
 <template>
   <layout>
-    <section-panel class="mt-2">
-      <template #title>Tambahkan Team</template>
-      <div class="font-secondary team-inputs gap-y-3 px-1 gap-x-3">
+    <section-panel class="mt-3">
+      <common-header font-weight="semibold">Tambahkan Team</common-header>
+      <div class="font-secondary team-inputs gap-y-3 gap-x-3">
         <div class="left gap-y-3">
-          <n-form-item :show-feedback="false" label="Nama team">
+          <n-form-item :show-feedback="false" :label-props="{ class: 'mb-1 font-primary size-5' }" label="Nama team">
             <n-input 
               placeholder="Team 7 - Srengat"
               class="bg-panel-primary"
               v-model:value="team.name"
             />
           </n-form-item>
-          <n-form-item :show-feedback="false" label="Kode team">
+          <n-form-item :show-feedback="false" :label-props="{ class: 'mb-1 font-primary size-5' }" label="Kode team">
             <n-input 
               placeholder="GA"
               class="bg-panel-primary"
               v-model:value="team.code"
             />
           </n-form-item>
-          <n-form-item :show-feedback="false" label="Alamat lengkap team">
+          <n-form-item :show-feedback="false" :label-props="{ class: 'mb-1 font-primary size-5' }" label="Alamat lengkap team">
             <n-input 
               placeholder="Jl. Ki Ageng Coleksono No.16 Dandong, Srengat, Blitar"
               type="textarea"
@@ -59,6 +60,7 @@ const onAddTeam = () => {
           <n-divider class="my-1"/>
           <team-member-add/>
         </div>
+        <n-divider vertical class="mx-1 vertical-divider"/>
         <div class="right gap-y-3">
           <n-divider class="my-1 dvd"/>
           <team-picture-add />
@@ -70,10 +72,10 @@ const onAddTeam = () => {
           >
             <template #icon>
               <n-icon>
-                <save16-filled class="size-4"/>
+                <save16-filled class="size-3"/>
               </n-icon>
             </template> 
-            <span class="font-secondary size-4">Simpan</span>
+            <span class="font-secondary has-text-weight-medium size-4">Simpan</span>
           </n-button>
         </div>
       </div>
@@ -82,13 +84,20 @@ const onAddTeam = () => {
 </template>
 
 <style lang="scss">
+.vertical-divider {
+  display: none !important;
+  @include res("small") {
+    display: inherit !important;
+    height: auto !important;
+  }
+}
 .team-inputs {
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: 100%;
   @include res('small') {
     flex-direction: row;
-    min-height: 80vh;
   }
   & .left {
     display: flex;

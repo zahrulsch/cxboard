@@ -57,31 +57,34 @@ export default defineComponent({
   <layout>
     <section-panel class="mt-4">
       <common-header font-weight="semibold">Level Jabatan</common-header>
-      <div class="level-list" v-if="croles.length">
+      <div class="level-list" v-if="loadRoles">
+        <common-card-loader v-for="i in 2" :key="i" :height="25"/>
+      </div>
+      <div class="level-list" v-if="croles.length && !loadRoles">
         <EmployeeLevelCard :class="`c-${kebab(i.name)}`" v-for="i in croles" :key="i.name" :level="i.name" :count="i.count"/>
       </div>
-      <div class="no-roles" v-else>
-        <n-image class="no-roles-img" width="75" :src="responsibility"/>
-        <span class="size-4 color-primary-5">Belum ada role jabatan yang tersedia</span>
+      <div class="no-roles" v-if="!croles.length && !loadRoles">
+        <n-image class="no-roles-img" width="45" :src="responsibility"/>
+        <span class="size-5 color-primary-6">Belum ada role jabatan</span>
       </div>
     </section-panel>
     <NDivider />
     <section-panel class="mt-4 is-relative">
       <common-header font-weight="semibold">Daftar Pegawai</common-header>
-      <n-button
-        class="radius-3 add-employee"
-        size="small"
-        type="info"
-        @click="$router.push('/add_employee')"
-        quaternary
-      >
-        <template #icon>
-          <n-icon>
-            <Add16Regular class="size-3" />
-          </n-icon>
-        </template>
-        <span class="font-secondary size-5 has-text-weight-medium">Tambah Karyawan</span>
-      </n-button>
+      <router-link to="/add_employee" class="add-employee">
+        <n-button
+          size="small"
+          type="info"
+          secondary
+        >
+          <template #icon>
+            <n-icon>
+              <Add16Regular class="size-3" />
+            </n-icon>
+          </template>
+          <span class="font-secondary size-5 has-text-weight-medium">Tambah Karyawan</span>
+        </n-button>
+      </router-link>
       <div class="is-flex mt-2 is-flex-direction-column gap-y-2">
         <employee-filter />
         <div class="emplist">
@@ -120,7 +123,6 @@ export default defineComponent({
 }
 .emplist {
   display: grid;
-  min-height: 50vh;
   align-items: start;
   grid-template-columns: repeat(1fr, auto);
   align-content: start;
@@ -140,9 +142,9 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 40vh;
   justify-content: center;
   row-gap: .65rem;
+  min-height: 200px;
 
   & &-img {
     filter: brightness(.85);

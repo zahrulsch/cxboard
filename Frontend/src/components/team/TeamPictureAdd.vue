@@ -52,9 +52,9 @@ const onDelete = () => {
 </script>
 
 <template>
-  <div class="is-flex is-flex-direction-column gap-y-4 t-create">
-    <h4 class="size-2">Gambar profil team</h4>
-    <div v-if="!imgurl" class="pic-input-box bg-panel-primary gap-y-4 radius-5 p-3">
+  <div class="is-flex is-flex-direction-column gap-y-3 t-create">
+    <h4 class="size-5 font-primary">Gambar profil team</h4>
+    <div v-if="!imgurl" class="pic-input-box bg-panel-primary gap-y-3 radius-5 p-3">
       <input 
         @dragover="dropText = 'Lepaskan file'" 
         @dragleave="dropText = 'Drop gambar disini / Klik untuk memilih file'"
@@ -66,7 +66,7 @@ const onDelete = () => {
       <n-icon size="28">
         <image20-regular class="color-secondary-1" />
       </n-icon>
-      <span class="font-secondary size-5 color-secondary-0 px-4">{{dropText}}</span>
+      <span class="font-secondary size-5 has-text-weight-medium color-secondary-0 px-4">{{dropText}}</span>
     </div>
     <div class="preview radius-5" v-else>
       <n-button

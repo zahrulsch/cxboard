@@ -20,6 +20,5 @@ import { NImage } from 'naive-ui'
   row-gap: .75rem;
   align-items: center;
   justify-content: center;
-  min-height: 80vh;
 }
 </style>

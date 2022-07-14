@@ -14,8 +14,8 @@ const actStore =  useAddActivityPayload()
 <template>
   <layout>
     <section-panel class="mt-3">
-      <common-header add-outer-class="px-1">Tambahkan Aktivitas</common-header>
-      <div class="activity-inputs px-1">
+      <common-header font-weight="semibold">Tambahkan Aktivitas</common-header>
+      <div class="activity-inputs">
         <div class="left">
           <activity-general-edit 
             v-model:name="actStore.name"

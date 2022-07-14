@@ -20,7 +20,7 @@ export const useAddActivityPayload = defineStore('useAddActivityPayload', {
       endDate: 0,
       startDate: new Date().getTime(),
       photo: '',
-      status: 'ongoing',
+      status: 'direncanakan',
       venue: ''
     }
   }

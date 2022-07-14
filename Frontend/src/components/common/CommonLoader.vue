@@ -12,7 +12,6 @@
 
 <style lang="scss">
 .__loader {
-  min-height: 75vh;
   & .boxes {
     display: flex;
     column-gap: var(--space-5);

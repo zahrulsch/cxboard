@@ -36,13 +36,13 @@ const cdate = computed(() => {
           <p class="size-3 has-text-weight-medium">{{props.name}}</p>
         </n-ellipsis>
       </router-link>
-      <p class="is-flex gap-x-6 is-align-items-center color-primary-1">
+      <p class="is-flex gap-x-6 is-align-items-center color-primary-3">
         <n-icon class="size-3">
           <calendar-ltr16-filled />
         </n-icon>
         <span class="size-5 font-secondary has-text-weight-medium">{{cdate}}</span>
       </p>
-      <p class="is-flex gap-x-6 is-align-items-center color-primary-1">
+      <p class="is-flex gap-x-6 is-align-items-center color-primary-3">
         <n-icon class="size-3">
           <location16-filled />
         </n-icon>
@@ -52,13 +52,13 @@ const cdate = computed(() => {
     <router-link :to="`/activities/${props.id}`" class="is-inline-flex activity-link">
       <div class="activity-item-info-layer p-2">
         <p class="size-3 has-text-weight-medium text-center">{{props.name}}</p>
-        <p class="is-flex gap-x-6 is-align-items-center color-primary-0">
+        <p class="is-flex gap-x-6 is-align-items-center color-primary-3">
           <n-icon class="size-3">
             <calendar-ltr16-filled />
           </n-icon>
           <span class="size-5 font-secondary">{{cdate}}</span>
         </p>
-        <p class="is-flex gap-x-6 is-align-items-center color-primary-0">
+        <p class="is-flex gap-x-6 is-align-items-center color-primary-3">
           <n-icon class="size-3">
             <location16-filled />
           </n-icon>
@@ -93,9 +93,9 @@ const cdate = computed(() => {
     position: absolute;
     top: 0;
     left: 0;
-    background-color: rgb(46, 255, 255);
+    background-color: rgb(238, 202, 42);
     text-transform: capitalize;
-    color: rgb(77, 77, 77);
+    color: rgb(46, 46, 46);
     font-weight: 500;
     margin-top: 5px;
     margin-left: 5px;

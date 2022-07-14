@@ -10,6 +10,7 @@ import EmployeeMarriageEdit from '../components/employee/EmployeeMarriageEdit.vu
 import EmployeePhotoEdit from '../components/employee/EmployeePhotoEdit.vue';
 import EmployeeActions from '../components/employee/EmployeeActions.vue';
 import EmployeeOfficeDataEdit from '../components/employee/EmployeeOfficeDataEdit.vue';
+import CommonHeader from '../components/common/CommonHeader.vue';
 
 export default defineComponent({
   name: 'AddEmployee',
@@ -29,7 +30,8 @@ export default defineComponent({
     EmployeeMarriageEdit,
     EmployeePhotoEdit,
     EmployeeActions,
-    EmployeeOfficeDataEdit
+    EmployeeOfficeDataEdit,
+    CommonHeader
   }
 })
 </script>
@@ -37,7 +39,7 @@ export default defineComponent({
 <template>
   <layout>
     <SectionPanel class="mt-3">
-      <template #title>Tambahkan Pegawai</template>
+      <common-header fontWeight="semibold">Tambahkan Pegawai</common-header>
       <div class="eadd">
         <div class="eadd-left">
           <employee-general-edit
@@ -51,24 +53,24 @@ export default defineComponent({
           />
           <!-- <n-divider class="px-2" style="margin: 0;"/> -->
           <employee-office-data-edit 
-            class="px-2"
             v-model:startWork="addPayload.startWork"
             v-model:endWork="addPayload.endWork"
             v-model:status="addPayload.status"
             v-model:officeEmail="addPayload.officeEmail"
             v-model:officeEmailPassword="addPayload.officeEmailPassword"
           />
-          <n-divider class="px-2" style="margin: 0;"/>
+          <n-divider style="margin: 0;"/>
           <employee-education-edit 
             v-model:schools="addPayload.schools"
           />
-          <n-divider class="px-2" style="margin: 0;"/>
+          <n-divider style="margin: 0;"/>
           <employee-marriage-edit 
             v-model:marriage="addPayload.marriageStatus"
           />
         </div>
+        <n-divider vertical class="mx-0 v-dvd"/>
         <div class="eadd-right">
-          <n-divider class="px-2 dvd" style="margin: 0;"/>
+          <n-divider class="dvd" style="margin: 0;"/>
           <employee-photo-edit />
           <employee-actions class="mt-2" />
         </div>
@@ -78,6 +80,13 @@ export default defineComponent({
 </template>
 
 <style lang="scss" scoped>
+.v-dvd {
+  height: auto;
+  display: none;
+  @include res('small') {
+    display: inherit;
+  }
+}
 .eadd {
   display: flex;
   flex-direction: column;
@@ -86,7 +95,6 @@ export default defineComponent({
 
   @include res('small') {
     flex-direction: row;
-    min-height: 80vh;
     column-gap: 1em;
   }
 
@@ -95,7 +103,19 @@ export default defineComponent({
     flex-direction: column;
     row-gap: 1em;
     @include res('small') {
+      width: 60%;
+    }
+    @include res('medium') {
+      width: 62%;
+    }
+    @include res('large') {
       width: 65%;
+    }
+    @include res('xlarge') {
+      width: 70%;
+    }
+    @include res('xxlarge') {
+      width: 72%;
     }
   }
 

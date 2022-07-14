@@ -10,9 +10,10 @@ import { Add16Filled } from '@vicons/fluent'
       class="noact-image"
       :src="noact"
       width="75"
+      preview-disabled
     />
-    <span class="size-5 color-primary-4 has-text-weight-light">Belum ada aktivitas apapun</span>
-    <router-link to="/">
+    <span class="size-5 color-primary-6 has-text-weight-light">Belum ada aktivitas apapun</span>
+    <router-link to="/activities/create">
       <n-button
         text
         type="success"
@@ -29,12 +30,11 @@ import { Add16Filled } from '@vicons/fluent'
 <style lang="scss">
 .noact {
   display: flex;
-  min-height: 300px;
   justify-content: center;
   flex-direction: column;
   align-items: center;
   &-image {
-    filter: saturate(.7)
+    filter: saturate(.65)
   }
 }
 </style>

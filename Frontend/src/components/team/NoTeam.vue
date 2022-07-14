@@ -29,7 +29,6 @@ import { PeopleTeam28Filled, Add16Filled } from '@vicons/fluent'
   align-items: center;
   justify-content: center;
   row-gap: .4rem;
-  min-height: 75vh;
   &-link {
     color: rgb(184, 34, 79);
     align-content: center;

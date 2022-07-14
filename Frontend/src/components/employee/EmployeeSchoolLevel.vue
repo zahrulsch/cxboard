@@ -14,8 +14,8 @@ export default defineComponent({
 <template>
   <div class="educard px-2 gap-x-5 py-2">
     <span :class="[level, 'level is-uppercase size-7 font-secondary']">{{ level }}</span>
-    <p class="size-3 is-uppercase">{{ name }}</p>
-    <span class="size-6 color-primary-6 font-secondary has-text-weight-bold">({{ graduateYear }})</span>
+    <p class="size-4 is-uppercase">{{ name }}</p>
+    <span class="size-7 color-primary-6 font-secondary has-text-weight-bold">({{ graduateYear }})</span>
   </div>
 </template>
 

@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Employees" ALTER COLUMN "handphone" DROP NOT NULL,
+ALTER COLUMN "handphone" SET DEFAULT E'0',
+ALTER COLUMN "handphone" SET DATA TYPE TEXT;

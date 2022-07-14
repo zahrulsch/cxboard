@@ -39,11 +39,13 @@ export interface Query {
       roles: any[];
       teams: { name: string; role: string }[];
     }[];
-    params: MaybeRef<number|null> | null;
-    query: MaybeRef<{
-      name?: string
-      gender?: 'MALE' | 'FEMALE'
-    }> | any;
+    params: MaybeRef<number | null> | null;
+    query:
+      | MaybeRef<{
+          name?: string;
+          gender?: "MALE" | "FEMALE";
+        }>
+      | any;
   };
   getEmployee: {
     url: "/employees";
@@ -75,6 +77,15 @@ export interface Query {
       }[];
       roles: { name: string; id: number }[];
       teams: { role: string; roleId: number; team: string; teamId: number }[];
+      activities: {
+        id: number;
+        name: string;
+        photo: string | null;
+        startDate: string;
+        endDate: string | null;
+        venue: string;
+        status: string;
+      }[];
     } | null;
     params: MaybeRef<number>;
     query: MaybeRef<any>;
@@ -154,42 +165,53 @@ export interface Query {
     query: MaybeRef<any>;
   };
   getActivities: {
-    url: '/activities/list'
-    method: 'get'
+    url: "/activities/list";
+    method: "get";
     response: {
-      detail: string
-      endDate: string | null
-      id: number
-      name: string
-      photo: string | null
-      startDate: string | null
-      status: string
-      venue: string      
-    }[]
-    params: MaybeRef<any>
-    query: MaybeRef<any>
-  }
+      detail: string;
+      endDate: string | null;
+      id: number;
+      name: string;
+      photo: string | null;
+      startDate: string | null;
+      status: string;
+      venue: string;
+    }[];
+    params: MaybeRef<any>;
+    query: MaybeRef<any>;
+  };
   getActivity: {
-    url: '/activities'
-    method: 'get'
+    url: "/activities";
+    method: "get";
     response: {
-      detail: string
-      endDate: string | null
-      id: number
-      name: string
-      photo: string | null
-      startDate: string | null
-      status: string
-      venue: string
+      detail: string;
+      endDate: string | null;
+      id: number;
+      name: string;
+      photo: string | null;
+      startDate: string | null;
+      status: string;
+      venue: string;
       employees: {
-        name: string
-        id: number
-        photo: string | null
-      }[]
-    } | null
-    params: MaybeRef<number>
-    query: MaybeRef<any>
-  }
+        name: string;
+        id: number;
+        photo: string | null;
+      }[];
+    } | null;
+    params: MaybeRef<number>;
+    query: MaybeRef<any>;
+  };
+  getParticipants: {
+    url: "/participants/activities";
+    method: "get";
+    response: {
+      id: number;
+      name: string;
+      photo: string | null;
+    }[];
+    params: MaybeRef<any | any[]>;
+    query: MaybeRef<any | any[]>;
+  };
 }
 
 type QueryOptions<T> = UseQueryOptions<T, ErrorResponse>

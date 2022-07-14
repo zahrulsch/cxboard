@@ -65,18 +65,20 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="font-secondary is-flex is-flex-direction-column gap-y-4 px-2">
-    <n-form-item label="Photo Karyawan" :show-feedback="false" :label-props="{class: 'size-3'}">
+  <div class="font-secondary is-flex is-flex-direction-column gap-y-4">
+    <n-form-item label="Photo Karyawan" :show-feedback="false" :label-props="{class: 'size-5 font-primary'}">
       <div v-if="!imageUrl" class="upload">
-        <label for="pic" id="label-pic" class="radius-4">
-          <n-icon size="40" class="color-secondary-0">
-            <Image20Regular />
-          </n-icon>
-          <span class="font-secondary size-5 has-text-weight-light color-secondary-0">{{dropText}}</span>
-        </label>
-        <input @change="change" @drop="drop" @dragover.prevent="dropText = 'Lepaskan file'" @dragleave.prevent="dropText = 'Drop file disini / Klik untuk memilih foto'" id="pic" type="file" accept=".png,.jpeg" />
+        <div>
+          <label for="pic" id="label-pic" class="radius-7">
+            <n-icon size="30" class="color-secondary-2">
+              <Image20Regular />
+            </n-icon>
+            <span class="font-secondary text-center px-5 size-5 has-text-weight-normal color-secondary-0">{{dropText}}</span>
+          </label>
+          <input @change="change" @drop="drop" @dragover.prevent="dropText = 'Lepaskan file'" @dragleave.prevent="dropText = 'Drop file disini / Klik untuk memilih foto'" id="pic" type="file" accept=".png,.jpeg" />
+        </div>
       </div>
-      <div class="upload-preview radius-5" v-else>
+      <div class="upload-preview radius-7" v-else>
         <n-icon
           class="is-clickable has-text-danger upload-preview-eraser"
           @click="erase"
@@ -86,7 +88,7 @@ export default defineComponent({
         </n-icon>
         <n-image 
           :src="imageUrl"
-          class="upload-preview-image radius-5"
+          class="upload-preview-image radius-6"
         />
       </div>
     </n-form-item>
@@ -101,21 +103,32 @@ export default defineComponent({
   flex-direction: column;
   background-color: var(--bg-primary);
   width: 100%;
-  height: 300px;
+  height: 100%;
 }
 .upload {
   width: 100%;
   display: flex;
   justify-content: center;
   position: relative;
+  padding-top: 100%;
 
-  & > input {
+  & > div {
     position: absolute;
     width: 100%;
     height: 100%;
-    z-index: 1;
-    opacity: 0;
+    top: 0;
+    left: 0;
+    & > input {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      opacity: 0;
+      top: 0;
+      left: 0;
+    }
   }
+
 
   &-preview {
     position: relative;

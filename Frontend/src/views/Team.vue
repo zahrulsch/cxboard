@@ -57,7 +57,6 @@ const { data: teams, isLoading, isError } = useCQuery('getTeams', '/teams/list',
 
 <style lang="scss" scoped>
 .teams {
-  min-height: 68vh;
   position: relative;
   &-list, &-loader {
     display: grid;

@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { ArrowCircleLeft16Regular, Home16Regular, DocumentPercent20Regular, ShiftsActivity20Filled, PersonInfo16Regular, PeopleTeam20Regular, TextAlignRight16Filled } from '@vicons/fluent'
+import { ArrowCircleLeft16Regular, Home16Filled, DocumentPercent20Filled, ShiftsActivity20Filled, PersonInfo16Filled, PeopleTeam20Filled, TextAlignRight16Filled } from '@vicons/fluent'
 import { NIcon } from 'naive-ui'
 import NavbarDrawer from './NavbarDrawer.vue'
 
@@ -8,13 +8,13 @@ export default defineComponent({
   name: 'Navbar',
   components: {
     NIcon,
-    Home16Regular,
-    DocumentPercent20Regular,
+    Home16Filled,
+    DocumentPercent20Filled,
     ShiftsActivity20Filled, 
-    PeopleTeam20Regular,
+    PeopleTeam20Filled,
     TextAlignRight16Filled,
     NavbarDrawer,
-    PersonInfo16Regular,
+    PersonInfo16Filled,
     ArrowCircleLeft16Regular
   },
   data: () => ({
@@ -38,42 +38,42 @@ export default defineComponent({
       </n-icon>
     </div>
     <div class="font-secondary size-3 is-flex gap-x-1 nav-links">
-      <router-link to="/">
-        <div class="nav-link gap-x-7">
-          <n-icon>
-            <Home16Regular size="16" />
+      <router-link v-slot:[`default`]="{ isActive }" to="/">
+        <div :class="[isActive && 'nav-link-active', 'nav-link gap-x-7 size-4']">
+          <n-icon size="14">
+            <Home16Filled />
           </n-icon>
           <span>Beranda</span>
         </div>
       </router-link>
-      <router-link to="/employees">
-        <div class="nav-link gap-x-7">
-          <n-icon>
-            <PersonInfo16Regular size="16" />
+      <router-link v-slot:[`default`]="{ isActive }" to="/employees">
+        <div :class="[isActive && 'nav-link-active', 'nav-link gap-x-7 size-4']">
+          <n-icon size="14">
+            <PersonInfo16Filled  />
           </n-icon>
           <span>Karyawan</span>
         </div>
       </router-link>
-      <router-link to="/">
-        <div class="nav-link gap-x-7">
-          <n-icon>
-            <DocumentPercent20Regular />
+      <!-- <router-link v-slot:[`default`]="{ isActive }" to="/cash-flow">
+        <div :class="[isActive && 'nav-link-active', 'nav-link gap-x-7 size-4']">
+          <n-icon size="14">
+            <DocumentPercent20Filled />
           </n-icon>
           <span>Keuangan</span>
         </div>
-      </router-link>
-      <router-link to="/activities">
-        <div class="nav-link gap-x-7">
-          <n-icon>
+      </router-link> -->
+      <router-link v-slot:[`default`]="{ isActive }" to="/activities">
+        <div :class="[isActive && 'nav-link-active', 'nav-link gap-x-7 size-4']">
+          <n-icon size="14">
             <ShiftsActivity20Filled />
           </n-icon>
           <span>Aktivitas</span>
         </div>
       </router-link>
-      <router-link to="/teams">
-        <div class="nav-link gap-x-7">
-          <n-icon>
-            <PeopleTeam20Regular />
+      <router-link v-slot:[`default`]="{ isActive }" to="/teams">
+        <div :class="[isActive && 'nav-link-active', 'nav-link gap-x-7 size-4']">
+          <n-icon size="14">
+            <PeopleTeam20Filled />
           </n-icon>
           <span>Teams</span>
         </div>
@@ -94,7 +94,7 @@ export default defineComponent({
   }
   #app-logo {
     color: var(--color-primary-0);
-    font-weight: 800;
+    font-weight: 900;
     color: #55c09c
   }
   .logo {
@@ -110,7 +110,10 @@ export default defineComponent({
       transition: 250ms;
       cursor: pointer;
       &-active {
-        color: var(--color-primary-0);
+        color: #55c09c;
+        &:hover {
+          color: #55cca4 !important;
+        }
       }
       &:hover {
         color: var(--color-primary-0);

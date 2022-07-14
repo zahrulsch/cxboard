@@ -21,16 +21,20 @@ const emits = defineEmits<{
 
 const statusoptions = [
   {
-    value: 'planned',
+    value: 'direncanakan',
     label: 'Direncanakan'
   },
   {
-    value: 'ongoing',
+    value: 'sedang berjalan',
     label: 'Sedang Berjalan'
   },
   {
-    value: 'finish',
+    value: 'selesai',
     label: 'Selesai'
+  },
+  {
+    value: 'pending',
+    label: 'Pending'
   }
 ]
 </script>
@@ -115,11 +119,6 @@ const statusoptions = [
     & > .start, & > .end {
       flex: 1;
     }
-  }
-}
-.n-date-picker {
-  > div {
-    --n-color: var(--bg-primary) !important;
   }
 }
 </style>
