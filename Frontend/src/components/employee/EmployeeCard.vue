@@ -42,9 +42,9 @@ export default defineComponent({
   <div class="bg-panel-primary is-flex gap-x-3 emps p-2">
     <div class="emps-image">
     </div>
-    <div style="max-width: 70%;" class="is-flex is-flex-direction-column is-justify-content-space-around">
+    <div style="max-width: 70%;" class="is-flex is-flex-direction-column">
       <n-ellipsis >
-        <span class="has-text-weight-medium size-3">{{name}}</span>
+        <span class="has-text-weight-medium size-4">{{name}}</span>
       </n-ellipsis>
       <div style="overflow: hidden;" class="is-flex is-align-items-center">
         <span class="font-secondary has-text-weight-semibold color-primary-5 size-5 mr-1">{{ level?.length || 0 }} Roles</span>
