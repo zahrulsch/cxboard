@@ -28,7 +28,6 @@ export default defineComponent({
 .level {
   padding-inline: .35rem;
   padding-block: .15rem;
-  border-radius: .2rem;
   color: black;
   margin: 0 !important;
 }

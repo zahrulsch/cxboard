@@ -47,12 +47,12 @@ export default defineComponent({
         <span class="has-text-weight-medium size-3">{{name}}</span>
       </n-ellipsis>
       <div style="overflow: hidden;" class="is-flex is-align-items-center">
-        <span class="font-secondary color-primary-5 size-5 mr-1">{{ level?.length || 0 }} Roles</span>
+        <span class="font-secondary has-text-weight-semibold color-primary-5 size-5 mr-1">{{ level?.length || 0 }} Roles</span>
         <n-icon class="size-5" v-for="v in level">
           <circle16-filled :class="[ `c-${kebab(v.name)}` ,'size-5']" />
         </n-icon>
       </div>
-      <p class="font-secondary size-5 color-primary-5 gap-x-6">
+      <p class="font-secondary size-5 color-primary-5 has-text-weight-semibold gap-x-6">
         <span>Bergabung di {{teamcount||0}} team</span>
       </p>
     </div>

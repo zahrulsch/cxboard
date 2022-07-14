@@ -29,40 +29,40 @@ const cdate = computed(() => {
 
 <template>
   <div class="activity-item">
-    <span class="status px-2 py-1 size-5">{{ props.status }}</span>
+    <span class="status px-2 py-1 size-6">{{ props.status }}</span>
     <div class="activity-item-info p-2">
       <router-link :to="`/activities/${props.id}`" class="is-inline-flex color-primary-0">
         <n-ellipsis>
-          <p class="size-3 has-text-weight-medium">{{props.name}}</p>
+          <p class="size-4 has-text-weight-medium">{{props.name}}</p>
         </n-ellipsis>
       </router-link>
       <p class="is-flex gap-x-6 is-align-items-center color-primary-3">
-        <n-icon class="size-3">
+        <n-icon class="size-4">
           <calendar-ltr16-filled />
         </n-icon>
-        <span class="size-5 font-secondary has-text-weight-medium">{{cdate}}</span>
+        <span class="size-6 font-secondary has-text-weight-medium">{{cdate}}</span>
       </p>
       <p class="is-flex gap-x-6 is-align-items-center color-primary-3">
-        <n-icon class="size-3">
+        <n-icon class="size-4">
           <location16-filled />
         </n-icon>
-        <span class="size-5 font-secondary has-text-weight-medium">{{props.place}}</span>
+        <span class="size-6 font-secondary has-text-weight-medium">{{props.place}}</span>
       </p>
     </div>
     <router-link :to="`/activities/${props.id}`" class="is-inline-flex activity-link">
       <div class="activity-item-info-layer p-2">
-        <p class="size-3 has-text-weight-medium text-center">{{props.name}}</p>
+        <p class="size-4 has-text-weight-medium text-center">{{props.name}}</p>
         <p class="is-flex gap-x-6 is-align-items-center color-primary-3">
-          <n-icon class="size-3">
+          <n-icon class="size-4">
             <calendar-ltr16-filled />
           </n-icon>
-          <span class="size-5 font-secondary">{{cdate}}</span>
+          <span class="size-6 font-secondary">{{cdate}}</span>
         </p>
         <p class="is-flex gap-x-6 is-align-items-center color-primary-3">
           <n-icon class="size-3">
             <location16-filled />
           </n-icon>
-          <span class="size-5 font-secondary">{{props.place}}</span>
+          <span class="size-6 font-secondary">{{props.place}}</span>
         </p>
       </div>
     </router-link>
@@ -97,7 +97,7 @@ const cdate = computed(() => {
     background-color: rgb(238, 202, 42);
     text-transform: capitalize;
     color: rgb(46, 46, 46);
-    font-weight: 500;
+    font-weight: 600;
     margin-top: 5px;
     margin-left: 5px;
   }
@@ -122,8 +122,7 @@ const cdate = computed(() => {
     top: 0;
     left: 0;
     column-gap: var(--space-6);
-    row-gap: var(--space-6);
-    background: rgba(28, 28, 28, 0.8);
+    background: rgba(17, 17, 17, 0.9);
     align-items: center;
     justify-content: center;
     @include ua('backdrop-filter', 'blur(2.5px)');
@@ -138,8 +137,7 @@ const cdate = computed(() => {
     bottom: 0;
     left: 0;
     column-gap: var(--space-6);
-    row-gap: var(--space-6);
-    background: rgba(35, 35, 35, 0.5);
+    background: rgba(35, 35, 35, 0.8);
     @include ua('backdrop-filter', 'blur(1.5px)');
   }
 }

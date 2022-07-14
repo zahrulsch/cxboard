@@ -52,9 +52,9 @@ const endDate = computed(() => {
 
 <template>
   <layout>
-    <common-loader v-if="isLoading" />
+    <common-loader style="min-height: 700px;" v-if="isLoading" />
     <div v-if="activity && !isLoading" class="single-activity gap-y-3">
-      <common-header font-weight="semibold" class="mt-2 px-1">Detail Aktivitas</common-header>
+      <common-header font-weight="semibold" class="mt-2">Detail Aktivitas</common-header>
       <div class="single-activity-wrapper gap-y-3 gap-x-3">
 
         <div class="left gap-y-3">
@@ -93,8 +93,8 @@ const endDate = computed(() => {
               </template>
               <template v-else>
                 <router-link class="is-flex" v-for="s in participants" :key="s.id" :to="`/employees/${s.id}`">
-                  <div class="link-employee px-3 py-1">
-                    <span class="font-secondary size-3">{{s.name}}</span>
+                  <div class="link-employee px-3 py-2">
+                    <span class="font-secondary has-text-weight-medium size-3">{{s.name}}</span>
                   </div>
                 </router-link>
               </template>
@@ -123,13 +123,13 @@ const endDate = computed(() => {
   color: #c4c4c4;
   transition: 150ms ease;
   outline: 1px solid rgba(46, 46, 46, 0);
-  background-color: rgb(0, 46, 77);
+  background-color: rgb(0, 64, 107);
   display: flex;
   width: 100%;
   &:hover {
-    background-color: rgb(1, 50, 83);
+    background-color: rgb(2, 76, 126);
     color: #dbdbdb;
-    outline: 1px solid rgb(53, 53, 53);
+    outline: 1px solid rgb(134, 134, 134);
   }
 }
 .list-of-participant {

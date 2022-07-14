@@ -181,3 +181,6 @@ body {
 .n-base-selection, .n-input {
   font-size: 13px !important;
 }
+.n-button, .n-input {
+  --n-border-radius: 0px !important;
+}

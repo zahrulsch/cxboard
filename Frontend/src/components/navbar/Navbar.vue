@@ -32,6 +32,10 @@ const { data, isLoading: loadUser } = useCQuery('getUserInfo', '/users/info', 'g
     <n-icon class="is-clickable" @click="$router.back()" id="back" size="18" v-if="$route.path !== '/'">
       <ArrowCircleLeft16Regular />
     </n-icon>
+    <div v-if="$route.path === '/'">
+      <n-icon size="18">
+      </n-icon>
+    </div>
     <h4 class="logo gap-x-3 has-text-weight-bold size-1">
       <router-link id="app-logo" to="/">CXBoard</router-link>
     </h4>
@@ -107,8 +111,8 @@ const { data, isLoading: loadUser } = useCQuery('getUserInfo', '/users/info', 'g
                   <MailAttach16Filled class="color-primary-5" />
                 </n-icon>
                 <common-card-loader v-if="loadUser" :height="12" :speed="'fast'" :width="100"/>
-                <span v-if="!loadUser && data?.data.email" title="Email Pengguna" class="size-5 color-primary-4">{{ data.data.email }}</span>
-                <span v-if="!loadUser && !data" title="Email Pengguna" class="size-5 color-primary-4">Gagal memuat email</span>
+                <span v-if="!loadUser && data?.data.email" title="Email Pengguna" class="size-4 color-primary-4">{{ data.data.email }}</span>
+                <span v-if="!loadUser && !data" title="Email Pengguna" class="size-4 color-primary-4">Gagal memuat email</span>
               </div>
             </div>
           </div>
@@ -124,7 +128,7 @@ const { data, isLoading: loadUser } = useCQuery('getUserInfo', '/users/info', 'g
                   <Settings16Filled />
                 </n-icon>
               </template>
-              <span class="font-secondary size-5 has-text-weight-semibold">Pengaturan akun</span>
+              <span class="font-secondary size-4 has-text-weight-medium">Pengaturan akun</span>
             </n-button>
           </router-link>
           <n-button
@@ -138,7 +142,7 @@ const { data, isLoading: loadUser } = useCQuery('getUserInfo', '/users/info', 'g
                 <SignOut20Filled />
               </n-icon>
             </template>
-            <span class="font-secondary size-5 has-text-weight-semibold">Keluar</span>
+            <span class="font-secondary size-4 has-text-weight-medium">Keluar</span>
           </n-button>
         </div>
       </n-popover>
@@ -199,7 +203,6 @@ const { data, isLoading: loadUser } = useCQuery('getUserInfo', '/users/info', 'g
       position: absolute;
       bottom: -4px;
       left: 50%;
-      border-radius: 5px;
       transform: scale(0);
       transition: 150ms ease-in-out;
       transform-origin: center;

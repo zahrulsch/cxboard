@@ -86,7 +86,6 @@ watch(() => props.show, (v) => {
 <style lang="scss" scoped>
 .user-pwd-dialog {
   background-color: var(--bg-primary-solid);
-  border-radius: var(--space-7);
   padding: var(--space-2);
   display: flex;
   flex-direction: column;

@@ -169,11 +169,9 @@ const editUser = () => {
   width: 100%;
   padding-top: 100%;
   background-color: var(--bg-primary);
-  border-radius: var(--space-6);
   overflow: hidden;
   position: relative;
   & &-input, & &-preview {
-    border-radius: var(--space-6);
     overflow: hidden;
     position: absolute;
     top: 0;
@@ -252,7 +250,6 @@ const editUser = () => {
   &-hero {
     line-height: 1rem;
     font-weight: 500;
-    border-radius: var(--space-7);
     padding-inline: var(--space-2);
     padding-block: var(--space-3);
     background-color: rgb(223, 202, 16);

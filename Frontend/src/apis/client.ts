@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const client = axios.create({
-  baseURL: 'http://localhost:8000/apis'
+  baseURL: 'https://a4a4-2001-448a-5040-463b-f0bc-9a45-8d70-1b98.ap.ngrok.io/apis'
 })
 
 let interceptor: number = 1

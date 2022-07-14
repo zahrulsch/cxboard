@@ -120,7 +120,7 @@ export default defineComponent({
 <template>
   <layout>
     <div class="is-flex is-flex-direction-column py-2 gap-y-3">
-      <common-loader v-if="isLoading || isFetching"/>
+      <common-loader style="min-height: 700px;" v-if="isLoading || isFetching"/>
       <template v-if="employee && !isLoading && !isFetching">
         <common-header :font-weight="'semibold'">Data Pegawai - {{ employee?.data?.name }}</common-header>
         <div class="dpanel mt-1">
@@ -137,9 +137,8 @@ export default defineComponent({
                   <n-icon
                     :class="kebab('c ' + t.role)"
                   ><circle16-filled class="size-7" /></n-icon>
-                  <span class="size-4">{{" " + t.role}}</span>
-                  <span class="size-4">di {{" " + t.team}}</span>
-
+                  <span class="size-5 has-text-weight-medium font-secondary">{{" " + t.role}}</span>
+                  <span class="size-5 has-text-weight-medium font-secondary">di {{" " + t.team}}</span>
                 </div>
               </div>
               <div class="px-2 py-1 bg-panel-primary" v-else>
@@ -180,31 +179,31 @@ export default defineComponent({
               </n-button>
               <div v-if="employee?.data" class="is-flex is-flex-direction-column gap-y-3">
                 <div class="data gap-y-6">
-                  <span class="data-label font-secondary size-6 color-primary-5">Nama lengkap</span>
+                  <span class="data-label font-secondary size-6 color-primary-5 has-text-weight-medium">Nama lengkap</span>
                   <span class="data-value size-3">{{employee.data.name}}</span>
                 </div>
                 <div class="data gap-y-6">
-                  <span class="data-label font-secondary size-6 color-primary-5">Tempat, tanggal lahir</span>
+                  <span class="data-label font-secondary size-6 color-primary-5 has-text-weight-medium">Tempat, tanggal lahir</span>
                   <span class="data-value size-3 is-capitalized">{{ employee.data.placeOfBirth }}, {{dateBirth}}</span>
                 </div>
                 <div class="data gap-y-6">
-                  <span class="data-label font-secondary size-6 color-primary-5">Status pernikahan</span>
+                  <span class="data-label font-secondary size-6 color-primary-5 has-text-weight-medium">Status pernikahan</span>
                   <span class="data-value size-3 is-capitalized">{{ marriageStatus }}</span>
                 </div>
                 <div class="data gap-y-6">
-                  <span class="data-label font-secondary size-6 color-primary-5">Gender</span>
+                  <span class="data-label font-secondary size-6 color-primary-5 has-text-weight-medium">Gender</span>
                   <span class="data-value size-3">{{ gender }}</span>
                 </div>
                 <div class="data gap-y-6">
-                  <span class="data-label font-secondary size-6 color-primary-5">Email</span>
+                  <span class="data-label font-secondary size-6 color-primary-5 has-text-weight-medium">Email</span>
                   <span class="data-value size-3">{{ employee.data.email }}</span>
                 </div>
                 <div class="data gap-y-6">
-                  <span class="data-label font-secondary size-6 color-primary-5">No. Handphone</span>
+                  <span class="data-label font-secondary size-6 color-primary-5 has-text-weight-medium">No. Handphone</span>
                   <span class="data-value size-3">{{ handphone }}</span>
                 </div>
                 <div class="data gap-y-6">
-                  <span class="data-label font-secondary size-6 color-primary-5">Alamat</span>
+                  <span class="data-label font-secondary size-6 color-primary-5 has-text-weight-medium">Alamat</span>
                   <span class="data-value size-3">{{ employee.data.address||'-' }}</span>
                 </div>
               </div>
@@ -214,7 +213,7 @@ export default defineComponent({
               <template #title>Data Kantor</template>
               <div class="is-flex is-flex-direction-column gap-y-3">
                 <div class="data gap-y-6">
-                  <span class="data-label font-secondary size-6 color-primary-5">Status Kerja</span>
+                  <span class="data-label font-secondary size-6 color-primary-5 has-text-weight-medium">Status Kerja</span>
                   <div class="is-flex is-align-items-center gap-x-7">
                     <n-icon>
                       <circle16-filled :class="[`status-${employee.data.status}`, 'size-7']"/>
@@ -223,19 +222,19 @@ export default defineComponent({
                   </div>
                 </div>
                 <div class="data gap-y-6">
-                  <span class="data-label font-secondary size-6 color-primary-5">Email Kantor</span>
+                  <span class="data-label font-secondary size-6 color-primary-5 has-text-weight-medium">Email Kantor</span>
                   <span class="data-value size-3">{{ employee.data.officeEmail || '-' }}</span>
                 </div>
                 <div class="data gap-y-6">
-                  <span class="data-label font-secondary size-6 color-primary-5">Password Email</span>
+                  <span class="data-label font-secondary size-6 color-primary-5 has-text-weight-medium">Password Email</span>
                   <span class="data-value size-3">{{ employee.data.officeEmailPassword || '-' }}</span>
                 </div>
                 <div class="data gap-y-6">
-                  <span class="data-label font-secondary size-6 color-primary-5">Mulai Berkerja</span>
+                  <span class="data-label font-secondary size-6 color-primary-5 has-text-weight-medium">Mulai Berkerja</span>
                   <span class="data-value size-3">{{ startDate }}</span>
                 </div>
                 <div class="data gap-y-6">
-                  <span class="data-label font-secondary size-6 color-primary-5">Berhenti Kerja</span>
+                  <span class="data-label font-secondary size-6 color-primary-5 has-text-weight-medium">Berhenti Kerja</span>
                   <span class="data-value size-3">{{ endDate }}</span>
                 </div>
               </div>

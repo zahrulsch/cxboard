@@ -42,7 +42,7 @@ export default defineComponent({
 
 <template>
   <div class="p-3 level-card">
-    <h4 class="font-secondary has-text-weight-normal size-4 is-capitalized">{{ level }}</h4>
+    <h4 class="font-secondary has-text-weight-medium size-4 is-capitalized">{{ level }}</h4>
     <p class="is-size-4 has-text-weight-bold">{{ count }}</p>
   </div>
 </template>

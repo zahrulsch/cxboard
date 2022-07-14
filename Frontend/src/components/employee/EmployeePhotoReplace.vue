@@ -166,7 +166,6 @@ export default defineComponent({
       width: max-content;
       height: max-content;
       margin: 5px 0 0 5px;
-      border-radius: 5px;
       top: 0;
       z-index: 2;
     }
