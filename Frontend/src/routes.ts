@@ -77,6 +77,12 @@ const routes: RouteRecordRaw[] = [
     beforeEnter: [ titleChanger, isTokenExist ]
   },
   {
+    path: '/user_setting',
+    meta: { pageTitle: 'Pengaturan Pengguna' },
+    component: () => import('./views/UserEdit.vue'),
+    beforeEnter: [ titleChanger, isTokenExist ]
+  },
+  {
     path: '/',
     meta: { pageTitle: 'Beranda' },
     component: () => import('./views/Dashboard.vue'),

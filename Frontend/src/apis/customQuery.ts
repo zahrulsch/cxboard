@@ -212,6 +212,20 @@ export interface Query {
     params: MaybeRef<any | any[]>;
     query: MaybeRef<any | any[]>;
   };
+  getUserInfo: {
+    url: "/users/info";
+    method: "get";
+    response: {
+      createdAt: string;
+      email: string;
+      id: number;
+      picture: string;
+      username: string;
+      centerSheetId: string;
+    };
+    params: MaybeRef<any>;
+    query: MaybeRef<any>;
+  };
 }
 
 type QueryOptions<T> = UseQueryOptions<T, ErrorResponse>

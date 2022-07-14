@@ -13,6 +13,9 @@ export async function auth(req: Request, res: Response, next: NextFunction) {
       where: { id: dataToken.id }
     })
     if (!response) errorThrower({ code: 401, message: 'user is not recognized', status: 'unauthorized' })
+
+    req['headers']['user-identity'] = String(response.id)
+
     next()
   } catch(e) {
     next(e)

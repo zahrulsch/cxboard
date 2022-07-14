@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const client = axios.create({
-  baseURL: 'https://karyawan-service-dot-shopeepdc.et.r.appspot.com/apis'
+  baseURL: 'http://localhost:8000/apis'
 })
 
 let interceptor: number = 1

@@ -6,6 +6,7 @@ import googleImage from '../../assets/google.png'
 const props = defineProps<{
   containerClass?: string
   buttonClass?: string
+  text?: string
 }>()
 
 const attributes = computed(() => ({
@@ -59,17 +60,18 @@ onMounted(() => {
   <div v-bind="attributes">
     <div :class="props.buttonClass || 'g-pick-btn radius-7 px-2 py-1'" @click="onRequest">
       <img width="14" height="14" :src="googleImage" alt="google-logo"/>
-      <span class="size-4 font-secondary has-text-weight-normal">Gunakan akun Google saya</span>
+      <span class="size-4 font-secondary has-text-weight-medium">{{props.text || "Gunakan akun Google saya"}}</span>
     </div>
   </div>
 </template>
 
 <style lang="scss">
 .g-pick-btn {
+  width: 100%;
   display: flex;
   column-gap: var(--space-3);
-  width: max-content;
   align-items: center;
+  justify-content: center;
   background-color: rgba(231, 231, 231, 0.95);
   color: rgb(5, 5, 5);
   cursor: pointer;

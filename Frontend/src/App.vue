@@ -37,7 +37,7 @@ export default defineComponent({
 <style lang="scss">
 @import "./app.scss";
 .fade-enter-active, .fade-leave-active {
-  transition: all .1s ease-in-out;
+  transition: all .2s ease-in-out;
 }
 .fade-enter-from {
   opacity: 0;

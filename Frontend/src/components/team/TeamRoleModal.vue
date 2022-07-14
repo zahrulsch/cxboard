@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { NModal, NInput, NFormItem, NButton, NIcon, NDivider, useMessage } from 'naive-ui'
-import { Save16Filled, ArrowLeft16Filled } from '@vicons/fluent'
+import { NModal, NInput, NFormItem, NButton, NDivider, useMessage } from 'naive-ui'
 import { useCMutation } from '../../apis/customMutation'
 import { reactive, watch } from 'vue';
 import { useQueryClient } from 'vue-query';
+import CommonHeader from '../common/CommonHeader.vue';
 
 const queryClient = useQueryClient()
 
@@ -68,11 +68,11 @@ watch(() => props.show, () => {
     class="cs-modal"
     :transform-origin="'center'"
   >
-    <div class="bg-panel-primary is-flex is-flex-direction-column gap-y-3 p-3 radius-5 size-3">
-      <h4 class="has-text-weight-medium size-1 color-primary-7">Tambahkan role team</h4>
+    <div class="bg-panel-primary-solid is-flex is-flex-direction-column gap-y-3 p-3 radius-5 size-3">
+      <common-header font-weight="semibold">Tambahkan Role Team</common-header>
       <n-divider class="my-0"/>
       <div class="is-flex is-flex-direction-column gap-y-3">
-        <n-form-item label="Nama role" :show-feedback="false">
+        <n-form-item label="Nama role" :show-feedback="false" :label-props="{class: 'size-5 font-primary mb-1'}">
           <n-input 
             @focus="onValidate"
             @blur="onValidate"
@@ -81,7 +81,7 @@ watch(() => props.show, () => {
             v-model:value="dataMutation.name"
           />
         </n-form-item>
-        <n-form-item label="Detail role (optional)" :show-feedback="false">
+        <n-form-item label="Detail role (optional)" :show-feedback="false" :label-props="{class: 'size-5 font-primary mb-1'}">
           <n-input 
             placeholder="Programmer bertugas menerima dan mengimplementasikan setiap ide bisnis ke dalam program komputer"
             type="textarea"
@@ -98,24 +98,14 @@ watch(() => props.show, () => {
           type="success"
           @click="createRole"
         >
-          <template #icon>
-            <n-icon>
-              <save16-filled class="size-3"/>
-            </n-icon>
-          </template>
-          <span class="font-secondary size-4">Simpan</span>
+          <span class="font-secondary has-text-weight-semibold size-4">Simpan</span>
         </n-button>
         <n-button
           size="small"
           secondary
           @click="emit('update:show', false)"
         >
-          <template #icon>
-            <n-icon>
-              <arrow-left16-filled class="size-3"/>
-            </n-icon>
-          </template>
-          <span class="font-secondary size-4">Kembali</span>
+          <span class="font-secondary has-text-weight-semibold size-4">Kembali</span>
         </n-button>
       </div>
     </div>

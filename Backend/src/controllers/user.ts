@@ -4,6 +4,7 @@ import { signToken } from '../helpers/tokenizer'
 import type { Request, Response, NextFunction } from 'express'
 import errorThrower from '../helpers/errorThrower'
 import argon from 'argon2'
+import { imageUploader } from '../helpers/imageUploader'
 
 interface UserCreatePayload {
   username: string
@@ -16,6 +17,14 @@ interface UserLoginPayload {
   email: string
   password: string
   username?: string
+}
+
+interface UserEditPayload {
+  email?: string
+  password?: string
+  picture?: string
+  username?: string
+  oldPassword?: string
 }
 
 export default class UsersController {
@@ -47,6 +56,62 @@ export default class UsersController {
       const accessToken = await signToken({ username: response.username, id: response.id, email: response.email })
 
       responseSender(res, 200, { data: { accessToken } })
+    } catch (e) {
+      next(e)
+    }
+  }
+
+  static async info(req: Request, res: Response, next: NextFunction) {
+    try {
+      const userId = req['headers']['user-identity']
+      if (!userId) errorThrower({ code: 401, message: 'user is not recognized', status: 'unauthorized' })
+      
+      const user = await prisma.users.findFirst({
+        where: { id: +userId },
+        select: {
+          id: true,
+          username: true,
+          email: true,
+          picture: true,
+          createdAt: true,
+          centerSheetId: true,
+        }
+      })
+
+      if (!user) errorThrower({ code: 401, message: 'user is not recognized', status: 'unauthorized' })
+      responseSender(res, 200, { data: user })
+    } catch (e) {
+      next(e)
+    }
+  }
+
+  static async edit(req: Request, res: Response, next: NextFunction) {
+    try {
+      let { email, oldPassword, password, picture, username } = req.body as UserEditPayload
+      const id = req.headers['user-identity']
+      if (!id) errorThrower({ code: 401, message: 'user is not recognized', status: 'unauthorized' })
+      if (!oldPassword) errorThrower({ code: 400, message: 'old password is required', status: 'bad request' })
+      
+      const user = await prisma.users.findFirst({ where: { id: +id } })
+      if (!user) errorThrower({ code: 401, message: 'user is not recognized', status: 'unauthorized' })
+      if (!await argon.verify(user.password, oldPassword)) errorThrower({ code: 401, message: 'user is not recognized', status: 'unauthorized' })
+
+      if (picture) {
+        const uploader = await imageUploader(picture)
+        if (uploader) picture = uploader
+      }
+
+      const update = await prisma.users.update({
+        where: { id: user.id },
+        data: {
+          username,
+          email,
+          password: !password ? undefined : password,
+          picture,
+        },
+      });
+
+      responseSender(res, 200, { data: `user with id ${update.id} updated successfully` })
     } catch (e) {
       next(e)
     }

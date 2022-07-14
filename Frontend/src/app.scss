@@ -6,8 +6,10 @@
 
 :root {
   --bg-primary: rgba(42, 42, 42, 0.75);
+  --bg-primary-solid: #222322;
   --bg-secondary: rgb(44, 44, 44, 0.5);
   @include res('small') {
+    --bg-primary-solid: #141815;
     --bg-primary: rgba(61, 61, 61, 0.322);
     --bg-secondary: rgb(44, 44, 44, 0.4);
   }
@@ -93,6 +95,9 @@ body {
 .bg-panel {
   &-primary {
     background-color: var(--bg-primary);
+    &-solid {
+      background-color: var(--bg-primary-solid);
+    }
   }
 }
 
