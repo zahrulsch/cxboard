@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon ./dist/server.js",
     "start": "node ./dist/server.js",
-    "compile": "tsc && yes | cp -rf ./src/prisma_client ./dist"
+    "compile": "tsc && yes | cp -rf ./src/prisma_client ./dist",
+    "build": "sudo node ./dist/build.js"
   },
   "engines": {
     "node": "14.x"

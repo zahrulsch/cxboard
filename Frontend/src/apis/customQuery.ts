@@ -222,6 +222,7 @@ export interface Query {
       picture: string;
       username: string;
       centerSheetId: string;
+      googleCredential: string
     };
     params: MaybeRef<any>;
     query: MaybeRef<any>;

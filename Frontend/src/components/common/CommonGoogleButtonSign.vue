@@ -1,12 +1,15 @@
 <script lang="ts" setup>
 import { computed, onMounted } from 'vue';
-import { requester } from '../../apis/generalRequester';
 import googleImage from '../../assets/google.png'
 
 const props = defineProps<{
   containerClass?: string
   buttonClass?: string
   text?: string
+}>()
+
+const emits = defineEmits<{
+  ( e: 'credential', data?: string ): void
 }>()
 
 const attributes = computed(() => ({
@@ -36,11 +39,7 @@ function onRequest() {
   tokenClient.callback = async(resp: any) => {
     if (resp.error !== undefined) throw (resp)
     if (resp.access_token) {
-      requester('/reports/1Igd41BEREBBGMJNlAdHs1e5XJrsem1qq3G1m3EWKRxA', 'get', null, null, {
-        headers: {
-          credential: resp.access_token
-        }
-      })
+      emits('credential', (resp.access_token as string))
     }
   }
   if (gapi.client.getToken() === null) {
@@ -67,6 +66,7 @@ onMounted(() => {
 
 <style lang="scss">
 .g-pick-btn {
+  height: 25px;
   width: 100%;
   display: flex;
   column-gap: var(--space-3);

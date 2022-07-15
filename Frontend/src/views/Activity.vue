@@ -7,6 +7,7 @@ import ActivitySingleCard from '../components/activity/ActivitySingleCard.vue'
 import ActivityFilter from '../components/activity/ActivityFilter.vue';
 import CommonCardLoader from '../components/common/CommonCardLoader.vue';
 import ActivityZero from '../components/activity/ActivityZero.vue';
+import CommonHeader from '../components/common/CommonHeader.vue'
 
 const { data, isLoading: loadActivities } = useCQuery('getActivities', '/activities/list', 'get')
 
@@ -22,7 +23,7 @@ const activities = computed(() => {
   <layout>
     <div class="activities mt-2">
       <div class="activities-head mt-1">
-        <h4 class="size-4 has-text-weight-semibold font-secondary color-secondary-0">Semua Aktivitas</h4>
+        <common-header font-weight="semibold">Semua Aktivitas</common-header>
         <router-link class="is-inline-flex" to="/activities/create">
           <n-button
             size="small"

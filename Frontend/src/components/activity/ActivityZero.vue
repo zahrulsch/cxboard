@@ -12,7 +12,7 @@ import { Add16Filled } from '@vicons/fluent'
       width="75"
       preview-disabled
     />
-    <span class="size-5 color-primary-6 has-text-weight-light">Belum ada aktivitas apapun</span>
+    <span class="size-5 color-primary-5 has-text-weight-medium">Belum ada aktivitas apapun</span>
     <router-link to="/activities/create">
       <n-button
         text
@@ -21,7 +21,7 @@ import { Add16Filled } from '@vicons/fluent'
         <n-icon>
           <add16-filled class="size-4"/>
         </n-icon>
-        <span class="font-secondary size-5 pl-1">Tambah aktivitas</span>
+        <span class="font-secondary has-text-weight-medium size-5 pl-1">Tambah aktivitas</span>
       </n-button>
     </router-link>
   </div>

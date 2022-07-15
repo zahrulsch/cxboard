@@ -9,6 +9,7 @@ export interface UserData {
   username: string
   id: number
   oldPassword: string
+  googleCredential: string
 }
 
 export const useUserData = defineStore('userData', {
@@ -20,6 +21,7 @@ export const useUserData = defineStore('userData', {
     password: "",
     picture: "",
     username: "",
-    oldPassword: ""
+    oldPassword: "",
+    googleCredential: ""
   })
 })

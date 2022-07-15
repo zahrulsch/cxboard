@@ -20,11 +20,15 @@ interface UserLoginPayload {
 }
 
 interface UserEditPayload {
+  centerSheetId?: string
+  createdAt?: string
+  picture?: string
   email?: string
   password?: string
-  picture?: string
   username?: string
+  id?: number
   oldPassword?: string
+  googleCredential?: string
 }
 
 export default class UsersController {
@@ -75,6 +79,7 @@ export default class UsersController {
           picture: true,
           createdAt: true,
           centerSheetId: true,
+          googleCredential: true
         }
       })
 
@@ -87,7 +92,7 @@ export default class UsersController {
 
   static async edit(req: Request, res: Response, next: NextFunction) {
     try {
-      let { email, oldPassword, password, picture, username } = req.body as UserEditPayload
+      let { email, oldPassword, password, picture, username, centerSheetId, googleCredential } = req.body as UserEditPayload
       const id = req.headers['user-identity']
       if (!id) errorThrower({ code: 401, message: 'user is not recognized', status: 'unauthorized' })
       if (!oldPassword) errorThrower({ code: 400, message: 'old password is required', status: 'bad request' })
@@ -108,6 +113,8 @@ export default class UsersController {
           email,
           password: !password ? undefined : password,
           picture,
+          centerSheetId,
+          googleCredential
         },
       });
 

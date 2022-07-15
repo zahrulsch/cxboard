@@ -11,7 +11,7 @@ import { Add16Filled } from '@vicons/fluent'
       width="75"
       class="no-emp-detected-image"
     />
-    <span class="size-5 mt-2 color-primary-6">Belum ada karyawan yang terdaftar</span>
+    <span class="size-5 mt-2 color-primary-5 has-text-weight-medium">Belum ada karyawan yang terdaftar</span>
     <router-link to="/add_employee">
       <n-button
         size="small"
@@ -21,7 +21,7 @@ import { Add16Filled } from '@vicons/fluent'
         <n-icon>
           <add16-filled class="size-5" />
         </n-icon>
-        <span class="font-secondary size-5 ml-1">Tambah karyawan</span>
+        <span class="font-secondary has-text-weight-medium size-5 ml-1">Tambah karyawan</span>
       </n-button>
     </router-link>
   </div>

@@ -1,4 +1,4 @@
-import { Prisma } from '@prisma/client'
+import { Prisma } from '../prisma_client'
 import type { Request, Response, NextFunction } from 'express'
 import { prisma } from '../db/prisma'
 import { responseSender } from '../helpers/errorHandler'

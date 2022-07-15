@@ -2,21 +2,25 @@
 import Layout from '../components/layout/Layout.vue';
 import CommonHeader from '../components/common/CommonHeader.vue';
 import CommonGoogleButtonSign from '../components/common/CommonGoogleButtonSign.vue';
+import CommonSheetButton from '../components/common/CommonSheetButton.vue';
 import UserPasswordDialog from '../components/user/UserPasswordDialog.vue';
 import { NFormItem, NInput, NDivider, NIcon, NImage, NButton, useMessage } from 'naive-ui';
 import { Image16Filled, Delete16Filled } from '@vicons/fluent'
 import { useUserData } from '../stores/userDataStore';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { tFileReader, tFileReaderDrop } from '../helpers/fileReader';
 import { useCMutation } from '../apis/customMutation';
 import { capitalized } from '../helpers/capitalized';
 import { useQueryClient } from 'vue-query';
+import { requester } from '../apis/generalRequester';
 
 const queryClient = useQueryClient()
 const userData = useUserData()
 const message = useMessage()
 const droptext = ref('Drop foto disini / Klik untuk memilih file')
 const showDialog = ref(false)
+const loadSheet = ref(false)
+const sheetTitle = ref('')
 const { mutateAsync, isLoading: editing } = useCMutation('editUser', '/users/update', 'PUT')
 
 const ondrop = (e: DragEvent) => {
@@ -44,6 +48,30 @@ const deletePicture = () => {
   userData.picture = ""
 }
 
+const oncredential = (data?: string, withCheck?: boolean) => {
+  if (data) {
+    userData.googleCredential = data
+    if (withCheck) {
+      requester<{ data: string }>(`/sheets/test/${userData.centerSheetId}`, 'get', null, null, {
+        headers: {
+          g_access_key: data
+        },
+        onSuccess: ({ data }) => {
+          sheetTitle.value = data
+        },
+        onError: e => {
+          const { status, message: msg } = e
+          if (status && msg) {
+            message.warning(`${ capitalized(status) } -> ${ msg }`, { closable: true, duration: 3000 })
+          }
+          else message.error('Error tidak terprediksi', { closable: true, duration: 3000 })
+        },
+        onLoading: v => loadSheet.value = v
+      })
+    }
+  }
+}
+
 const editUser = () => {
   mutateAsync(userData.$state, {
     onSuccess: response => {
@@ -55,6 +83,12 @@ const editUser = () => {
     }
   })
 }
+
+watch(() => userData.googleCredential, (v) => {
+  if (v) {
+    oncredential(v, true)
+  }
+}, { immediate: true })
 </script>
 
 <template>
@@ -82,11 +116,13 @@ const editUser = () => {
                 <n-icon size="20">
                   <image16-filled class="color-secondary-2" />
                 </n-icon>
-                <label class="font-secondary size-5 color-primary-7 has-text-weight-medium">Drop foto disini / Klik untuk memilih file</label>
+                <label class="font-secondary size-5 color-primary-7 has-text-weight-medium">{{droptext}}</label>
               </div>
               <div v-else class="profile-picture-preview">
                 <n-image 
                   :src="userData.picture"
+                  object-fit="contain"
+                  style="align-items: center; justify-content: center;"
                 />
                 <n-button 
                   class="delete-btn"
@@ -107,7 +143,7 @@ const editUser = () => {
             @click="showDialog = !showDialog"
             :loading="editing"
           >
-            <span class="font-secondary size-4 has-text-weight-semibold">Simpan perubahan</span>
+            <span class="font-secondary size-4 has-text-weight-medium">Simpan perubahan</span>
           </n-button>
         </div>
         <n-divider class="my-0 mt-2 h-divider" />
@@ -146,8 +182,27 @@ const editUser = () => {
               <span class="font-secondary has-text-weight-semibold size-5 color-primary-7"><span class="font-secondary has-text-weight-bold size-5 color-primary-5">Catatan :</span> Gunakan ID Google Sheet yang mencangkup data Penjualan ALL Team</span>
             </div>
           </n-form-item>
+          <n-form-item label="Google Credentials" :show-feedback="false" :label-props="{class: 'size-5 mb-1'}">
+            <n-input 
+              class="bg-panel-primary font-secondary size-3"
+              v-model:value="userData.googleCredential"
+              disabled
+              placeholder="Belum ada credential"
+              type="textarea"
+            />
+          </n-form-item>
           <n-form-item label="Hubungkan ke Google" :show-feedback="false" :label-props="{class: 'size-5 mb-1'}">
-            <common-google-button-sign class="google-btn" text="Hubungkan akun Google" />
+            <div class="is-flex is-align-items- gap-x-4">
+              <common-google-button-sign 
+                class="google-btn" 
+                text="Hubungkan akun Google"
+                @credential="oncredential"
+              />
+              <common-sheet-button 
+                :loading="loadSheet"
+                :text="sheetTitle"
+              />
+            </div>
           </n-form-item>
         </div>
       </div>

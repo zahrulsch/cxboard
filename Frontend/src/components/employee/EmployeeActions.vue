@@ -36,7 +36,7 @@ export default defineComponent({
         return
       }
 
-      this.mutateAsync(this.addPayload, {
+      this.mutateAsync(this.addPayload.$state, {
         onSuccess: () => {
           this.message.success('Pegawai Berhasil ditambahkan')
         },

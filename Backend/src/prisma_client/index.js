@@ -24,11 +24,11 @@ exports.Prisma = Prisma
 
 /**
  * Prisma Client JS version: 3.15.2
- * Query Engine version: 461d6a05159055555eb7dfb337c9fb271cbd4d7e
+ * Query Engine version: da41d2bb3406da22087b849f0e911199ba4fbf11
  */
 Prisma.prismaVersion = {
   client: "3.15.2",
-  engine: "461d6a05159055555eb7dfb337c9fb271cbd4d7e"
+  engine: "da41d2bb3406da22087b849f0e911199ba4fbf11"
 }
 
 Prisma.PrismaClientKnownRequestError = PrismaClientKnownRequestError;
@@ -68,7 +68,7 @@ const regularDirname = hasDirname && fs.existsSync(path.join(__dirname, 'schema.
 
 // if the client has been bundled, we need to look for the folders
 const foundDirname = !regularDirname && findSync(process.cwd(), [
-    "src\\prisma_client",
+    "src/prisma_client",
     "prisma_client",
 ], ['d'], ['d'], 1)[0]
 
@@ -226,7 +226,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "D:\\cxboard\\Backend\\src\\prisma_client",
+      "value": "/home/mantracode/Documents/My Project/cxboard/Backend/src/prisma_client",
       "fromEnvVar": null
     },
     "config": {
@@ -235,7 +235,7 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows"
+        "value": "debian-openssl-3.0.x"
       },
       {
         "fromEnvVar": null,
@@ -246,12 +246,12 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "..\\..\\.env",
-    "schemaEnvPath": "..\\..\\.env"
+    "rootEnvPath": "../../.env",
+    "schemaEnvPath": "../../.env"
   },
-  "relativePath": "..\\..\\prisma",
+  "relativePath": "../../prisma",
   "clientVersion": "3.15.2",
-  "engineVersion": "461d6a05159055555eb7dfb337c9fb271cbd4d7e",
+  "engineVersion": "da41d2bb3406da22087b849f0e911199ba4fbf11",
   "datasourceNames": [
     "db"
   ],
@@ -274,10 +274,10 @@ const PrismaClient = getPrismaClient(config)
 exports.PrismaClient = PrismaClient
 Object.assign(exports, Prisma)
 
-path.join(__dirname, "query_engine-windows.dll.node");
-path.join(process.cwd(), "src\\prisma_client\\query_engine-windows.dll.node")
+path.join(__dirname, "libquery_engine-debian-openssl-3.0.x.so.node");
+path.join(process.cwd(), "src/prisma_client/libquery_engine-debian-openssl-3.0.x.so.node")
 
 path.join(__dirname, "libquery_engine-debian-openssl-1.1.x.so.node");
-path.join(process.cwd(), "src\\prisma_client\\libquery_engine-debian-openssl-1.1.x.so.node")
+path.join(process.cwd(), "src/prisma_client/libquery_engine-debian-openssl-1.1.x.so.node")
 path.join(__dirname, "schema.prisma");
-path.join(process.cwd(), "src\\prisma_client\\schema.prisma")
+path.join(process.cwd(), "src/prisma_client/schema.prisma")

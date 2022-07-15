@@ -2,7 +2,7 @@ import { prisma } from "../db/prisma";
 import { payloadChecker } from '../helpers/payloadChecker'
 import { responseSender } from "../helpers/errorHandler"
 import type { Response, Request, NextFunction } from 'express'
-import { Prisma } from "@prisma/client";
+import { Prisma } from "../prisma_client";
 import { imageUploader } from "../helpers/imageUploader";
 
 type EmployeeCreatePayload = Parameters<typeof prisma.employees.create>['0']['data']

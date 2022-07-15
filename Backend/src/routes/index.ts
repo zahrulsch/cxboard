@@ -9,6 +9,7 @@ import suggestRouter from './suggests'
 import reportRouter from './reports'
 import activityRouter from './activities'
 import participantRouter from './participants'
+import sheetRouter from './sheets'
 
 const router = Router()
 
@@ -21,5 +22,6 @@ router.use('/suggests', auth, suggestRouter)
 router.use('/reports', auth, reportRouter)
 router.use('/activities', auth, activityRouter)
 router.use('/participants', auth, participantRouter)
+router.use('/sheets', auth, sheetRouter)
 
 export default router

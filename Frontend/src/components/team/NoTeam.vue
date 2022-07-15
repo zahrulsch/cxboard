@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import united from '../../assets/united.png'
 import { NIcon, NImage } from 'naive-ui'
-import { PeopleTeam28Filled, Add16Filled } from '@vicons/fluent'
+import { Add16Filled } from '@vicons/fluent'
 </script>
 
 <template>
@@ -9,14 +9,15 @@ import { PeopleTeam28Filled, Add16Filled } from '@vicons/fluent'
     <n-image 
       :src="united"
       width="75"
+      style="filter: saturate(.75);"
     />
-    <span class="color-primary-4 size-4 has-text-weight-light mt-2">Belum ada team yang terdaftar</span>
+    <span class="color-primary-5 size-5 has-text-weight-medium mt-2">Belum ada team yang terdaftar</span>
     <router-link to="/teams/create">
       <p class="no-team-link">
         <n-icon class="size-3">
           <add16-filled />
         </n-icon>
-        <span class="font-secondary size-4 has-text-weight-normal">Buat Team Baru</span>
+        <span class="font-secondary size-4 has-text-weight-medium">Buat Team Baru</span>
       </p>
     </router-link>
   </div>

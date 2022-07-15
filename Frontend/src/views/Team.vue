@@ -16,40 +16,42 @@ const { data: teams, isLoading, isError } = useCQuery('getTeams', '/teams/list',
 <template>
   <layout>
     <common-fetching-error style="min-height: 75vh;" v-if="isError" />
-    <div class="teams-list" v-if="isLoading">
-      <common-card-loader v-for="i in 5" :key="i" :height="75" speed="medium" />
-    </div>
     <template v-if="teams">
-      <no-team v-if="!teams.data.length"/>
-      <section-panel class="mt-3 teams" v-else>
-        <common-header class="px-1" font-weight="semibold">Daftar Team</common-header>
+      <section-panel class="mt-3 teams">
+        <common-header font-weight="semibold">Daftar Team</common-header>
         <router-link class="add-button" to="/teams/create">
           <n-button 
-            class="pr-1"
             size="small"
             :bordered="false"
-            type="info"
-            text
+            type="primary"
           >
-            <template #icon>
-              <n-icon>
-                <add16-filled class="size-4" />
-              </n-icon>
-            </template>
-            <span class="font-secondary size-5">Tambah Tim</span>
+            <span class="has-text-weight-medium font-secondary size-4">Tambah Tim</span>
           </n-button>
         </router-link>
-        <div class="teams-list px-1">
-          <team-card 
-            v-for="k in teams.data" 
-            :key="k.id" 
-            :code="k.code" 
-            :employee-count="k._count.employees"
-            :image="k.image"
-            :name="k.name"
-            :team-id="k.id"
-          />
-        </div>
+        <template v-if="teams.data.length && !isLoading">
+          <div class="teams-list px-1">
+            <team-card 
+              v-for="k in teams.data" 
+              :key="k.id" 
+              :code="k.code" 
+              :employee-count="k._count.employees"
+              :image="k.image"
+              :name="k.name"
+              :team-id="k.id"
+            />
+          </div>
+        </template>
+        <template v-if="isLoading">
+          <div class="teams-list px-1">
+            <common-card-loader
+              v-for="k in 2" 
+              :key="k"
+            />
+          </div>
+        </template>
+        <template v-if="!teams.data.length && !isLoading">
+          <no-team style="min-height: 700px;"/>
+        </template>
       </section-panel>
     </template>
   </layout>
