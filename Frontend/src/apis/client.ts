@@ -1,7 +1,13 @@
 import axios from 'axios'
 
+let baseURL = 'http://localhost:8000/apis'
+
+if (import.meta.env.PROD) {
+  baseURL = 'https://karyawan-service-dot-shopeepdc.et.r.appspot.com/apis'
+}
+
 const client = axios.create({
-  baseURL: 'https://karyawan-service-dot-shopeepdc.et.r.appspot.com/apis'
+  baseURL: baseURL
 })
 
 let interceptor: number = 1

@@ -25,7 +25,7 @@ const cbgimage = computed(() => {
 <template>
   <layout>
     <common-fetching-error v-if="isError && !isLoading" class="p-6" style="min-height: 78vh; align-items: center; justify-content: center;"/>
-    <common-loader v-if="isLoading"/>
+    <common-loader style="min-height: 700px;" v-if="isLoading"/>
     <div class="teamdetail gap-y-3 mt-3" v-if="team?.data">
       <common-header font-weight="semibold">Detail Team - {{team.data.name}}</common-header>
       <div class="details gap-x-3 gap-y-3">
@@ -52,7 +52,7 @@ const cbgimage = computed(() => {
           </div>
           <div class="detailrow px-2 py-1">
             <span class="size-6 font-secondary color-primary-5">Alamat</span>
-            <p class="size-3">{{team.data.address}}</p>
+            <p class="size-3">{{team.data.address || "-"}}</p>
           </div>
         </div>
       </div>
@@ -69,8 +69,8 @@ const cbgimage = computed(() => {
               }"
             >
             </div>
-            <n-ellipsis class="mt-1">
-              <span class="font-secondary has-text-weight-medium size-3">{{e.employee.name}}</span>
+            <n-ellipsis style="max-width: 100%;" class="mt-1">
+              <p class="font-secondary has-text-weight-medium size-3">{{e.employee.name}}</p>
             </n-ellipsis>
             <span :class="[kebab(e.role.name), 'role font-secondary mt-1 px-1 size-5']">{{e.role.name}}</span>
           </div>
@@ -91,20 +91,20 @@ const cbgimage = computed(() => {
 
   & &-list {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(10px, 1fr));
     gap: .65rem;
 
     @include res('small') {
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(4, minmax(10px, 1fr));
     }
     @include res('medium') {
-      grid-template-columns: repeat(6, 1fr);
+      grid-template-columns: repeat(6, minmax(10px, 1fr));
     }
     @include res('large') {
-      grid-template-columns: repeat(8, 1fr);
+      grid-template-columns: repeat(8, minmax(10px, 1fr));
     }
     @include res('xxlarge') {
-      grid-template-columns: repeat(10, 1fr);
+      grid-template-columns: repeat(10, minmax(10px, 1fr));
       gap: .75rem;
     }
 

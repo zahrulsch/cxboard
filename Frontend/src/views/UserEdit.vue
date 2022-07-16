@@ -54,7 +54,7 @@ const oncredential = (data?: string, withCheck?: boolean) => {
     if (withCheck) {
       requester<{ data: string }>(`/sheets/test/${userData.centerSheetId}`, 'get', null, null, {
         headers: {
-          g_access_key: data
+          'x-g-access-key': data
         },
         onSuccess: ({ data }) => {
           sheetTitle.value = data

@@ -72,7 +72,7 @@ export default defineComponent({
     background-repeat: no-repeat;
     background-size: cover;
     background-image: v-bind(imageUrl);
-    background-color: rgb(233, 233, 233);
+    background-color: rgba(32, 32, 32, 0.404);
   };
   &-roleteam {
     color: var(--color-secondary-0);

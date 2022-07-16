@@ -18,6 +18,7 @@ export const useAddEmployeePayload = defineStore('addEmployeePayload', {
       startWork: 0,
       status: 'active',
       photo: '',
+      handphone: ''
     }
   },
   actions: {

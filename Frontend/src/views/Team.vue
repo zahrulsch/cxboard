@@ -25,7 +25,7 @@ const { data: teams, isLoading, isError } = useCQuery('getTeams', '/teams/list',
             :bordered="false"
             type="primary"
           >
-            <span class="has-text-weight-medium font-secondary size-4">Tambah Tim</span>
+            <span class="has-text-weight-semibold font-secondary size-4">Tambah Tim</span>
           </n-button>
         </router-link>
         <template v-if="teams.data.length && !isLoading">

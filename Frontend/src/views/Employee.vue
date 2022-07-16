@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
 import { NDivider, NButton, NIcon, NImage } from 'naive-ui';
 import { Add16Regular } from '@vicons/fluent';
 import { useCQuery } from '../apis/customQuery';
@@ -11,7 +11,9 @@ import EmployeeCard from '../components/employee/EmployeeCard.vue';
 import EmployeeLevelCard from '../components/employee/EmployeeLevelCard.vue';
 import CommonCardLoader from '../components/common/CommonCardLoader.vue';
 import CommonHeader from '../components/common/CommonHeader.vue';
+import CommonPagination from '../components/common/CommonPagination.vue';
 import responsibility from '../assets/responsibility.png'
+import { useRoute } from 'vue-router';
 
 export default defineComponent({
   name: 'Employee',
@@ -27,18 +29,27 @@ export default defineComponent({
     CommonCardLoader,
     NIcon,
     NImage,
-    CommonHeader
+    CommonHeader,
+    CommonPagination
   },
   setup: function() {
-    const { data: employees, isLoading: loadEmps } = useCQuery('getEmployees', '/employees/list/', 'get')
+    const route = useRoute()
+    const { data: employees, isLoading: loadEmps } = useCQuery('getEmployees', '/employees/list', 'get', null, computed(() => ({ pageNumber: route.query.page, pageSize: route.query.pagesize })))
     const { data: roles, isLoading: loadRoles} = useCQuery('getRoles', '/roles/list', 'get')
+    const totalPage = computed(() => {
+      if (employees.value?.data.count) {
+        return Math.ceil(employees.value.data.count/Number(route.query.pagesize))
+      }
+      return 0
+    })
     return {
       employees,
       loadEmps,
       roles,
       loadRoles,
       kebab,
-      responsibility
+      responsibility,
+      totalPage
     }
   },
   computed: {
@@ -49,6 +60,10 @@ export default defineComponent({
       }
       return r
     }
+  },
+  beforeRouteUpdate: function(to) {
+    if (!to.query.page) this.$router.push({ path: '/employees', query: { ...this.$route.query, page: 1 } })
+    if (!to.query.pagesize) this.$router.push({ path: '/employees', query: { ...this.$route.query, pagesize: 20 } })
   }
 })
 </script>
@@ -85,13 +100,20 @@ export default defineComponent({
           <span class="font-secondary size-5 has-text-weight-medium">Tambah Karyawan</span>
         </n-button>
       </router-link>
-      <div class="is-flex mt-2 is-flex-direction-column gap-y-2">
+      <div style="min-height: 500px;" class="is-flex mt-2 is-flex-direction-column gap-y-2">
         <employee-filter />
         <div class="emplist">
           <template v-if="loadEmps">
             <common-card-loader v-for="i in 3" :key="i" :height="75"/>
           </template>
-          <EmployeeCard class="is-clickable" v-for="p in employees?.data" :key="p.id" :image="p.photo || 'https://ik.imagekit.io/pv5j1g25r/download-icon-group_people_team_users_icon-1320196240876938595_512_xbk2gytLr.png?ik-sdk-version=javascript-1.4.3&updatedAt=1656044876345'" @click="$router.push(`/employees/${p.id}`)" :name="p.name" :level="p.teams.map(t => ({name: t.role}))" :teamcount="p.teams.map(e => e.name).filter((e, i, s) => s.indexOf(e) === i).length" />
+          <EmployeeCard class="is-clickable" v-for="p in employees?.data.employees" :key="p.id" :image="p.photo || 'https://ik.imagekit.io/pv5j1g25r/download-icon-group_people_team_users_icon-1320196240876938595_512_xbk2gytLr.png?ik-sdk-version=javascript-1.4.3&updatedAt=1656044876345'" @click="$router.push(`/employees/${p.id}`)" :name="p.name" :level="p.teams.map(t => ({name: t.role}))" :teamcount="p.teams.map(e => e.name).filter((e, i, s) => s.indexOf(e) === i).length" />
+        </div>
+        <div class="mt-3 is-flex is-justify-content-center">
+          <common-pagination
+            :page="Number($route.query.page)" 
+            :page-count="totalPage"
+            @update-page="page => $router.push({ path: '/employees/', query: { ...$route.query, page: page } })"
+          />
         </div>
       </div>
     </section-panel>

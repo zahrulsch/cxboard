@@ -1,7 +1,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { NFormItem, NIcon, NImage, useNotification } from 'naive-ui';
-import { Image20Regular, Eraser24Filled } from '@vicons/fluent'
+import { NFormItem, NIcon, NImage, useNotification, NButton } from 'naive-ui';
+import { Image20Regular, Delete16Filled } from '@vicons/fluent'
 import { tFileReader, tFileReaderDrop } from '../../helpers/fileReader';
 import { useEditEmployeePayload } from '../../stores/editEmployeePayload';
 
@@ -12,7 +12,8 @@ export default defineComponent({
     Image20Regular,
     NIcon,
     NImage,
-    Eraser24Filled
+    NButton,
+    Delete16Filled
   },
   setup: function() {
     return {
@@ -81,7 +82,7 @@ export default defineComponent({
 
 <template>
   <div class="font-secondary is-flex is-flex-direction-column gap-y-4 px-2">
-    <n-form-item label="Photo Karyawan" :show-feedback="false" :label-props="{class: 'size-3'}">
+    <n-form-item label="Photo Karyawan" :show-feedback="false" :label-props="{class: 'size-5 font-primary'}">
       <div v-if="!imageUrl" class="upload">
         <label for="pic" id="label-pic">
           <n-icon size="40" class="color-secondary-0">
@@ -92,13 +93,15 @@ export default defineComponent({
         <input @change="change" @drop="drop" @dragover.prevent="dropText = 'Lepaskan file'" @dragleave.prevent="dropText = 'Drop file disini / Klik untuk memilih foto'" id="pic" type="file" accept=".png,.jpeg" />
       </div>
       <div class="upload-preview" v-else>
-        <n-icon
-          class="is-clickable has-text-danger upload-preview-eraser"
-          @click="erase"
-          size="16"
+        <n-button
+          class="upload-preview-eraser"
+          type="error"
+          size="small"
         >
-          <Eraser24Filled />
-        </n-icon>
+          <n-icon>
+            <delete16-filled />
+          </n-icon>
+        </n-button>
         <n-image 
           :src="imageUrl"
           class="imgs"
@@ -161,10 +164,6 @@ export default defineComponent({
     }
     &-eraser {
       position: absolute;
-      background-color: white;
-      padding: 5px;
-      width: max-content;
-      height: max-content;
       margin: 5px 0 0 5px;
       top: 0;
       z-index: 2;

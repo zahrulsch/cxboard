@@ -15,7 +15,7 @@ import ActivitySingleCard from '../components/activity/ActivitySingleCard.vue';
 export default defineComponent({
   name: 'Dashboard',
   setup: function() {
-    const { data: employees, isLoading, isError } = useCQuery('getEmployees', '/employees/list/', 'get')
+    const { data: employees, isLoading, isError } = useCQuery('getEmployees', '/employees/list', 'get')
     const { data: activities, isLoading: loadActivities } = useCQuery('getActivities', '/activities/list', 'get')
     return {
       employees,
@@ -51,12 +51,12 @@ export default defineComponent({
         <CommonCardLoader  v-for="i in 5" :key="i" :height="100"/>
       </div>
       <div class="employee-list mb-4" v-if="employees">
-        <employee-zero class="zero" v-if="!employees.data.length" />
-        <employee-card v-for="employee in employees.data" :key="employee.id" class="is-clickable" @click="$router.push(`/employees/${employee.id}`)" :level="employee.teams.map(t => ({name: t.role}))" :teamcount="employee.teams.map(e => e.name).filter((e, i, s) => s.indexOf(e) === i).length" :image="employee.photo || ''" :name="employee.name"/>
+        <employee-zero class="zero" v-if="!employees.data.employees.length" />
+        <employee-card v-for="employee in employees.data.employees" :key="employee.id" class="is-clickable" @click="$router.push(`/employees/${employee.id}`)" :level="employee.teams.map(t => ({name: t.role}))" :teamcount="employee.teams.map(e => e.name).filter((e, i, s) => s.indexOf(e) === i).length" :image="employee.photo || ''" :name="employee.name"/>
       </div>
       <router-link to="/employees" class="is-inline-flex">
         <n-button
-          v-if="employees?.data.length"
+          v-if="employees?.data.employees.length"
           type="primary"
           size="small"
           class="action-button"

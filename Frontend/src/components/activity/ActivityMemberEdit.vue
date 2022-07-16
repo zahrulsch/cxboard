@@ -18,7 +18,7 @@ const emits = defineEmits<{
   ( e: 'update:employees', value: number[] ): void
 }>()
 
-const employees = ref<Query['getEmployees']['response']>([])
+const employees = ref<Query['getEmployees']['response']['employees']>([])
 const loading = ref(false)
 const query = reactive({ name: '', teams: ([] as number[]), roles: ([] as number[]) })
 const teamSelections = ref<Query['getTeams']['response']>([])
@@ -27,7 +27,7 @@ const roleSelections = ref<Query['getRoles']['response']>([])
 const employeesRequester = (query: any) => {
   requester<{data: Query['getEmployees']['response']}>('/employees/list/', 'get', null, query, {
     onSuccess: ({ data }) => {
-      employees.value = data
+      employees.value = data.employees
     },
     onLoading: s => loading.value = s
   })

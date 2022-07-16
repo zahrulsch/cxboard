@@ -42,7 +42,7 @@ const employeeListRequester = (name?: string) => {
   employeeOptions.length = 0
   requester<{ data: Query['getEmployees']['response'] }>('/employees/list', 'get', null, { name }, {
     onSuccess: res => {
-      res.data.forEach(e => employeeOptions.push({ label: e.name, value: String(e.id) }))
+      res.data.employees.forEach(e => employeeOptions.push({ label: e.name, value: String(e.id) }))
     },
     onLoading: v => loadingSuggest.value = v
   })

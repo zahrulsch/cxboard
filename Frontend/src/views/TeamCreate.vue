@@ -14,7 +14,7 @@ const message= useMessage()
 const { mutateAsync, isLoading } = useCMutation('addTeam', '/teams/create', 'POST')
 
 const onAddTeam = () => {
-  mutateAsync(team, {
+  mutateAsync(team.$state, {
     onError: e => {
       if (typeof e === 'string') {
         message.error(e)

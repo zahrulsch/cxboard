@@ -85,7 +85,7 @@ export default class EmployeeController {
   
   static async list(req: Request<any, any>, res: Response, next: NextFunction) {
     try {
-      const { name, email, sortBy, sortType, gender, teams, roles } = req.query as {[key: string]: any | undefined}
+      const { name, email, sortBy, sortType, gender, teams, roles, pageNumber = 1, pageSize = 12 } = req.query as {[key: string]: any | undefined}
       
       const filter: Prisma.Enumerable<Prisma.EmployeesWhereInput> = []
 
@@ -94,15 +94,17 @@ export default class EmployeeController {
       if (gender) filter.push({ gender: { equals: gender as 'MALE'|'FEMALE'|undefined } })
       if (teams) { if (Array.isArray(teams)) { filter.push({ teams: { some: { teamId: { in: teams.map((t) => +t), }, }, }, }); } if (roles) { if (Array.isArray(roles)) { filter.push({ teams: { some: { roleId: { in: roles.map((r) => +r), }, teamId: { in: teams.map((t: string | number) => +t), }, }, }, }); } } }
       if (roles) { if (Array.isArray(roles)) { filter.push({ teams: { some: { roleId: { in: roles.map((r) => +r), }, }, }, }); } }
-
+      const count = await prisma.employees.count({ where: { AND: filter } })
       const result = await prisma.employees.findMany({
+        take: +pageSize,
+        skip: (+pageNumber - 1) * +pageSize,
         where: {
           AND: filter,
         },
         orderBy: [
           {
-            [sortBy || "createdAt"]: sortType || "asc",
-          },
+            [sortBy || "createdAt"]: sortType || "desc",
+          }
         ],
         include: {
           schools: {
@@ -136,32 +138,36 @@ export default class EmployeeController {
             }
           },
         },
+        
       });
       responseSender(res, 200, {
-        data: result.map((res) => {
-          const { schools, roles, teams } = res;
-          return {
-            ...res,
-            schools: schools.map((sc) => ({
-              id: sc.id,
-              name: sc.schools.name,
-              level: sc.schools.level,
-              schoolId: sc.schools.id,
-              graduateYear: sc.graduateYear,
-            })),
-            roles: roles
-              .map((r) => ({ name: r.roles.name, id: r.roles.id }))
-              .reduce((p, c) => {
-                const pd = [...p];
-                if (!pd.some(v => v.id === c.id)) pd.push(c);
-                return pd;
-              }, [] as { name: string; id: number }[]),
-            teams: teams.map((t) => ({
-              name: t.teams.name,
-              role: t.role.name,
-            })),
-          };
-        }),
+        data: {
+          count: count,
+          employees: result.map((res) => {
+            const { schools, roles, teams } = res;
+            return {
+              ...res,
+              schools: schools.map((sc) => ({
+                id: sc.id,
+                name: sc.schools.name,
+                level: sc.schools.level,
+                schoolId: sc.schools.id,
+                graduateYear: sc.graduateYear,
+              })),
+              roles: roles
+                .map((r) => ({ name: r.roles.name, id: r.roles.id }))
+                .reduce((p, c) => {
+                  const pd = [...p];
+                  if (!pd.some(v => v.id === c.id)) pd.push(c);
+                  return pd;
+                }, [] as { name: string; id: number }[]),
+              teams: teams.map((t) => ({
+                name: t.teams.name,
+                role: t.role.name,
+              })),
+            };
+          }),
+        }
       });
     } catch (e) {
       next(e)

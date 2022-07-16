@@ -289,20 +289,22 @@ export default defineComponent({
               </template>
               <span class="font-secondary size-4">Ubah Data</span>
             </n-button>
-            <n-divider class="my-2" style="margin: 0;"/>
-            <section-panel>
-              <template #title>Pegawai Terkait</template>
-              <div class="suggestion-list">
-                <suggest-employee 
-                  v-for="e in suggests"
-                  :key="e.id"
-                  :id="e.id"
-                  :name="e.name"
-                  :type="e.type"
-                  :photo="e.photo"
-                />
-              </div>
-            </section-panel>
+            <template v-if="suggests.length">
+              <n-divider class="my-2" style="margin: 0;"/>
+              <section-panel>
+                <template #title>Pegawai Terkait</template>
+                <div class="suggestion-list">
+                  <suggest-employee 
+                    v-for="e in suggests"
+                    :key="e.id"
+                    :id="e.id"
+                    :name="e.name"
+                    :type="e.type"
+                    :photo="e.photo"
+                  />
+                </div>
+              </section-panel>
+            </template>
           </div>
         </div>
       </template>

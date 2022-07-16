@@ -15,31 +15,34 @@ interface ErrorResponse {
 
 export interface Query {
   getEmployees: {
-    url: "/employees/list/";
+    url: "/employees/list";
     method: "get";
     response: {
-      id: number;
-      name: string;
-      email: string;
-      gender: string;
-      placeOfBirth: string;
-      dateOfBirth: string;
-      marriageStatus: boolean;
-      photo: string | null;
-      address: string | null;
-      createdAt: string;
-      updatedAt: string;
-      schools: {
+      count: number;
+      employees: {
         id: number;
         name: string;
-        level: string;
-        schoolId: number;
-        graduateYear: number;
+        email: string;
+        gender: string;
+        placeOfBirth: string;
+        dateOfBirth: string;
+        marriageStatus: boolean;
+        photo: string | null;
+        address: string | null;
+        createdAt: string;
+        updatedAt: string;
+        schools: {
+          id: number;
+          name: string;
+          level: string;
+          schoolId: number;
+          graduateYear: number;
+        }[];
+        roles: any[];
+        teams: { name: string; role: string }[];
       }[];
-      roles: any[];
-      teams: { name: string; role: string }[];
-    }[];
-    params: MaybeRef<number | null> | null;
+    };
+    params: MaybeRef<any> | null;
     query:
       | MaybeRef<{
           name?: string;
@@ -222,7 +225,7 @@ export interface Query {
       picture: string;
       username: string;
       centerSheetId: string;
-      googleCredential: string
+      googleCredential: string;
     };
     params: MaybeRef<any>;
     query: MaybeRef<any>;

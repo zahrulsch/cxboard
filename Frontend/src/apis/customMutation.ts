@@ -111,8 +111,7 @@ export function useCMutation<K extends keyof Mutation, T extends Mutation>(mode:
     try {
       let uri = url as string;
 
-      if (params) uri = uri + "/" + params;
-
+      if (params) uri = url + "/" + params;
       const response: AxiosResponse<
         Response<T[K]["response"]>,
         unknown

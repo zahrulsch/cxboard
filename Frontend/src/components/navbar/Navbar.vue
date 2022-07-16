@@ -18,7 +18,6 @@ const logout = () => {
 const { data, isLoading: loadUser } = useCQuery('getUserInfo', '/users/info', 'get', null, null, {
   onSuccess: ({ data }) => {
     const { createdAt, email, id, picture, username, centerSheetId, googleCredential } = data
-    console.log(googleCredential)
     userData.$patch({ createdAt, centerSheetId, email, id, picture, username, googleCredential })
   },
   onError: logout,

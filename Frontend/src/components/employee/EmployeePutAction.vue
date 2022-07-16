@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { NButton, NIcon, useMessage } from 'naive-ui'
-import { Save20Regular } from '@vicons/fluent'
+import { NButton, useMessage } from 'naive-ui'
 import { useEditEmployeePayload } from '../../stores/editEmployeePayload';
 import { useCMutation } from '../../apis/customMutation';
 import { useRoute } from 'vue-router';
@@ -34,12 +33,7 @@ const save = () => {
       :loading="isLoading"
       block
     >
-      <template #icon>
-        <n-icon>
-          <save20-regular />
-        </n-icon>
-      </template>
-      <span class="font-secondary size-4">Simpan</span>
+      <span class="font-secondary has-text-weight-semibold size-4">Simpan</span>
     </n-button>
   </div>
 </template>

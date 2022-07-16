@@ -50,7 +50,6 @@ export default defineComponent({
     this.addPayload.$reset();
     delete this.addPayload.schools
     delete this.addPayload.photo
-    console.log(this.addPayload)
   }
 })
 </script>

@@ -17,10 +17,10 @@ export default class SheetController {
   static async getTest(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params
-      const { g_access_key } = req.headers
+      const g_access_key = req.headers['x-g-access-key']
 
       if (!id) errorThrower({ code: 400, message: 'sheet ID is required', status: 'bad request' })
-      if (!g_access_key) errorThrower({ code: 400, message: 'g_access_key is missing from headers', status: 'bad request' })
+      if (!g_access_key) errorThrower({ code: 400, message: 'x-g-access-key is missing from headers', status: 'bad request' })
 
       oauth.credentials.access_token = g_access_key as string
       const sheets = new GoogleSpreadsheet(id)

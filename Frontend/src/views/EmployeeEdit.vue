@@ -11,6 +11,7 @@ import EmployeeEducationEdit from "../components/employee/EmployeeEducationEdit.
 import EmployeePhotoReplace from "../components/employee/EmployeePhotoReplace.vue"
 import EmployeePutAction from "../components/employee/EmployeePutAction.vue"
 import EmployeeOfficeDataEdit from "../components/employee/EmployeeOfficeDataEdit.vue"
+import EmployeeMarriageEdit from "../components/employee/EmployeeMarriageEdit.vue"
 
 export default defineComponent({
   name: 'EmployeeEdit',
@@ -22,7 +23,8 @@ export default defineComponent({
     NDivider,
     EmployeePhotoReplace,
     EmployeePutAction,
-    EmployeeOfficeDataEdit
+    EmployeeOfficeDataEdit,
+    EmployeeMarriageEdit
   },
   setup: function() {
     const edit = useEditEmployeePayload()
@@ -78,22 +80,27 @@ export default defineComponent({
             v-model:date-birth="edit.dateOfBirth"
             v-model:handphone="edit.handphone"
           />
-          <n-divider class="my-1 px-3" />
-          <employee-office-data-edit class="px-2" 
+          <n-divider class="my-1" />
+          <employee-office-data-edit 
             v-model:officeEmail="edit.officeEmail"
             v-model:startWork="edit.startWork"
             v-model:endWork="edit.endWork"
             v-model:officeEmailPassword="edit.officeEmailPassword"
             v-model:status="edit.status"
           />
-          <n-divider class="my-1 px-3" />
+          <n-divider class="my-1" />
           <EmployeeEducationEdit 
             v-model:schools="edit.schools"
             id="edu-edit"
           />
+          <n-divider class="my-1" />
+          <employee-marriage-edit 
+            v-model:marriage="edit.marriageStatus"
+          />
         </div>
+        <n-divider style="height: auto;" class="mx-3 vertical-divider" vertical/>
         <div class="edit-panel-right gap-y-3">
-          <n-divider class="my-1 px-3 res-divider" />
+          <n-divider class="my-1 res-divider" />
           <employee-photo-replace />
           <employee-put-action />
         </div>
@@ -103,6 +110,12 @@ export default defineComponent({
 </template>
 
 <style lang="scss" scoped>
+.vertical-divider {
+  display: none;
+  @include res('small') {
+    display: inherit;
+  }
+}
 .edit-panel {
   display: flex;
   flex-direction: column;
