@@ -21,7 +21,7 @@ const props = defineProps<TeamCardProp>()
       <p class="size-3 has-text-weight-medium font-secondary">{{props.name || '-' }}</p>
       <div class="is-flex is-align-items-center gap-x-6 font-secondary">
         <n-icon>
-          <PeopleTeam16Filled class="color-primary-7" />
+          <PeopleTeam16Filled class="color-primary-7 size-4" />
         </n-icon>
         <span class="size-5 has-text-weight-normal color-primary-4">{{props.employeeCount || 0}} anggota</span>
       </div>
@@ -41,7 +41,7 @@ const props = defineProps<TeamCardProp>()
             <span class="font-secondary size-5 pr-1">Detail</span>
           </n-button>
         </router-link>
-        <n-divider class="mx-0" vertical />
+        <!-- <n-divider class="mx-0" vertical /> -->
         <router-link class="is-inline-flex" :to="`/teams/edit/${props.teamId}`">
           <n-button
             size="tiny"
