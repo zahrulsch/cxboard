@@ -1,12 +1,15 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { useBreakpoints, breakpointsBootstrapV5 } from '@vueuse/core'
 import { NConfigProvider, NMessageProvider, darkTheme, NLayout, NNotificationProvider } from 'naive-ui'
 
 export default defineComponent({
   name: 'App',
   setup: function() {
+    const media = useBreakpoints(breakpointsBootstrapV5)
     return {
-      darkTheme
+      darkTheme,
+      media
     }
   },
   components: {
@@ -21,7 +24,7 @@ export default defineComponent({
 <template>
   <n-config-provider :theme="darkTheme">
     <n-message-provider :max="2">
-      <n-notification-provider placement="bottom">
+      <n-notification-provider :placement="media.isGreater('md') ? 'bottom-right' : 'bottom'">
           <div class="before-container">
             <div class="before-container-layer">
               <router-view v-slot="{ Component }">

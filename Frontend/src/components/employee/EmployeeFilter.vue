@@ -26,7 +26,7 @@ export default defineComponent({
     <n-input 
       size="medium"
       placeholder="Temukan sesuatu..."
-      class="bg-panel-primary size-4 has-text-weight-light"
+      class="bg-panel-primary size-6 has-text-weight-light"
       :bordered="!1"
     >
       <template #prefix>

@@ -25,7 +25,7 @@ const props = defineProps<{
     </div>
     <div class="detail">
       <n-ellipsis :line-clamp="1">
-        <span style="-webkit-line-clamp: 1;" class="size-3 color-primary-0">{{props.name}}</span>
+        <span style="-webkit-line-clamp: 1;" class="size-4 font-secondary has-text-weight-medium color-primary-0">{{props.name}}</span>
       </n-ellipsis>
       <span class="size-5 color-primary-6 font-secondary">{{props.type}}</span>
     </div>

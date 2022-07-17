@@ -35,7 +35,6 @@ export default defineComponent({
         })
         return
       }
-
       this.mutateAsync(this.addPayload.$state, {
         onSuccess: () => {
           this.message.success('Pegawai Berhasil ditambahkan')
@@ -48,8 +47,8 @@ export default defineComponent({
   },
   unmounted: function() {
     this.addPayload.$reset();
-    delete this.addPayload.schools
-    delete this.addPayload.photo
+    this.addPayload.schools = []
+    this.addPayload.photo = ''
   }
 })
 </script>

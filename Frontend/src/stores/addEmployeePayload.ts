@@ -5,7 +5,7 @@ import type { Mutation } from '../apis/customMutation'
 export const useAddEmployeePayload = defineStore('addEmployeePayload', {
   state: (): Mutation['addEmployee']['data']  => {
     return {
-      dateOfBirth: 0,
+      dateOfBirth: new Date().getTime(),
       email: '',
       gender: 'MALE',
       marriageStatus: false,
@@ -15,10 +15,11 @@ export const useAddEmployeePayload = defineStore('addEmployeePayload', {
       endWork: 0,
       officeEmail: '',
       officeEmailPassword: '',
-      startWork: 0,
+      startWork: new Date().getTime(),
       status: 'active',
       photo: '',
-      handphone: ''
+      handphone: '',
+      schools: []
     }
   },
   actions: {

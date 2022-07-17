@@ -37,6 +37,8 @@ export default defineComponent({
         onSuccess: data => {
           this.imageUrl = data.fileBlobUrl
           this.payload.photo = String(data.base64Text)
+          console.log(this.payload.photo)
+
         }
       })
     },
@@ -53,6 +55,7 @@ export default defineComponent({
         onSuccess: data => {
           this.imageUrl = data.fileBlobUrl
           this.payload.photo = String(data.base64Text)
+          console.log(this.payload.photo)
         }
       })
     },
@@ -75,7 +78,7 @@ export default defineComponent({
             </n-icon>
             <span class="font-secondary text-center px-5 size-5 has-text-weight-normal color-secondary-0">{{dropText}}</span>
           </label>
-          <input @change="change" @drop="drop" @dragover.prevent="dropText = 'Lepaskan file'" @dragleave.prevent="dropText = 'Drop file disini / Klik untuk memilih foto'" id="pic" type="file" accept=".png,.jpeg" />
+          <input @change="change" @drop="drop" @dragover.prevent="dropText = 'Lepaskan file'" @dragleave.prevent="dropText = 'Drop file disini / Klik untuk memilih foto'" id="pic" type="file" accept=".png, .jpg" />
         </div>
       </div>
       <div class="upload-preview" v-else>

@@ -5,6 +5,7 @@ import { ArrowCircleRight16Regular } from '@vicons/fluent'
 import { useCMutation } from '../apis/customMutation'
 import { setInterceptor } from '../apis/client'
 import { capitalized } from '../helpers/capitalized'
+import cxboard from '../assets/ruangcxo.png'
 
 export default defineComponent({
   name: 'Login',
@@ -20,7 +21,8 @@ export default defineComponent({
       notif: useMessage(),
       data,
       isLoading,
-      mutateAsync
+      mutateAsync,
+      cxboard
     }
   },
   data: () => ({
@@ -51,9 +53,9 @@ export default defineComponent({
 <template>
   <div class="login">
     <div class="login-panel bg-panel-primary px-4 py-4">
-      <h3 class="text-center has-text-weight-bold is-size-5 cxboard">CXBoard</h3>
+      <img :src="cxboard" title="ruangcxo" style="width: 72px;"/>
       <div class="input-panel">
-        <label class="has-text-weight-medium color-primary-2 size-3 font-secondary">Email Pengguna</label>
+        <label class="has-text-weight-normal color-primary-1 size-5 font-primary">Email Pengguna</label>
         <n-input 
           :bordered="false"
           placeholder="email@gmail.com"
@@ -63,7 +65,7 @@ export default defineComponent({
         />
       </div>
       <div class="input-panel">
-        <label class="has-text-weight-medium color-primary-2 size-3 font-secondary">Kata Sandi</label>
+        <label class="has-text-weight-normal color-primary-1 size-5 font-primary">Kata Sandi</label>
         <n-input 
           :bordered="false"
           placeholder="••••••••"
@@ -75,7 +77,7 @@ export default defineComponent({
         />
       </div>
       <n-button
-        type="primary"
+        type="warning"
         size="medium"
         :loading="isLoading"
         @click="login"

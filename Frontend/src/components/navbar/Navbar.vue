@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { ArrowCircleLeft16Regular, Home16Filled, MailAttach16Filled, SignOut20Filled, Person16Filled, Settings16Filled, ShiftsActivity20Filled, PersonInfo16Filled, PeopleTeam20Filled, TextAlignRight16Filled } from '@vicons/fluent'
-import { NIcon, NPopover, NAvatar, NButton, NDivider } from 'naive-ui'
+import { NIcon, NPopover, NAvatar, NButton, NDivider, NImage } from 'naive-ui'
 import { useCQuery } from '../../apis/customQuery'
 import { useUserData } from '../../stores/userDataStore'
 import NavbarDrawer from './NavbarDrawer.vue'
 import CommonCardLoader from '../common/CommonCardLoader.vue'
+import ruangcxo from '../../assets/ruangcxo.png'
 
 const userData = useUserData()
 const showDrawer = ref(false)
@@ -27,7 +28,7 @@ const { data, isLoading: loadUser } = useCQuery('getUserInfo', '/users/info', 'g
 </script>
 
 <template>
-  <div class="bg-panel-primary container size-2 p-2 px-3 is-flex is-align-items-center is-justify-content-space-between app-nav">
+  <div class="container size-2 py- is-flex is-align-items-center is-justify-content-space-between app-nav">
     <NavbarDrawer style="background-color: var(--bg-primary-solid); width: 80%;" :show="showDrawer" @on-update:show="v => showDrawer = v"/>
     <n-icon class="is-clickable" @click="$router.back()" id="back" size="18" v-if="$route.path !== '/'">
       <ArrowCircleLeft16Regular />
@@ -36,9 +37,12 @@ const { data, isLoading: loadUser } = useCQuery('getUserInfo', '/users/info', 'g
       <n-icon size="18">
       </n-icon>
     </div>
-    <h4 class="logo gap-x-3 has-text-weight-bold size-1">
+    <router-link to="/" class="is-flex is-align-items-center">
+      <img alt="logo" title="RuangCXO" :src="ruangcxo" style="width: 72px;"/>
+    </router-link>
+    <!-- <h4 class="logo gap-x-3 has-text-weight-bold size-1">
       <router-link id="app-logo" to="/">CXBoard</router-link>
-    </h4>
+    </h4> -->
     <div class="nav-links-mobile">
       <n-icon @click="showDrawer = !showDrawer" class="is-clickable">
         <TextAlignRight16Filled />

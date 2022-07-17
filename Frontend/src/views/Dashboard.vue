@@ -44,7 +44,7 @@ export default defineComponent({
 
 <template>
   <layout>
-    <div class=" py-2 px-1 is-flex is-flex-direction-column">
+    <div class="py-2 is-flex is-flex-direction-column">
       <common-header class="mb-3" font-weight="semibold">Daftar Pegawai</common-header>
       <common-fetching-error v-if="!isLoading && isError" />
       <div class="employee-list mb-4" v-if="isLoading">

@@ -11,7 +11,7 @@ export default defineComponent({
     FooterVue,
     NDivider,
     NLayout
-  }
+  },
 })
 </script>
 
@@ -19,7 +19,7 @@ export default defineComponent({
   <div class="before-container">
     <div class="before-container-layer">
       <n-layout style="height: 100vh; background-color: transparent;" :native-scrollbar="false">
-        <div style="height: 100%;" class="p-2 container">
+        <div style="height: 100%;" class="p-1 container">
           <navbar-vue class="mb-1 mt-2" />
           <div class="with-min-height">
             <slot name="default"></slot>

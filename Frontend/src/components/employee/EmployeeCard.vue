@@ -4,12 +4,14 @@ import { NImage, NIcon, NEllipsis } from 'naive-ui'
 import { PersonBoard24Regular, PeopleTeam20Regular, Circle16Filled } from '@vicons/fluent'
 import { kebab } from 'case'
 import EmployeeLevelTag from './EmployeeLevelTag.vue'
+import noimage from '../../assets/noimage.png'
 
 export default defineComponent({
   name: 'EmployeeCard',
   setup() {
     return {
-      kebab
+      kebab,
+      noimage
     }
   },
   components: {
@@ -26,13 +28,15 @@ export default defineComponent({
     level: {
       type: Array as PropType<{ name: string; }[]>
     },
-    image: String,
+    image: {
+      type: Object as PropType<string | null>
+    },
     teamcount: Number
   },
   computed: {
     imageUrl: function() {
       if (this.image) return `url("${this.image}")`
-      return 'url("")'
+      return `url("${ this.noimage }")`
     }
   }
 })
@@ -44,15 +48,15 @@ export default defineComponent({
     </div>
     <div style="max-width: 70%;" class="is-flex is-flex-direction-column">
       <n-ellipsis >
-        <span class="has-text-weight-medium size-4">{{name}}</span>
+        <span class="has-text-weight-medium font-secondary size-4">{{name}}</span>
       </n-ellipsis>
       <div style="overflow: hidden;" class="is-flex is-align-items-center">
-        <span class="font-secondary has-text-weight-semibold color-primary-5 size-5 mr-1">{{ level?.length || 0 }} Roles</span>
+        <span class="font-secondary has-text-weight-medium color-primary-5 size-5 mr-1">{{ level?.length || 0 }} Roles</span>
         <n-icon class="size-5" v-for="v in level">
           <circle16-filled :class="[ `c-${kebab(v.name)}` ,'size-5']" />
         </n-icon>
       </div>
-      <p class="font-secondary size-5 color-primary-5 has-text-weight-semibold gap-x-6">
+      <p class="font-secondary size-5 color-primary-5 has-text-weight-medium gap-x-6">
         <span>Bergabung di {{teamcount||0}} team</span>
       </p>
     </div>

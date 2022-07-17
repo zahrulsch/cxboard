@@ -94,6 +94,12 @@ export default defineComponent({
         }, 500)
       }
       return func
+    },
+    deleteField: function() {
+      if (this.schools) {
+        const dp = [...this.schools]
+        this.$emit('update:schools', dp.filter((s, index) => index !== this.index))
+      }
     }
   },
   beforeMount: function() {
@@ -120,6 +126,7 @@ export default defineComponent({
       <n-button
         type="warning"
         :bordered="false"
+        @click="deleteField"
       >
         <template #icon>
           <n-icon>

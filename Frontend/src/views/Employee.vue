@@ -85,28 +85,29 @@ export default defineComponent({
     </section-panel>
     <NDivider />
     <section-panel class="mt-4 is-relative">
-      <common-header font-weight="semibold">Daftar Pegawai</common-header>
-      <router-link to="/add_employee" class="add-employee">
-        <n-button
-          size="small"
-          type="info"
-          secondary
-        >
-          <template #icon>
-            <n-icon>
-              <Add16Regular class="size-3" />
-            </n-icon>
-          </template>
-          <span class="font-secondary size-5 has-text-weight-medium">Tambah Karyawan</span>
-        </n-button>
-      </router-link>
+      <div class="is-flex is-align-items-end is-justify-content-space-between">
+        <common-header font-weight="semibold">Daftar Pegawai</common-header>
+        <router-link to="/add_employee" class="is-flex ia-align-items-center">
+          <n-button
+            size="small"
+            type="primary"
+          >
+            <template #icon>
+              <n-icon>
+                <Add16Regular class="size-4" />
+              </n-icon>
+            </template>
+            <span class="font-secondary size-5 has-text-weight-semibold">Tambah Karyawan</span>
+          </n-button>
+        </router-link>
+      </div>
       <div style="min-height: 500px;" class="is-flex mt-2 is-flex-direction-column gap-y-2">
         <employee-filter />
         <div class="emplist">
           <template v-if="loadEmps">
             <common-card-loader v-for="i in 3" :key="i" :height="75"/>
           </template>
-          <EmployeeCard class="is-clickable" v-for="p in employees?.data.employees" :key="p.id" :image="p.photo || 'https://ik.imagekit.io/pv5j1g25r/download-icon-group_people_team_users_icon-1320196240876938595_512_xbk2gytLr.png?ik-sdk-version=javascript-1.4.3&updatedAt=1656044876345'" @click="$router.push(`/employees/${p.id}`)" :name="p.name" :level="p.teams.map(t => ({name: t.role}))" :teamcount="p.teams.map(e => e.name).filter((e, i, s) => s.indexOf(e) === i).length" />
+          <EmployeeCard class="is-clickable" v-for="p in employees?.data.employees" :key="p.id" :image="p.photo" @click="$router.push(`/employees/${p.id}`)" :name="p.name" :level="p.teams.map(t => ({name: t.role}))" :teamcount="p.teams.map(e => e.name).filter((e, i, s) => s.indexOf(e) === i).length" />
         </div>
         <div class="mt-3 is-flex is-justify-content-center">
           <common-pagination
@@ -121,10 +122,7 @@ export default defineComponent({
 </template>
 
 <style lang="scss" scoped>
-.add-employee {
-  position: absolute;
-  right: 0;
-}
+
 .level-list {
   display: grid;
   gap: .5rem;

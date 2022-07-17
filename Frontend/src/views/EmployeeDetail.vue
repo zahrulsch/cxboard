@@ -3,7 +3,7 @@ import { computed, defineComponent, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { useCQuery } from '../apis/customQuery'
 import { NDivider, NIcon, NButton } from 'naive-ui'
-import { QuestionCircle20Regular, Edit16Regular, Circle16Filled } from '@vicons/fluent'
+import { QuestionCircle20Regular, Circle16Filled } from '@vicons/fluent'
 import { kebab } from 'case';
 import { requester } from '../apis/generalRequester';
 import Layout from '../components/layout/Layout.vue';
@@ -13,6 +13,7 @@ import CommonLoader from '../components/common/CommonLoader.vue';
 import SuggestEmployee from '../components/suggest/SuggestEmployee.vue';
 import CommonHeader from '../components/common/CommonHeader.vue';
 import ActivitySingleCard from '../components/activity/ActivitySingleCard.vue';
+import noimage from '../assets/noimage.png'
 
 export default defineComponent({
   name: 'EmployeeDetail',
@@ -24,7 +25,6 @@ export default defineComponent({
     NIcon,
     QuestionCircle20Regular,
     NButton,
-    Edit16Regular,
     CommonLoader,
     Circle16Filled,
     SuggestEmployee,
@@ -45,7 +45,8 @@ export default defineComponent({
       suggests,
       loadingSuggests,
       requester,
-      isFetching
+      isFetching,
+      noimage
     }
   },
   watch: {
@@ -126,19 +127,18 @@ export default defineComponent({
         <div class="dpanel mt-1">
           <div class="left">
             <div class="bg-panel-primary is-flex is-align-items-center is-justify-content-center" v-if="employee.data">
-              <img v-if="!employee.data.photo" src="https://ik.imagekit.io/pv5j1g25r/download-icon-group_people_team_users_icon-1320196240876938595_512_xbk2gytLr.png?ik-sdk-version=javascript-1.4.3&updatedAt=1656044876345"/>
+              <img v-if="!employee.data.photo" :src="noimage"/>
               <img v-else :src="employee.data.photo"/>
             </div>
             <div class="left-secondary gap-y-4">
               <n-divider class="my-1"/>
-              <h4 class="size-2 color-primary-0 font-secondary has-text-weight-semibold">Peran</h4>
+              <common-header font-weight="semibold" type="light" >Posisi</common-header>
               <div v-if="employee.data?.teams.length" v-for="(t, i) in employee.data?.teams" class="bg-panel-primary p-2 drow" :key="i">
                 <div class="is-flex is-align-items-start gap-x-7">
                   <n-icon
                     :class="kebab('c ' + t.role)"
                   ><circle16-filled class="size-7" /></n-icon>
-                  <span class="size-5 has-text-weight-medium font-secondary">{{" " + t.role}}</span>
-                  <span class="size-5 has-text-weight-medium font-secondary">di {{" " + t.team}}</span>
+                  <span class="size-5 has-text-weight-medium font-secondary">{{" " + t.role}} di {{ t.team }}</span>
                 </div>
               </div>
               <div class="px-2 py-1 bg-panel-primary" v-else>
@@ -147,14 +147,14 @@ export default defineComponent({
             </div>
             <n-divider class="my-2" style="margin: 0;"/>
             <section-panel>
-              <template #title>Riwayat Pendidikan</template>
+              <common-header font-weight="semibold" type="light" >Riwayat Pendidikan</common-header>
               <div v-if="employee?.data" class="is-flex is-flex-direction-column gap-y-3">
                 <EmployeeSchoolLevel v-if="employee.data.schools.length" class="bg-panel-primary" v-for="sc in emps" :key="sc.id" :name="sc.name" :graduate-year="sc.graduateYear" :level="sc.level"/>
                 <div class="no-edu gap-y-4" v-else>
                   <n-icon class="color-primary-6" size="25">
                     <QuestionCircle20Regular />
                   </n-icon>
-                  <span class="font-secondary size-4 color-primary-5">Belum ada data pendidikan</span>
+                  <span class="font-secondary size-5 color-primary-5">Belum ada data pendidikan</span>
                 </div>
               </div>
             </section-panel>
@@ -162,21 +162,18 @@ export default defineComponent({
           <n-divider class="vdivider" vertical/>
           <div class="right gap-y-4">
             <section-panel accesskey="d">
-              <template #title>Data Personal</template>
-              <n-button
-                @click="$router.push(`/employees/edit/${employee?.data?.id}`)"
-                class="edit-nonmobile"
-                type="info"
-                size="small"
-                text
-              >
-                <template #icon>
-                  <n-icon>
-                    <edit16-regular class="size-3" />
-                  </n-icon>
-                </template>
-                <span class="font-secondary size-4">Ubah Data</span>
-              </n-button>
+              <div class="is-flex is-align-items-end is-justify-content-space-between">
+                <common-header font-weight="semibold" type="light" >Data Personal</common-header>
+                <n-button
+                  @click="$router.push(`/employees/edit/${employee?.data?.id}`)"
+                  class="edit-nonmobile"
+                  type="primary"
+                  size="tiny"
+                  
+                >
+                  <span class="font-secondary has-text-weight-semibold size-5">Ubah Data</span>
+                </n-button>
+              </div>
               <div v-if="employee?.data" class="is-flex is-flex-direction-column gap-y-3">
                 <div class="data gap-y-6">
                   <span class="data-label font-secondary size-6 color-primary-5 has-text-weight-medium">Nama lengkap</span>
@@ -210,7 +207,7 @@ export default defineComponent({
             </section-panel>
             <n-divider class="my-2" style="margin: 0;"/>
             <section-panel v-if="employee.data">
-              <template #title>Data Kantor</template>
+              <common-header font-weight="semibold" type="light" >Data Kantor</common-header>
               <div class="is-flex is-flex-direction-column gap-y-3">
                 <div class="data gap-y-6">
                   <span class="data-label font-secondary size-6 color-primary-5 has-text-weight-medium">Status Kerja</span>
@@ -241,7 +238,7 @@ export default defineComponent({
             </section-panel>
             <n-divider class="my-2" style="margin: 0;"/>
             <section-panel class="mb-2">
-              <template #title>Pernah Mengikuti Kegiatan</template>
+              <common-header font-weight="semibold" type="light" >Pernah Mengikuti Kegiatan</common-header>
               <div v-if="employee?.data" class="is-flex is-flex-direction-column gap-y-3">
                 <div class="list-of-activities" v-if="employee.data.activities.length">
                   <activity-single-card 
@@ -292,7 +289,7 @@ export default defineComponent({
             <template v-if="suggests.length">
               <n-divider class="my-2" style="margin: 0;"/>
               <section-panel>
-                <template #title>Pegawai Terkait</template>
+                <common-header font-weight="semibold" type="light" >Pegawai Terkait</common-header>
                 <div class="suggestion-list">
                   <suggest-employee 
                     v-for="e in suggests"
@@ -411,9 +408,6 @@ export default defineComponent({
       }
     }
     & .edit-nonmobile {
-      position: absolute;
-      right: 0;
-      margin-right: 2px;
       display: none;
       @include res('small') {
         display: inherit;
