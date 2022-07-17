@@ -5,6 +5,7 @@ import { ref } from 'vue';
 import { useEditTeamPayload } from '../../stores/editTeamPayload';
 import TeamMemberEditField from './TeamMemberEditField.vue';
 import TeamRoleModal from './TeamRoleModal.vue';
+import CommonHeader from '../common/CommonHeader.vue';
 
 const openModal = ref(false)
 const team = useEditTeamPayload()
@@ -27,7 +28,7 @@ const onAddEmployeeTeam = () => {
   <div class="is-flex is-flex-direction-column gap-y-4">
     <team-role-modal v-model:show="openModal" />
     <div class="is-flex is-align-items-center is-justify-content-space-between px-1">
-      <h4 class="font-secondary size-2">Anggota team</h4>
+      <common-header font-weight="semibold" type="light">Anggota Team</common-header>
       <n-button 
         type="info"
         text

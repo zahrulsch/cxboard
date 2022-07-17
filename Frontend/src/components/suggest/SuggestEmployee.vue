@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { NImage, NEllipsis } from 'naive-ui';
-import user from '../../assets/user.png'
+import user from '../../assets/noimage.png'
 
 const props = defineProps<{
   name?: string
@@ -18,9 +18,9 @@ const props = defineProps<{
     <div class="photo">
       <n-image 
         :src="props.photo || user"
-        width="50"
-        height="50"
         :preview-disabled="true"
+        :object-fit="'cover'"
+        width="100"
       />
     </div>
     <div class="detail">
@@ -50,10 +50,20 @@ const props = defineProps<{
     z-index: 1;
   }
   & .photo {
-    width: max-content;
+    width: 50px;
+    position: relative;
+    padding-top: 50px;
     display: flex;
     align-items: center;
     background-color: var(--bg-secondary);
+    justify-content: center;
+    & > div {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
   }
   & .detail {
     display: flex;

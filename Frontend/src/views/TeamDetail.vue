@@ -40,19 +40,19 @@ const cbgimage = computed(() => {
         <div class="details-detail gap-y-3">
           <div class="detailrow px-2 py-1">
             <span class="font-secondary size-6 color-primary-5 has-text-weight-medium">Nama Team</span>
-            <p class="size-3">{{team.data.name}}</p>
+            <p class="size-4">{{team.data.name}}</p>
           </div>
           <div class="detailrow px-2 py-1">
             <span class="font-secondary size-6 color-primary-5 has-text-weight-medium">Kode Team</span>
-            <p class="size-3">{{team.data.code}}</p>
+            <p class="size-4">{{team.data.code}}</p>
           </div>
           <div class="detailrow px-2 py-1">
             <span class="font-secondary size-6 color-primary-5 has-text-weight-medium">Jumlah Anggota</span>
-            <p class="size-3">{{team.data.employees?.length}}</p>
+            <p class="size-4">{{team.data.employees?.length}}</p>
           </div>
-          <div class="detailrow px-2 py-1">
+          <div class="detailrow px-2 pt-1 pb-2">
             <span class="font-secondary size-6 color-primary-5 has-text-weight-medium">Alamat</span>
-            <p class="size-3">{{team.data.address || "-"}}</p>
+            <p class="size-4">{{team.data.address || "-"}}</p>
           </div>
         </div>
       </div>

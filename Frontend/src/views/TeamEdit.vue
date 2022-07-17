@@ -13,6 +13,7 @@ import TeamFindNull from '../components/team/TeamFindNull.vue'
 import SectionPanel from '../components/layout/SectionPanel.vue';
 import TeamPictureEdit from '../components/team/TeamPictureEdit.vue';
 import TeamMemberEdit from '../components/team/TeamMemberEdit.vue';
+import CommonHeader from '../components/common/CommonHeader.vue';
 
 const message = useMessage()
 const pteam = useEditTeamPayload()
@@ -63,26 +64,26 @@ onUnmounted(() => {
       <!-- if team data is not null -->
 
       <div class="mt-3" v-else>
-        <h4 class="size-3 has-text-weight-medium color-primary-7 font-secondary">Ubah Data Team {{team.data.name}}</h4>
+        <CommonHeader font-weight="semibold">Ubah Data {{team.data.name}}</CommonHeader>
         <div class="edit-panel gap-x-3 gap-y-3">
           <div class="edit-panel-left">
-            <section-panel class="mt-2 font-secondary px-1">
+            <section-panel class="mt-2 font-secondary">
               <div class="list gap-y-4">
-                <n-form-item :show-feedback="false" label="Nama team">
+                <n-form-item :show-feedback="false" label="Nama team" :label-props="{class: 'font-primary size-5 mb-1'}">
                   <n-input 
                     class="bg-panel-primary"
                     placeholder="Team Advertiser"
                     v-model:value="pteam.name"
                   />
                 </n-form-item>
-                <n-form-item :show-feedback="false" label="Kode team">
+                <n-form-item :show-feedback="false" label="Kode team" :label-props="{class: 'font-primary size-5 mb-1'}">
                   <n-input 
                     class="bg-panel-primary"
                     placeholder="G"
                     v-model:value="pteam.code"
                   />
                 </n-form-item>
-                <n-form-item :show-feedback="false" label="Alamat">
+                <n-form-item :show-feedback="false" label="Alamat" :label-props="{class: 'font-primary size-5 mb-1'}">
                   <n-input 
                     type="textarea"
                     rows="5"
@@ -93,11 +94,12 @@ onUnmounted(() => {
                 </n-form-item>
               </div>
             </section-panel>
-            <n-divider class="px-3 my-3"/>
+            <n-divider class="my-3"/>
             <team-member-edit />
           </div>
+          <n-divider class="mx-1 vertical-divider" vertical/>
           <div class="edit-panel-right gap-y-3">
-            <n-divider class="px-1 my-1 dvd"/>
+            <n-divider class="my-1 dvd"/>
             <team-picture-edit :image="pteam.image" @update:image="v => pteam.image = v" />
             <n-button
               block
@@ -106,12 +108,7 @@ onUnmounted(() => {
               @click="update"
               :loading="loadEdit"
             >
-              <template #icon>
-                <n-icon>
-                  <save16-regular class="size-2" />
-                </n-icon>
-              </template>
-              <span class="font-secondary size-4">Simpan</span>
+              <span class="font-secondary has-text-weight-semibold size-4">Simpan</span>
             </n-button>
           </div>
         </div>
@@ -122,6 +119,13 @@ onUnmounted(() => {
 </template>
 
 <style lang="scss" scoped>
+.vertical-divider {
+  display: none;
+  height: auto;
+  @include res('small') {
+    display: inherit;
+  }
+}
 .list {
   display: flex;
   flex-direction: column;

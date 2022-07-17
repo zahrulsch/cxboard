@@ -4,6 +4,7 @@ import { ArrowCircleLeft16Regular, Home16Filled, MailAttach16Filled, SignOut20Fi
 import { NIcon, NPopover, NAvatar, NButton, NDivider, NImage } from 'naive-ui'
 import { useCQuery } from '../../apis/customQuery'
 import { useUserData } from '../../stores/userDataStore'
+import type { RouterLinkProps } from 'vue-router'
 import NavbarDrawer from './NavbarDrawer.vue'
 import CommonCardLoader from '../common/CommonCardLoader.vue'
 import ruangcxo from '../../assets/ruangcxo.png'
@@ -28,7 +29,7 @@ const { data, isLoading: loadUser } = useCQuery('getUserInfo', '/users/info', 'g
 </script>
 
 <template>
-  <div class="container size-2 py- is-flex is-align-items-center is-justify-content-space-between app-nav">
+  <div class="container size-2 py-1 is-flex is-align-items-center is-justify-content-space-between app-nav">
     <NavbarDrawer style="background-color: var(--bg-primary-solid); width: 80%;" :show="showDrawer" @on-update:show="v => showDrawer = v"/>
     <n-icon class="is-clickable" @click="$router.back()" id="back" size="18" v-if="$route.path !== '/'">
       <ArrowCircleLeft16Regular />
@@ -40,9 +41,6 @@ const { data, isLoading: loadUser } = useCQuery('getUserInfo', '/users/info', 'g
     <router-link to="/" class="is-flex is-align-items-center">
       <img alt="logo" title="RuangCXO" :src="ruangcxo" style="width: 72px;"/>
     </router-link>
-    <!-- <h4 class="logo gap-x-3 has-text-weight-bold size-1">
-      <router-link id="app-logo" to="/">CXBoard</router-link>
-    </h4> -->
     <div class="nav-links-mobile">
       <n-icon @click="showDrawer = !showDrawer" class="is-clickable">
         <TextAlignRight16Filled />
@@ -65,12 +63,12 @@ const { data, isLoading: loadUser } = useCQuery('getUserInfo', '/users/info', 'g
           <span>Karyawan</span>
         </div>
       </router-link>
-      <router-link to="/activities">
+      <router-link to="/activities" v-slot="{ isActive, href }">
         <div :class="['nav-link gap-x-7 size-4']">
           <n-icon size="14">
             <ShiftsActivity20Filled />
           </n-icon>
-          <span>Aktivitas</span>
+          <span>{{ href }}Aktivitas</span>
         </div>
       </router-link>
       <router-link to="/teams">

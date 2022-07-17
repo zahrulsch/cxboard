@@ -41,7 +41,6 @@ const props = defineProps<TeamCardProp>()
             <span class="font-secondary size-5 pr-1">Detail</span>
           </n-button>
         </router-link>
-        <!-- <n-divider class="mx-0" vertical /> -->
         <router-link class="is-inline-flex" :to="`/teams/edit/${props.teamId}`">
           <n-button
             size="tiny"

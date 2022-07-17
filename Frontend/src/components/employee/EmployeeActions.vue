@@ -1,7 +1,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { NButton, NIcon, useMessage, useNotification } from 'naive-ui';
-import { Save16Filled } from '@vicons/fluent'
+import { NButton, useMessage, useNotification } from 'naive-ui';
 import { useAddEmployeePayload } from '../../stores/addEmployeePayload';
 import { useCMutation } from '../../apis/customMutation'
 
@@ -9,8 +8,6 @@ export default defineComponent({
   name: 'EmployeeActions',
   components: {
     NButton,
-    NIcon,
-    Save16Filled
   },
   setup: function() {
     const { isLoading, mutateAsync } = useCMutation('addEmployee', '/employees/create/', 'POST')
@@ -62,12 +59,7 @@ export default defineComponent({
       @click="createNew"
       :loading="isLoading"
     >
-      <template #icon>
-        <n-icon>
-          <Save16Filled class="size-2" />
-        </n-icon>
-      </template>
-      <span class="font-secondary has-text-weight-medium size-4">Simpan</span>
+      <span class="font-secondary has-text-weight-semibold size-4">Simpan</span>
     </n-button>
   </div>
 </template>

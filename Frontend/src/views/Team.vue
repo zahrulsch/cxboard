@@ -29,7 +29,7 @@ const { data: teams, isLoading, isError } = useCQuery('getTeams', '/teams/list',
           </n-button>
         </router-link>
         <template v-if="teams.data.length && !isLoading">
-          <div class="teams-list px-1">
+          <div class="teams-list">
             <team-card 
               v-for="k in teams.data" 
               :key="k.id" 
@@ -42,7 +42,7 @@ const { data: teams, isLoading, isError } = useCQuery('getTeams', '/teams/list',
           </div>
         </template>
         <template v-if="isLoading">
-          <div class="teams-list px-1">
+          <div class="teams-list">
             <common-card-loader
               v-for="k in 2" 
               :key="k"

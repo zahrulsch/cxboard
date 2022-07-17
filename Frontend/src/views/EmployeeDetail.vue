@@ -142,7 +142,7 @@ export default defineComponent({
                 </div>
               </div>
               <div class="px-2 py-1 bg-panel-primary" v-else>
-                <span class="size-4 color-primary-5 has-text-weight-light"> Belum ada peran di team manapun</span>
+                <span class="size-5 color-primary-5 has-text-weight-light">Tidak memiliki posisi</span>
               </div>
             </div>
             <n-divider class="my-2" style="margin: 0;"/>
@@ -177,31 +177,31 @@ export default defineComponent({
               <div v-if="employee?.data" class="is-flex is-flex-direction-column gap-y-3">
                 <div class="data gap-y-6">
                   <span class="data-label font-secondary size-6 color-primary-5 has-text-weight-medium">Nama lengkap</span>
-                  <span class="data-value size-3">{{employee.data.name}}</span>
+                  <span class="data-value size-4">{{employee.data.name}}</span>
                 </div>
                 <div class="data gap-y-6">
                   <span class="data-label font-secondary size-6 color-primary-5 has-text-weight-medium">Tempat, tanggal lahir</span>
-                  <span class="data-value size-3 is-capitalized">{{ employee.data.placeOfBirth }}, {{dateBirth}}</span>
+                  <span class="data-value size-4 is-capitalized">{{ employee.data.placeOfBirth }}, {{dateBirth}}</span>
                 </div>
                 <div class="data gap-y-6">
                   <span class="data-label font-secondary size-6 color-primary-5 has-text-weight-medium">Status pernikahan</span>
-                  <span class="data-value size-3 is-capitalized">{{ marriageStatus }}</span>
+                  <span class="data-value size-4 is-capitalized">{{ marriageStatus }}</span>
                 </div>
                 <div class="data gap-y-6">
                   <span class="data-label font-secondary size-6 color-primary-5 has-text-weight-medium">Gender</span>
-                  <span class="data-value size-3">{{ gender }}</span>
+                  <span class="data-value size-4">{{ gender }}</span>
                 </div>
                 <div class="data gap-y-6">
                   <span class="data-label font-secondary size-6 color-primary-5 has-text-weight-medium">Email</span>
-                  <span class="data-value size-3">{{ employee.data.email }}</span>
+                  <span class="data-value size-4">{{ employee.data.email }}</span>
                 </div>
                 <div class="data gap-y-6">
                   <span class="data-label font-secondary size-6 color-primary-5 has-text-weight-medium">No. Handphone</span>
-                  <span class="data-value size-3">{{ handphone }}</span>
+                  <span class="data-value size-4">{{ handphone }}</span>
                 </div>
                 <div class="data gap-y-6">
                   <span class="data-label font-secondary size-6 color-primary-5 has-text-weight-medium">Alamat</span>
-                  <span class="data-value size-3">{{ employee.data.address||'-' }}</span>
+                  <span class="data-value size-4">{{ employee.data.address||'-' }}</span>
                 </div>
               </div>
             </section-panel>
@@ -215,24 +215,24 @@ export default defineComponent({
                     <n-icon>
                       <circle16-filled :class="[`status-${employee.data.status}`, 'size-7']"/>
                     </n-icon>
-                    <span class="data-value size-3 is-capitalized">{{ employee.data.status }}</span>
+                    <span class="data-value size-4 is-capitalized">{{ employee.data.status }}</span>
                   </div>
                 </div>
                 <div class="data gap-y-6">
                   <span class="data-label font-secondary size-6 color-primary-5 has-text-weight-medium">Email Kantor</span>
-                  <span class="data-value size-3">{{ employee.data.officeEmail || '-' }}</span>
+                  <span class="data-value size-4">{{ employee.data.officeEmail || '-' }}</span>
                 </div>
                 <div class="data gap-y-6">
                   <span class="data-label font-secondary size-6 color-primary-5 has-text-weight-medium">Password Email</span>
-                  <span class="data-value size-3">{{ employee.data.officeEmailPassword || '-' }}</span>
+                  <span class="data-value size-4">{{ employee.data.officeEmailPassword || '-' }}</span>
                 </div>
                 <div class="data gap-y-6">
                   <span class="data-label font-secondary size-6 color-primary-5 has-text-weight-medium">Mulai Berkerja</span>
-                  <span class="data-value size-3">{{ startDate }}</span>
+                  <span class="data-value size-4">{{ startDate }}</span>
                 </div>
                 <div class="data gap-y-6">
                   <span class="data-label font-secondary size-6 color-primary-5 has-text-weight-medium">Berhenti Kerja</span>
-                  <span class="data-value size-3">{{ endDate }}</span>
+                  <span class="data-value size-4">{{ endDate }}</span>
                 </div>
               </div>
             </section-panel>
@@ -255,7 +255,7 @@ export default defineComponent({
                   <n-icon class="color-primary-7" size="25">
                     <QuestionCircle20Regular />
                   </n-icon>
-                  <span class="font-secondary size-4 color-primary-7">Belum ada aktivitas pada pegawai ini</span>
+                  <span class="font-secondary size-5 color-primary-7">Belum ada aktivitas pada pegawai ini</span>
                 </div>
               </div>
             </section-panel>

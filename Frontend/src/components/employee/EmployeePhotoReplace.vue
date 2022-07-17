@@ -97,6 +97,7 @@ export default defineComponent({
           class="upload-preview-eraser"
           type="error"
           size="small"
+          @click="erase"
         >
           <n-icon>
             <delete16-filled />
@@ -105,6 +106,7 @@ export default defineComponent({
         <n-image 
           :src="imageUrl"
           class="imgs"
+          object-fit="contain"
         />
       </div>
     </n-form-item>

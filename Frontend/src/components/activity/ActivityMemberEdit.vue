@@ -105,7 +105,7 @@ employeesRequester(query)
             v-for="s in teamSelections"
             @update:checked="v => onChecked(v, s.id)"
             :checked="query.teams.includes(s.id)"
-            class="size-4 has-text-weight-light"
+            class="size-4 has-text-weight-normal"
             size="small"
           >{{s.name}}</n-checkbox>
         </div>
@@ -118,7 +118,7 @@ employeesRequester(query)
             v-for="s in roleSelections"
             @update:checked="v => onCheckedRole(v, s.id)"
             :checked="query.roles.includes(s.id)"
-            class="size-4 has-text-weight-light"
+            class="size-4 has-text-weight-normal"
             size="small"
           >{{s.name}}</n-checkbox>
         </div>

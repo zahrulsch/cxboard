@@ -62,8 +62,8 @@ onMounted(() => {
 
 <template>
   <section-panel>
-    <section-panel class="px-1 font-secondary">
-      <n-form-item v-if="imageurl" :show-feedback="false" label="Gambar team">
+    <section-panel class="font-secondary">
+      <n-form-item v-if="imageurl" :show-feedback="false" label="Gambar team" :label-props="{class: 'font-primary size-5 mb-1'}">
         <div :style="{width: '100%', backgroundImage: `url(${imageurl})`}" v-if="imageurl" class="bg-panel-primary iexist">
           <n-button
             type="error"
@@ -80,7 +80,7 @@ onMounted(() => {
           />
         </div>
       </n-form-item>
-      <n-form-item v-else :show-feedback="false" label="Gambar team">
+      <n-form-item v-else :show-feedback="false" label="Gambar team" :label-props="{class: 'font-primary size-5 mb-1'}">
         <div class="iunexist bg-panel-primary">
           <input 
             type="file" 

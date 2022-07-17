@@ -18,7 +18,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         chunkFileNames: function(chunkInfo) {
-          return `assets/${new Md5().appendStr(chunkInfo.name).end()}.js`
+          return `assets/${new Md5().appendStr(chunkInfo.name + new Date().getTime().toString()).end()}.js`
         },
         assetFileNames: function(assetInfo) {
           return `assets/${new Md5().appendStr(assetInfo.source.toString()).end()}.${assetInfo.name.split('.').at(-1)}`

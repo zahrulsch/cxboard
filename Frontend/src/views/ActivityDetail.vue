@@ -60,28 +60,28 @@ const endDate = computed(() => {
         <div class="left gap-y-3">
           <div class="is-flex is-flex-direction-column gap-y-3">
             <div class="data gap-y-6">
-              <span class="data-label font-secondary size-5 color-primary-5 has-text-weight-medium">Nama Aktivitas</span>
-              <span class="data-value size-3 is-capitalized">{{activity.name}}</span>
+              <span class="data-label font-secondary size-6 color-primary-5 has-text-weight-medium">Nama Aktivitas</span>
+              <span class="data-value size-4 is-capitalized">{{activity.name}}</span>
             </div>
             <div class="data gap-y-6">
-              <span class="data-label font-secondary size-5 color-primary-5 has-text-weight-medium">Status</span>
-              <span class="data-value size-3 is-capitalized">{{activity.status}}</span>
+              <span class="data-label font-secondary size-6 color-primary-5 has-text-weight-medium">Status</span>
+              <span class="data-value size-4 is-capitalized">{{activity.status}}</span>
             </div>
             <div class="data gap-y-6">
-              <span class="data-label font-secondary size-5 color-primary-5 has-text-weight-medium">Tempat</span>
-              <span class="data-value size-3 is-capitalized">{{activity.venue}}</span>
+              <span class="data-label font-secondary size-6 color-primary-5 has-text-weight-medium">Tempat</span>
+              <span class="data-value size-4 is-capitalized">{{activity.venue}}</span>
             </div>
             <div class="data gap-y-6">
-              <span class="data-label font-secondary size-5 color-primary-5 has-text-weight-medium">Jumlah Peserta</span>
-              <span class="data-value size-3 is-capitalized">{{activity.employees.length}} orang</span>
+              <span class="data-label font-secondary size-6 color-primary-5 has-text-weight-medium">Jumlah Peserta</span>
+              <span class="data-value size-4 is-capitalized">{{activity.employees.length}} orang</span>
             </div>
             <div class="data gap-y-6">
-              <span class="data-label font-secondary size-5 color-primary-5 has-text-weight-medium">Diselenggarakan Pada</span>
-              <span class="data-value size-3 is-capitalized">{{startDate}} - {{endDate}}</span>
+              <span class="data-label font-secondary size-6 color-primary-5 has-text-weight-medium">Diselenggarakan Pada</span>
+              <span class="data-value size-4 is-capitalized">{{startDate}} - {{endDate}}</span>
             </div>
             <div class="data gap-y-6">
-              <span class="data-label font-secondary size-5 color-primary-5 has-text-weight-medium">Detail</span>
-              <span class="data-value size-3 is-capitalized">{{activity.detail || '-'}}</span>
+              <span class="data-label font-secondary size-6 color-primary-5 has-text-weight-medium">Detail</span>
+              <span class="data-value size-4 is-capitalized">{{activity.detail || '-'}}</span>
             </div>
           </div>
           <n-divider class="my-1" />
@@ -94,7 +94,7 @@ const endDate = computed(() => {
               <template v-else>
                 <router-link class="is-flex" v-for="s in participants" :key="s.id" :to="`/employees/${s.id}`">
                   <div class="link-employee px-3 py-2">
-                    <span class="font-secondary has-text-weight-medium size-3">{{s.name}}</span>
+                    <span class="font-secondary has-text-weight-medium size-4">{{s.name}}</span>
                   </div>
                 </router-link>
               </template>
@@ -105,7 +105,7 @@ const endDate = computed(() => {
         <n-divider vertical class="mx-1 v-dvd" style="height: auto;" />
 
         <div class="right">
-          <span class="data-label font-secondary size-5 has-text-weight-medium color-primary-4">Gambar Utama</span>
+          <span class="data-label font-secondary size-5 color-primary-5 has-text-weight-semibold">Gambar Utama</span>
           <div class="activity-image">
             <n-image 
               :src="activity.photo || noactivity"

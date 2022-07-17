@@ -12,6 +12,7 @@ import EmployeePhotoReplace from "../components/employee/EmployeePhotoReplace.vu
 import EmployeePutAction from "../components/employee/EmployeePutAction.vue"
 import EmployeeOfficeDataEdit from "../components/employee/EmployeeOfficeDataEdit.vue"
 import EmployeeMarriageEdit from "../components/employee/EmployeeMarriageEdit.vue"
+import CommonHeader from "../components/common/CommonHeader.vue"
 
 export default defineComponent({
   name: 'EmployeeEdit',
@@ -24,7 +25,8 @@ export default defineComponent({
     EmployeePhotoReplace,
     EmployeePutAction,
     EmployeeOfficeDataEdit,
-    EmployeeMarriageEdit
+    EmployeeMarriageEdit,
+    CommonHeader
   },
   setup: function() {
     const edit = useEditEmployeePayload()
@@ -68,7 +70,7 @@ export default defineComponent({
 <template>
   <layout>
     <section-panel class="mt-3">
-      <template #title>Ubah Data Pegawai</template>
+      <common-header font-weight="semibold" >Ubah data pegawai</common-header>
       <div class="edit-panel gap-y-4">
         <div class="edit-panel-left gap-y-4">
           <EmployeeGeneralEdit 

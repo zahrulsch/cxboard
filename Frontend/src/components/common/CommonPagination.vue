@@ -72,6 +72,12 @@ const emits = defineEmits<{
 .n-pagination .n-pagination-item:not(.n-pagination-item--disabled).n-pagination-item--active {
   border: 1px solid transparent !important;
 }
+.n-pagination .n-pagination-item {
+  padding: 0;
+}
+.n-pagination > *:not(:first-child) {
+  margin-left: 2.75px;
+}
 .m-btn {
   border-radius: 2px;
 }
