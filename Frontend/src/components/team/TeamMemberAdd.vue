@@ -29,20 +29,20 @@ const onAddEmployeeTeam = () => {
       <h4 class="font-primary size-5">Anggota team</h4>
       <n-button 
         type="info"
-        text
+        size="tiny"
         @click="openModal = !openModal"
       >
         <template #icon>
-          <n-icon size="14"><add16-filled /></n-icon>
+          <n-icon><add16-filled class="size-5" /></n-icon>
         </template>
-        <span class="font-secondary has-text-weight-medium size-5">Tambah Role</span>
+        <span class="font-secondary has-text-weight-semibold size-5">Tambah Role</span>
       </n-button>
     </div>
     <div class="add-emp-list gap-y-4">
-      <team-member-field v-for="(emp, index) in team.employees" v-model:employees="team.employees" :index="index" :key="index" />
+      <team-member-field v-for="(_, index) in team.employees" v-model:employees="team.employees" :index="index" :key="index" />
     </div>
     <n-button
-      type="info"
+      type="primary"
       secondary
       @click="onAddEmployeeTeam"
     >
@@ -51,7 +51,7 @@ const onAddEmployeeTeam = () => {
           <add16-filled class="size-4" />
         </n-icon>
       </template>
-      <span class="font-secondary has-text-weight-medium size-4">Tambah</span>
+      <span class="font-secondary has-text-weight-semibold size-4">Tambah</span>
     </n-button>
   </div>
 </template>

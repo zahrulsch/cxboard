@@ -32,18 +32,23 @@ function initializeTokenClient() {
     client_id: '680985954441-79brl8t5ir27uhkrapqa63ckkelnq562.apps.googleusercontent.com',
     scope: 'https://www.googleapis.com/auth/spreadsheets',
     callback: '',
+    access_type: 'offline',
+    prompt: 'consent',
+    grant_type: 'authorization_code'
   })
 }
 
 function onRequest() {
   tokenClient.callback = async(resp: any) => {
     if (resp.error !== undefined) throw (resp)
+    console.log(resp)
     if (resp.access_token) {
       emits('credential', (resp.access_token as string))
     }
   }
   if (gapi.client.getToken() === null) {
-    tokenClient.requestAccessToken({ prompt: 'consent', response_type: 'token' })
+    
+    tokenClient.requestAccessToken({ prompt: 'consent', response_type: 'token', access_type: 'offline', approval_prompt: 'forces', grant_type: 'authorization_code' })
   } else {
     tokenClient.requestAccessToken({ prompt: '' })
   }

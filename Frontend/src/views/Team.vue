@@ -18,16 +18,18 @@ const { data: teams, isLoading, isError } = useCQuery('getTeams', '/teams/list',
     <common-fetching-error style="min-height: 75vh;" v-if="isError" />
     <template v-if="teams">
       <section-panel class="mt-3 teams">
-        <common-header font-weight="semibold">Daftar Team</common-header>
-        <router-link class="add-button" to="/teams/create">
-          <n-button 
-            size="small"
-            :bordered="false"
-            type="primary"
-          >
-            <span class="has-text-weight-semibold font-secondary size-4">Tambah Tim</span>
-          </n-button>
-        </router-link>
+        <div class="is-flex is-justify-content-space-between is-align-items-end">
+          <common-header font-weight="semibold">Daftar Team</common-header>
+          <router-link to="/teams/create">
+            <n-button 
+              size="small"
+              :bordered="false"
+              type="primary"
+            >
+              <span class="has-text-weight-semibold font-secondary size-4">Tambah Tim</span>
+            </n-button>
+          </router-link>
+        </div>
         <template v-if="teams.data.length && !isLoading">
           <div class="teams-list">
             <team-card 
@@ -75,10 +77,6 @@ const { data: teams, isLoading, isError } = useCQuery('getTeams', '/teams/list',
     @include res('xxlarge') {
       grid-template-columns: repeat(5, 1fr);
     }
-  }
-  & .add-button {
-    position: absolute;
-    right: 0;
   }
 }
 </style>

@@ -259,19 +259,6 @@ export default defineComponent({
                 </div>
               </div>
             </section-panel>
-            <!-- <n-divider class="my-2" style="margin: 0;"/> -->
-            <!-- <section-panel>
-              <template #title>Pernah Mengkuti Kegiatan</template>
-              <div v-if="employee?.data" class="is-flex is-flex-direction-column gap-y-3">
-                <EmployeeSchoolLevel v-if="employee.data.schools.length" class="bg-panel-primary" v-for="sc in emps" :key="sc.id" :name="sc.name" :graduate-year="sc.graduateYear" :level="sc.level"/>
-                <div class="no-edu gap-y-4" v-else>
-                  <n-icon class="color-primary-6" size="25">
-                    <QuestionCircle20Regular />
-                  </n-icon>
-                  <span class="font-secondary size-4 color-primary-5">Belum ada data pendidikan</span>
-                </div>
-              </div>
-            </section-panel> -->
             <n-button
               @click="$router.push(`/employees/edit/${employee?.data?.id}`)"
               class="edit-mobile"
@@ -279,11 +266,6 @@ export default defineComponent({
               size="small"
               secondary
             >
-              <template #icon>
-                <n-icon>
-                  <edit16-regular class="size-3" />
-                </n-icon>
-              </template>
               <span class="font-secondary size-4">Ubah Data</span>
             </n-button>
             <template v-if="suggests.length">

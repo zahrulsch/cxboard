@@ -81,7 +81,7 @@ export default defineComponent({
       }
     },
     debounced: function() {
-      let timer: string | number | NodeJS.Timeout | undefined
+      let timer: any
       const func = () => {
         clearTimeout(timer)
         timer = setTimeout(() => {

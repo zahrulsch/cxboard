@@ -1,16 +1,19 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { ArrowCircleLeft16Regular, Home16Filled, MailAttach16Filled, SignOut20Filled, Person16Filled, Settings16Filled, ShiftsActivity20Filled, PersonInfo16Filled, PeopleTeam20Filled, TextAlignRight16Filled } from '@vicons/fluent'
-import { NIcon, NPopover, NAvatar, NButton, NDivider, NImage } from 'naive-ui'
+import { NIcon, NPopover, NAvatar, NButton, NDivider } from 'naive-ui'
 import { useCQuery } from '../../apis/customQuery'
 import { useUserData } from '../../stores/userDataStore'
-import type { RouterLinkProps } from 'vue-router'
+import { useRoute } from 'vue-router'
 import NavbarDrawer from './NavbarDrawer.vue'
 import CommonCardLoader from '../common/CommonCardLoader.vue'
 import ruangcxo from '../../assets/ruangcxo.png'
 
 const userData = useUserData()
 const showDrawer = ref(false)
+const route = useRoute()
+
+const groupRoute = computed(() => route.meta.group)
 
 const logout = () => {
   localStorage.clear()
@@ -48,7 +51,7 @@ const { data, isLoading: loadUser } = useCQuery('getUserInfo', '/users/info', 'g
     </div>
     <div class="font-secondary size-3 is-flex gap-x-1 nav-links is-align-items-center">
       <router-link to="/">
-        <div :class="['nav-link gap-x-7 size-4']">
+        <div :class="[ groupRoute === 'beranda' && 'nav-link-active' , 'nav-link gap-x-7 size-4']">
           <n-icon size="14">
             <Home16Filled />
           </n-icon>
@@ -56,23 +59,23 @@ const { data, isLoading: loadUser } = useCQuery('getUserInfo', '/users/info', 'g
         </div>
       </router-link>
       <router-link to="/employees">
-        <div :class="['nav-link gap-x-7 size-4']">
+        <div :class="[groupRoute === 'karyawan' && 'nav-link-active', 'nav-link gap-x-7 size-4']">
           <n-icon size="14">
             <PersonInfo16Filled  />
           </n-icon>
           <span>Karyawan</span>
         </div>
       </router-link>
-      <router-link to="/activities" v-slot="{ isActive, href }">
-        <div :class="['nav-link gap-x-7 size-4']">
+      <router-link to="/activities">
+        <div :class="[groupRoute === 'aktivitas' && 'nav-link-active', 'nav-link gap-x-7 size-4']">
           <n-icon size="14">
             <ShiftsActivity20Filled />
           </n-icon>
-          <span>{{ href }}Aktivitas</span>
+          <span>Aktivitas</span>
         </div>
       </router-link>
       <router-link to="/teams">
-        <div :class="['nav-link gap-x-7 size-4']">
+        <div :class="[groupRoute === 'team' && 'nav-link-active', 'nav-link gap-x-7 size-4']">
           <n-icon size="14">
             <PeopleTeam20Filled />
           </n-icon>
@@ -191,6 +194,9 @@ const { data, isLoading: loadUser } = useCQuery('getUserInfo', '/users/info', 'g
     transition: 250ms;
     cursor: pointer;
     position: relative;
+    &-active {
+      color: #61d2aa !important;
+    }
     &:hover {
       color: var(--color-primary-0);
       &::after {

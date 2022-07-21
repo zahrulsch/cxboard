@@ -48,16 +48,17 @@ export default defineComponent({
     <n-button
       :bordered="!1"
       secondary
-      type="info"
+      type="primary"
       class="mt-1"
       @click="onAddField"
+      size="tiny"
     >
       <template #icon>
         <n-icon>
-          <Add16Filled class="size-4" />
+          <Add16Filled class="size-5" />
         </n-icon>
       </template>
-      <span class="font-secondary size-4">Tambah</span>
+      <span class="font-secondary has-text-weight-semibold size-5">Tambah</span>
     </n-button>
   </div>
 </template>

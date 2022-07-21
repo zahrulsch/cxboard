@@ -8,6 +8,7 @@ import { useCQuery } from '../../apis/customQuery'
 import CommonHeader from '../common/CommonHeader.vue';
 import ActivityMemberSelect from './ActivityMemberSelect.vue';
 import CommonCardLoader from '../common/CommonCardLoader.vue';
+import CommonPagination from '../common/CommonPagination.vue';
 import errorpng from '../../assets/error.png'
 
 const props = defineProps<{
@@ -19,8 +20,9 @@ const emits = defineEmits<{
 }>()
 
 const employees = ref<Query['getEmployees']['response']['employees']>([])
+const totalPages = ref(0)
 const loading = ref(false)
-const query = reactive({ name: '', teams: ([] as number[]), roles: ([] as number[]) })
+const query = reactive({ name: '', teams: ([] as number[]), roles: ([] as number[]), pageNumber: 1, pageSize: 24 })
 const teamSelections = ref<Query['getTeams']['response']>([])
 const roleSelections = ref<Query['getRoles']['response']>([])
 
@@ -28,6 +30,7 @@ const employeesRequester = (query: any) => {
   requester<{data: Query['getEmployees']['response']}>('/employees/list/', 'get', null, query, {
     onSuccess: ({ data }) => {
       employees.value = data.employees
+      totalPages.value = Math.ceil(data.count / query.pageSize)
     },
     onLoading: s => loading.value = s
   })
@@ -124,19 +127,27 @@ employeesRequester(query)
         </div>
       </div>
       <n-divider vertical class="v-dvd mx-0" />
-      <div class="activity-member-list">
-        <template v-if="!loading">
-          <template v-if="employees.length">
-            <activity-member-select v-for="p in employees" :name="p.name" :image="p.photo" :checked="props.employees?.includes(p.id)" @update:checked="v => onCheckedSelection(v, p.id)"/>
+      <div style="width: 100%;" class="is-flex is-align-items-center is-flex-direction-column gap-y-2">
+        <div class="activity-member-list">
+          <template v-if="!loading">
+            <template v-if="employees.length">
+              <activity-member-select v-for="p in employees" :name="p.name" :image="p.photo" :checked="props.employees?.includes(p.id)" @update:checked="v => onCheckedSelection(v, p.id)"/>
+            </template>
+            <div class="no-data is-flex is-flex-direction-column gap-y-4 is-align-items-center is-justify-content-center" v-else>
+              <n-image width="100" :src="errorpng" />
+              <span class="size-5 font-secondary has-text-weight-light color-primary-5">Tidak ada pegawai yang memenuhi kriteria filter</span>
+            </div>
           </template>
-          <div class="no-data is-flex is-flex-direction-column gap-y-4 is-align-items-center is-justify-content-center" v-else>
-            <n-image width="100" :src="errorpng" />
-            <span class="size-5 font-secondary has-text-weight-light color-primary-5">Tidak ada pegawai yang memenuhi kriteria filter</span>
-          </div>
-        </template>
-        <template v-else>
-          <common-card-loader v-for="i in 2" :key="i" :height="30" />
-        </template>
+          <template v-else>
+            <common-card-loader v-for="i in 2" :key="i" :height="30" />
+          </template>
+        </div>
+        <common-pagination 
+          v-if="!loading"
+          :page-count="totalPages"
+          :page="query.pageNumber"
+          @update-page="v => query.pageNumber = v || 1"
+        />
       </div>
     </div>
   </div>
@@ -144,10 +155,12 @@ employeesRequester(query)
 
 <style lang="scss">
 .activity-member-list {
+  width: 100%;
   display: grid;
   gap: var(--space-3);
   grid-template-columns: repeat(2, 1fr);
   flex: 1;
+  grid-auto-rows: min-content;
   align-self: start;
   .no-data {
     grid-column: 1 / span 6;

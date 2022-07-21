@@ -109,7 +109,7 @@ export default defineComponent({
           </template>
           <EmployeeCard class="is-clickable" v-for="p in employees?.data.employees" :key="p.id" :image="p.photo" @click="$router.push(`/employees/${p.id}`)" :name="p.name" :level="p.teams.map(t => ({name: t.role}))" :teamcount="p.teams.map(e => e.name).filter((e, i, s) => s.indexOf(e) === i).length" />
         </div>
-        <div class="mt-3 is-flex is-justify-content-center">
+        <div v-if="!loadEmps" class="mt-3 is-flex is-justify-content-center">
           <common-pagination
             :page="Number($route.query.page)" 
             :page-count="totalPage"

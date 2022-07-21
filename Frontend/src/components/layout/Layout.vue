@@ -19,7 +19,7 @@ export default defineComponent({
   <div class="before-container">
     <div class="before-container-layer">
       <n-layout style="height: 100vh; background-color: transparent;" :native-scrollbar="false">
-        <div style="height: 100%;" class="p-1 container">
+        <div style="height: 100%;" class="container x-container">
           <navbar-vue class="mb-1 mt-2" />
           <div class="with-min-height">
             <slot name="default"></slot>
@@ -33,6 +33,12 @@ export default defineComponent({
 </template>
 
 <style lang="scss">
+.x-container {
+  padding: 10px;
+  @include res('large') {
+    padding: 0;
+  }
+}
 .with-min-height {
   min-height: 85vh;
 }

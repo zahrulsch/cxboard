@@ -29,7 +29,7 @@ export default defineComponent({
       type: Array as PropType<{ name: string; }[]>
     },
     image: {
-      type: Object as PropType<string | null>
+      type: String as PropType<string | null>
     },
     teamcount: Number
   },
